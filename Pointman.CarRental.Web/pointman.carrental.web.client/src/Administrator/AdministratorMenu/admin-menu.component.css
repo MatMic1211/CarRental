@@ -1,0 +1,35 @@
+.navbar-nav .nav-link {
+  color: #bbb;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+  .navbar-nav .nav-link:hover {
+    color: #41c4f0;
+  }
+
+
+  .navbar-nav .nav-link::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0;
+    background: #41c4f0;
+    transition: width 0.3s ease;
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    transform: translateX(-50%);
+  }
+
+  .navbar-nav .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link.active {
+    color: #41c4f0;;
+  }
+
+    .navbar-nav .nav-link.active::after {
+      width: 100%;
+    }
