@@ -35,3 +35,16 @@ main {
   position: relative;
   padding: 20px; 
 }
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.table {
+  width: 60%; 
+  margin: 0 auto;
+  background-color: #fff;
+}
