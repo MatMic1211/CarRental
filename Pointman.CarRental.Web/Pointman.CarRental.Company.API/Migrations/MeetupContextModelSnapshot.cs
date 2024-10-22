@@ -9,7 +9,7 @@ using Pointman.CarRental.Company.API.Entities;
 
 namespace Pointman.CarRental.Company.API.Migrations
 {
-    [DbContext(typeof(MeetupContext))]
+    [DbContext(typeof(CompanyContext))]
     partial class MeetupContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

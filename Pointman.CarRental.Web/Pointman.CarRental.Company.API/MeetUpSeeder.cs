@@ -7,18 +7,18 @@ namespace Pointman.CarRental.Company.API
 {
     public class MeetUpSeeder
     {
-        private readonly MeetupContext _meetupContext;
+        private readonly CompanyContext _companyContext;
 
-        public MeetUpSeeder(MeetupContext meetupContext)
+        public MeetUpSeeder(CompanyContext meetupContext)
         {
-            _meetupContext = meetupContext;
+            _companyContext = meetupContext;
         }
 
         public void Seed()
         {
-            if (_meetupContext.Database.CanConnect())
+            if (_companyContext.Database.CanConnect())
             {
-                if (!_meetupContext.Meetups.Any())
+                if (!_companyContext.Meetups.Any())
                 {
                     InsertSampleData();
                 }
@@ -27,9 +27,9 @@ namespace Pointman.CarRental.Company.API
 
         private void InsertSampleData()
         {
-            var meetups = new List<Meetup>
+            var meetups = new List<Entities.Company>
             {
-                new Meetup
+                new Entities.Company
                 {
                     Name = "RedRent",
                     Location = new Location
@@ -37,7 +37,7 @@ namespace Pointman.CarRental.Company.API
                         City = "Wrocław",
                     }
                 },
-                new Meetup
+                new Entities.Company
                 {
                     Name = "BlueRent",
                     Location = new Location
@@ -45,7 +45,7 @@ namespace Pointman.CarRental.Company.API
                         City = "Katowice",
                     }
                 },
-                new Meetup
+                new Entities.Company
                 {
                     Name = "GreenRent",
                     Location = new Location
@@ -55,8 +55,8 @@ namespace Pointman.CarRental.Company.API
                 }
             };
 
-            _meetupContext.Meetups.AddRange(meetups);
-            _meetupContext.SaveChanges();
+            _companyContext.Meetups.AddRange(meetups);
+            _companyContext.SaveChanges();
         }
     }
 }

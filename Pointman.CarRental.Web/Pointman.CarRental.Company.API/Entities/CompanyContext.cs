@@ -2,18 +2,18 @@
 
 namespace Pointman.CarRental.Company.API.Entities
 {
-    public class MeetupContext : DbContext
+    public class CompanyContext : DbContext
     {
-        public MeetupContext(DbContextOptions<MeetupContext> options) : base(options)
+        public CompanyContext(DbContextOptions<CompanyContext> options) : base(options)
         {
         }
 
-        public DbSet<Meetup> Meetups { get; set; }
+        public DbSet<Company> Meetups { get; set; }
         public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Meetup>()
+            modelBuilder.Entity<Company>()
                 .HasOne(m => m.Location)
                 .WithOne(m => m.Meetup);
         }

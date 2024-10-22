@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string City { get; set; }
         
-        public virtual Meetup Meetup { get; set; }
+        public virtual Company Meetup { get; set; }
 
         public int MeetupId { get; set; }
     }
