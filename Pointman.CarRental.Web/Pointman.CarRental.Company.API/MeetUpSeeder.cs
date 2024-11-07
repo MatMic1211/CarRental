@@ -27,47 +27,36 @@ namespace Pointman.CarRental.Company.API
 
         private void InsertSampleData()
         {
-            var rentCompanies = new List<RentCompany>
-    {
-        new RentCompany
-        {
-            Name = "RedRent",
-            TelephoneNumber = "123-456-789",
-            Location = new Location
+            var meetups = new List<Meetup>
             {
-                City = "Wrocław"
-            }
-        },
-        new RentCompany
-        {
-            Name = "BlueRent",
-            TelephoneNumber = "987-654-321",
-            Location = new Location
-            {
-                City = "Katowice"
-            }
-        },
-        new RentCompany
-        {
-            Name = "GreenRent",
-            //TelephoneNumber = "456-123-789",
-            Location = new Location
-            {
-                City = "Wrocław"
-            }
-        },
-          new RentCompany
-        {
-            Name = "BlackRent",
-            TelephoneNumber = "142-212-122",
-            Location = new Location
-            {
-                City = "Wrocław"
-            }
-        }
-    };
-            _companyContext.RentCompanies.AddRange(rentCompanies);
-            _companyContext.SaveChanges();
+                new Meetup
+                {
+                    Name = "RedRent",
+                    Location = new Location
+                    {
+                        City = "Wrocław",
+                    }
+                },
+                new Meetup
+                {
+                    Name = "BlueRent",
+                    Location = new Location
+                    {
+                        City = "Katowice",
+                    }
+                },
+                new Meetup
+                {
+                    Name = "GreenRent",
+                    Location = new Location
+                    {
+                        City = "Wrocław",
+                    }
+                }
+            };
+
+            _meetupContext.Meetups.AddRange(meetups);
+            _meetupContext.SaveChanges();
         }
     }
 }

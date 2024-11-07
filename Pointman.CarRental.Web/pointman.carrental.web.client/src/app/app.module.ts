@@ -19,7 +19,7 @@ import { CompaniesListComponent } from '../Common/CompaniesList/companies-list.c
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

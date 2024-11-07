@@ -42,10 +42,10 @@ app.UseCors("AllowSpecificOrigin");
 app.UseAuthorization();
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var seeder = scope.ServiceProvider.GetRequiredService<MeetUpSeeder>();
-    seeder.Seed();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var seeder = scope.ServiceProvider.GetRequiredService<MeetUpSeeder>();
+//    seeder.Seed();
+//}
 
 app.Run();
