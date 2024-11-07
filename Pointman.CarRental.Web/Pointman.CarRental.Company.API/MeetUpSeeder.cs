@@ -27,9 +27,9 @@ namespace Pointman.CarRental.Company.API
 
         private void InsertSampleData()
         {
-            var meetups = new List<Meetup>
+            var meetups = new List<RentCompany>
             {
-                new Meetup
+                new RentCompany
                 {
                     Name = "RedRent",
                     Location = new Location
@@ -37,7 +37,7 @@ namespace Pointman.CarRental.Company.API
                         City = "Wrocław",
                     }
                 },
-                new Meetup
+                new RentCompany
                 {
                     Name = "BlueRent",
                     Location = new Location
@@ -45,7 +45,7 @@ namespace Pointman.CarRental.Company.API
                         City = "Katowice",
                     }
                 },
-                new Meetup
+                new RentCompany
                 {
                     Name = "GreenRent",
                     Location = new Location
@@ -55,8 +55,8 @@ namespace Pointman.CarRental.Company.API
                 }
             };
 
-            _meetupContext.Meetups.AddRange(meetups);
-            _meetupContext.SaveChanges();
+            _companyContext.RentCompanies.AddRange(meetups);
+            _companyContext.SaveChanges();
         }
     }
 }
