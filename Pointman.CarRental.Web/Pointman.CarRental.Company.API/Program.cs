@@ -1,18 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Pointman.CarRental.Company.API.Entities;
 using Pointman.CarRental.Company.API;
+using Pointman.CarRental.Company.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<CompanyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+builder.Services.AddScoped<CompanyService>();
 
 builder.Services.AddScoped<MeetUpSeeder>();
 
@@ -20,7 +21,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("https://localhost:4200") 
+        policy.WithOrigins("https://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

@@ -11,16 +11,17 @@ namespace Pointman.CarRental.Company.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Meetups",
+                name: "RentCompanies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meetups", x => x.Id);
+                    table.PrimaryKey("PK_RentCompanies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,23 +31,24 @@ namespace Pointman.CarRental.Company.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RentCompanyId = table.Column<int>(type: "int", nullable: false),
                     MeetupId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Locations_Meetups_MeetupId",
-                        column: x => x.MeetupId,
-                        principalTable: "Meetups",
+                        name: "FK_Locations_RentCompanies_RentCompanyId",
+                        column: x => x.RentCompanyId,
+                        principalTable: "RentCompanies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_MeetupId",
+                name: "IX_Locations_RentCompanyId",
                 table: "Locations",
-                column: "MeetupId",
+                column: "RentCompanyId",
                 unique: true);
         }
 
@@ -57,7 +59,7 @@ namespace Pointman.CarRental.Company.API.Migrations
                 name: "Locations");
 
             migrationBuilder.DropTable(
-                name: "Meetups");
+                name: "RentCompanies");
         }
     }
 }

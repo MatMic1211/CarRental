@@ -8,14 +8,17 @@ namespace Pointman.CarRental.Company.API.Entities
         {
         }
 
-        public DbSet<Company> Meetups { get; set; }
+        public DbSet<RentCompany> RentCompanies { get; set; }
         public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Company>()
-                .HasOne(m => m.Location)
-                .WithOne(m => m.Meetup);
+            modelBuilder.Entity<RentCompany>()
+                .HasOne(r => r.Location)      
+                .WithOne(l => l.RentCompany)    
+                .HasForeignKey<Location>(l => l.RentCompanyId);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -9,16 +9,16 @@ namespace Pointman.CarRental.Company.API
     {
         private readonly CompanyContext _companyContext;
 
-        public MeetUpSeeder(CompanyContext meetupContext)
+        public MeetUpSeeder(CompanyContext companyContext)
         {
-            _companyContext = meetupContext;
+            _companyContext = companyContext;
         }
 
         public void Seed()
         {
             if (_companyContext.Database.CanConnect())
             {
-                if (!_companyContext.Meetups.Any())
+                if (!_companyContext.RentCompanies.Any())
                 {
                     InsertSampleData();
                 }
@@ -27,35 +27,46 @@ namespace Pointman.CarRental.Company.API
 
         private void InsertSampleData()
         {
-            var meetups = new List<Entities.Company>
+            var rentCompanies = new List<RentCompany>
+    {
+        new RentCompany
+        {
+            Name = "RedRent",
+            TelephoneNumber = "123-456-789",
+            Location = new Location
             {
-                new Entities.Company
-                {
-                    Name = "RedRent",
-                    Location = new Location
-                    {
-                        City = "Wrocław",
-                    }
-                },
-                new Entities.Company
-                {
-                    Name = "BlueRent",
-                    Location = new Location
-                    {
-                        City = "Katowice",
-                    }
-                },
-                new Entities.Company
-                {
-                    Name = "GreenRent",
-                    Location = new Location
-                    {
-                        City = "Wrocław",
-                    }
-                }
-            };
-
-            _companyContext.Meetups.AddRange(meetups);
+                City = "Wrocław"
+            }
+        },
+        new RentCompany
+        {
+            Name = "BlueRent",
+            TelephoneNumber = "987-654-321",
+            Location = new Location
+            {
+                City = "Katowice"
+            }
+        },
+        new RentCompany
+        {
+            Name = "GreenRent",
+            //TelephoneNumber = "456-123-789",
+            Location = new Location
+            {
+                City = "Wrocław"
+            }
+        },
+          new RentCompany
+        {
+            Name = "BlackRent",
+            TelephoneNumber = "142-212-122",
+            Location = new Location
+            {
+                City = "Wrocław"
+            }
+        }
+    };
+            _companyContext.RentCompanies.AddRange(rentCompanies);
             _companyContext.SaveChanges();
         }
     }

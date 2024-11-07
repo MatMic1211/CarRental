@@ -10,7 +10,7 @@ using Pointman.CarRental.Company.API.Entities;
 namespace Pointman.CarRental.Company.API.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class MeetupContextModelSnapshot : ModelSnapshot
+    partial class CompanyContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -36,15 +36,18 @@ namespace Pointman.CarRental.Company.API.Migrations
                     b.Property<int>("MeetupId")
                         .HasColumnType("int");
 
+                    b.Property<int>("RentCompanyId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MeetupId")
+                    b.HasIndex("RentCompanyId")
                         .IsUnique();
 
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.Meetup", b =>
+            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.RentCompany", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,23 +59,27 @@ namespace Pointman.CarRental.Company.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TelephoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Meetups");
+                    b.ToTable("RentCompanies");
                 });
 
             modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.Location", b =>
                 {
-                    b.HasOne("Pointman.CarRental.Company.API.Entities.Meetup", "Meetup")
+                    b.HasOne("Pointman.CarRental.Company.API.Entities.RentCompany", "RentCompany")
                         .WithOne("Location")
-                        .HasForeignKey("Pointman.CarRental.Company.API.Entities.Location", "MeetupId")
+                        .HasForeignKey("Pointman.CarRental.Company.API.Entities.Location", "RentCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Meetup");
+                    b.Navigation("RentCompany");
                 });
 
-            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.Meetup", b =>
+            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.RentCompany", b =>
                 {
                     b.Navigation("Location")
                         .IsRequired();
