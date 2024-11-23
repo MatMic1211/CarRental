@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="src\Administrator\AdministratorMenu\" />
+    <Folder Include="src\Common\CompaniesList\CompaniesForm\" />
     <Folder Include="src\MainPage\" />
   </ItemGroup>
 </Project>

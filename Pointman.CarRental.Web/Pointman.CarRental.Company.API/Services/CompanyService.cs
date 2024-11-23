@@ -19,13 +19,13 @@ namespace Pointman.CarRental.Company.API.Services
         public async Task<List<RentCompanyViewModel>> GetAllCompaniesAsync()
         {
             return await _context.RentCompanies
-                .Include(c => c.Location) 
+                .Include(c => c.Location)
                 .Select(c => new RentCompanyViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     TelephoneNumber = c.TelephoneNumber,
-                    Location = c.Location.City 
+                    Location = c.Location.City
                 })
                 .ToListAsync();
         }
@@ -33,16 +33,94 @@ namespace Pointman.CarRental.Company.API.Services
         public async Task<RentCompanyViewModel> GetCompanyByIdAsync(int id)
         {
             return await _context.RentCompanies
-                .Include(c => c.Location) 
+                .Include(c => c.Location)
                 .Where(c => c.Id == id)
                 .Select(c => new RentCompanyViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
                     TelephoneNumber = c.TelephoneNumber,
-                    Location = c.Location.City 
+                    Location = c.Location.City
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> AddCompanyAsync(RentCompanyViewModel model)
+        {
+            var newCompany = new RentCompany
+            {
+                Name = model.Name,
+                TelephoneNumber = model.TelephoneNumber,
+                Location = new Location
+                {
+                    City = model.Location
+                }
+            };
+
+            _context.RentCompanies.Add(newCompany);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<RentCompanyViewModel> GetCompanyByNameAsync(string name)
+        {
+            return await _context.RentCompanies
+                .Include(c => c.Location)
+                .Where(c => c.Name == name)
+                .Select(c => new RentCompanyViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    TelephoneNumber = c.TelephoneNumber,
+                    Location = c.Location.City
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> UpdateCompanyAsync(int id, RentCompanyViewModel model)
+        {
+            var existingCompany = await _context.RentCompanies
+                .Include(c => c.Location)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (existingCompany == null)
+            {
+                return false;
+            }
+
+            existingCompany.Name = model.Name;
+            existingCompany.TelephoneNumber = model.TelephoneNumber;
+
+            if (existingCompany.Location == null)
+            {
+                existingCompany.Location = new Location { City = model.Location };
+            }
+            else
+            {
+                existingCompany.Location.City = model.Location;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false; 
+            }
+        }
+        public async Task<bool> DeleteCompanyAsync(int id)
+        {
+            var company = await _context.RentCompanies.FindAsync(id);
+            if (company == null)
+            {
+                return false;
+            }
+
+            _context.RentCompanies.Remove(company);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

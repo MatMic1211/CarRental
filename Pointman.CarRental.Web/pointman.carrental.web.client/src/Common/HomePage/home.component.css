@@ -1,2 +1,43 @@
-body {
+/* Navbar hover effects */
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  position: relative;
 }
+
+  .nav-link:hover {
+    color: #ffcc00;
+  }
+
+  .nav-link.active {
+    color: #ffcc00;
+    border-bottom: 2px solid #ffcc00;
+  }
+
+/* Footer background and spacing */
+.footer {
+  background: #212529;
+}
+
+  .footer p {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .footer a {
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+    .footer a:hover {
+      color: #ffcc00;
+      transform: scale(1.2);
+    }
+
+  /* Social media icon spacing */
+  .footer .fab {
+    display: inline-block;
+    margin: 0 10px;
+    color: inherit;
+  }

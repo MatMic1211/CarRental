@@ -1,23 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light p-3" style="background: linear-gradient(to right, #2f353b, #434b54); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand text-light fw-bold fs-2" routerLink="/home">
+      MyApp
+    </a>
+    <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+          <a class="nav-link text-light menu-item" routerLink="/home" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            Home
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/companies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Companies</a>
+          <a class="nav-link text-light menu-item" routerLink="/companies" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            Companies
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/about" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">About</a>
+          <a class="nav-link text-light menu-item" routerLink="/about" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            About
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Contact</a>
+          <a class="nav-link text-light menu-item" routerLink="/contact" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            Contact
+          </a>
         </li>
       </ul>
+      <div>
+        <a routerLink="/signup" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold transition-btn">
+          Sign Up
+        </a>
+      </div>
     </div>
   </div>
 </nav>

@@ -7,6 +7,8 @@ import { MainPageComponent } from '../MainPage/main-page.component';
 import { AdminMenuComponent } from '../Administrator/AdministratorMenu/admin-menu.component';
 import { HomeComponent } from '../Common/HomePage/home.component';
 import { CompaniesListComponent } from '../Common/CompaniesList/companies-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CompaniesFormComponent } from '../Common/CompaniesList/CompaniesForm/companies-form.component';
 
 @NgModule({
   declarations: [
@@ -14,12 +16,13 @@ import { CompaniesListComponent } from '../Common/CompaniesList/companies-list.c
     MainPageComponent,
     AdminMenuComponent,
     HomeComponent,
-    CompaniesListComponent
+    CompaniesListComponent,
+    CompaniesFormComponent
 
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule, 
+    AppRoutingModule, ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,20 @@
+<form [formGroup]="companyForm" (ngSubmit)="submitForm()">
+  <div class="form-group">
+    <label for="name">Company Name</label>
+    <input id="name" formControlName="name" type="text" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input id="location" formControlName="location" type="text" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="telephoneNumber">Phone Number</label>
+    <input id="telephoneNumber" formControlName="telephoneNumber" type="text" class="form-control" />
+  </div>
+  <div class="d-flex justify-content-between">
+    <button type="submit" class="btn btn-success btn-lg" [disabled]="isSubmitting">
+      {{ companyToEdit ? 'Update' : 'Add' }}
+    </button>
+    <button type="button" class="btn btn-secondary btn-lg ms-2" (click)="cancel()">Close</button>
+  </div>
+</form>
