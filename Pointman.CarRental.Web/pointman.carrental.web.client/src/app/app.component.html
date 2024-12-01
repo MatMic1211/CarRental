@@ -10,7 +10,12 @@
   <div class="d-flex flex-column min-vh-100">
 
     <header>
-      <app-admin-menu></app-admin-menu>
+      <div *ngIf="!showCompanyMenu">
+        <app-admin-menu (switchToCompany)="switchToCompanyMenu()"></app-admin-menu>
+      </div>
+      <div *ngIf="showCompanyMenu">
+        <app-company-menu (switchToAdmin)="switchToAdminMenu()"></app-company-menu>
+      </div>
     </header>
 
     <main class="flex-grow-1 text-center py-5">
@@ -36,8 +41,6 @@
         </div>
       </div>
     </footer>
-
-
 
   </div>
 

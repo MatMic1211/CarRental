@@ -9,6 +9,7 @@ import { HomeComponent } from '../Common/HomePage/home.component';
 import { CompaniesListComponent } from '../Common/CompaniesList/companies-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CompaniesFormComponent } from '../Common/CompaniesList/CompaniesForm/companies-form.component';
+import { CompanyMenuComponent } from '../Company/CompanyMenu/company-menu.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +18,14 @@ import { CompaniesFormComponent } from '../Common/CompaniesList/CompaniesForm/co
     AdminMenuComponent,
     HomeComponent,
     CompaniesListComponent,
-    CompaniesFormComponent
+    CompaniesFormComponent,
+    CompanyMenuComponent,
+    
 
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule, ReactiveFormsModule,
+    AppRoutingModule, ReactiveFormsModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

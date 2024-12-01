@@ -3,14 +3,16 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  ngOnInit() {
-      throw new Error('Method not implemented.');
+  showCompanyMenu = false;
+
+  switchToCompanyMenu() {
+    this.showCompanyMenu = true;
   }
-  forecasts(forecasts: any) {
-      throw new Error('Method not implemented.');
+
+  switchToAdminMenu() {
+    this.showCompanyMenu = false;
   }
-  title = 'pointman.carrental.web.client';
 }

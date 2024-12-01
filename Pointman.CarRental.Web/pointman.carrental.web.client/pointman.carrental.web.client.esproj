@@ -10,7 +10,10 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="src\Administrator\AdministratorMenu\" />
+    <Folder Include="src\Assets\i18n\" />
     <Folder Include="src\Common\CompaniesList\CompaniesForm\" />
+    <Folder Include="src\Common\SignIn\" />
+    <Folder Include="src\Company\CompanyMenu\" />
     <Folder Include="src\MainPage\" />
   </ItemGroup>
 </Project>

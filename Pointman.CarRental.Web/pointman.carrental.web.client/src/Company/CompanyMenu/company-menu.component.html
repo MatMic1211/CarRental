@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light p-3" style="background: linear-gradient(to right, #2f353b, #434b54); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
   <div class="container-fluid">
     <a class="navbar-brand text-light fw-bold fs-2" routerLink="/home">
-      {{ getTranslation('HOME') }}
+      Home
     </a>
     <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,44 +11,33 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/home" routerLinkActive="active"
+          <a class="nav-link text-light menu-item" routerLink="/company/dashboard" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
-            {{ getTranslation('HOME') }}
+            Home
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/companies" routerLinkActive="active"
+          <a class="nav-link text-light menu-item" routerLink="/company/rentals" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
-            {{ getTranslation('COMPANIES') }}
+            Rentals
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/about" routerLinkActive="active"
+          <a class="nav-link text-light menu-item" routerLink="/company/cars" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
-            {{ getTranslation('ABOUT') }}
+            Cars
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/contact" routerLinkActive="active"
+          <a class="nav-link text-light menu-item" routerLink="/company/profile" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
-            {{ getTranslation('CONTACT') }}
+            Profile
           </a>
         </li>
       </ul>
-      <div class="d-flex align-items-center">
-        <div class="dropdown" (mouseleave)="closeDropdown()">
-          <button class="btn btn-outline-light rounded-pill me-2 dropdown-toggle" type="button" (click)="toggleDropdown()">
-            {{ getTranslation('LANGUAGE') }}
-          </button>
-          <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }">
-            <li><a class="dropdown-item" (click)="changeLanguage('pl')">PL</a></li>
-            <li><a class="dropdown-item" (click)="changeLanguage('en')">EN</a></li>
-          </ul>
-        </div>
-        <button class="btn btn-outline-light rounded-pill" (click)="openSignInModal()">
-          {{ getTranslation('SIGN_IN') }}
-        </button>
-      </div>
+      <button class="btn btn-outline-light rounded-pill" (click)="openSignInModal()">
+        Sign In
+      </button>
     </div>
   </div>
 </nav>
@@ -60,13 +49,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Logowanie</h5>
+        <h5 class="modal-title">Sign In</h5>
         <button type="button" class="btn-close" (click)="closeSignInModal('Cancel')"></button>
       </div>
       <div class="modal-body">
-        <p>Wybierz typ logowania:</p>
+        <p>Select login type:</p>
         <button class="btn btn-primary me-2" (click)="closeSignInModal('Admin')">Admin</button>
-        <button class="btn btn-secondary" (click)="closeSignInModal('Company')">Firma</button>
+        <button class="btn btn-secondary" (click)="closeSignInModal('Company')">Company</button>
       </div>
     </div>
   </div>
