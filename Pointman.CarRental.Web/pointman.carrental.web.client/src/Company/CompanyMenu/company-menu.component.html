@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light p-3" style="background: linear-gradient(to right, #2f353b, #434b54); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
   <div class="container-fluid">
     <a class="navbar-brand text-light fw-bold fs-2" routerLink="/home">
-      Home
+      Logo
     </a>
     <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,15 +17,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/company/rentals" routerLinkActive="active"
-             [routerLinkActiveOptions]="{ exact: true }">
-            Rentals
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-light menu-item" routerLink="/company/cars" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             Cars
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light menu-item" routerLink="/company/rentals" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            Rentals
           </a>
         </li>
         <li class="nav-item">
@@ -35,7 +35,7 @@
           </a>
         </li>
       </ul>
-      <button class="btn btn-outline-light rounded-pill" (click)="openSignInModal()">
+      <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="openSignInModal()">
         Sign In
       </button>
     </div>
@@ -54,8 +54,14 @@
       </div>
       <div class="modal-body">
         <p>Select login type:</p>
-        <button class="btn btn-primary me-2" (click)="closeSignInModal('Admin')">Admin</button>
-        <button class="btn btn-secondary" (click)="closeSignInModal('Company')">Company</button>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-primary rounded-pill px-4 shadow-sm me-2" (click)="closeSignInModal('Admin')">
+            Admin
+          </button>
+          <button class="btn btn-outline-secondary rounded-pill px-4 shadow-sm" (click)="closeSignInModal('Company')">
+            Company
+          </button>
+        </div>
       </div>
     </div>
   </div>

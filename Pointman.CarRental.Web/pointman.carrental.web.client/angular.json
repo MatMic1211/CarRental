@@ -34,6 +34,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/Images",
+                "output": "/assets/Images"
               }
             ],
             "styles": [
@@ -95,6 +100,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/Images",
+                "output": "/assets/Images"
               }
             ],
             "styles": [

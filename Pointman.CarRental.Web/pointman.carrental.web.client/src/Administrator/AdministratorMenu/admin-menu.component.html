@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light p-3" style="background: linear-gradient(to right, #2f353b, #434b54); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+<nav class="navbar navbar-expand-lg navbar-dark p-3" style="background: linear-gradient(45deg, #2f353b, #434b54); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
   <div class="container-fluid">
     <a class="navbar-brand text-light fw-bold fs-2" routerLink="/home">
-      {{ getTranslation('HOME') }}
+      Logo
     </a>
     <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,33 +11,33 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/home" routerLinkActive="active"
+          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/home" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('HOME') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/companies" routerLinkActive="active"
+          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/companies" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('COMPANIES') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/about" routerLinkActive="active"
+          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/about" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('ABOUT') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light menu-item" routerLink="/contact" routerLinkActive="active"
+          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/contact" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('CONTACT') }}
           </a>
         </li>
       </ul>
       <div class="d-flex align-items-center">
-        <div class="dropdown" (mouseleave)="closeDropdown()">
-          <button class="btn btn-outline-light rounded-pill me-2 dropdown-toggle" type="button" (click)="toggleDropdown()">
+        <div class="dropdown me-3" (mouseleave)="closeDropdown()">
+          <button class="btn btn-light rounded-pill px-3 dropdown-toggle shadow-sm" type="button" (click)="toggleDropdown()">
             {{ getTranslation('LANGUAGE') }}
           </button>
           <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }">
@@ -45,7 +45,7 @@
             <li><a class="dropdown-item" (click)="changeLanguage('en')">EN</a></li>
           </ul>
         </div>
-        <button class="btn btn-outline-light rounded-pill" (click)="openSignInModal()">
+        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="openSignInModal()">
           {{ getTranslation('SIGN_IN') }}
         </button>
       </div>
@@ -53,10 +53,7 @@
   </div>
 </nav>
 
-<div class="modal fade show"
-     tabindex="-1"
-     style="display: block; background: rgba(0, 0, 0, 0.5);"
-     *ngIf="showModal">
+<div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0, 0, 0, 0.5);" *ngIf="showModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -64,9 +61,11 @@
         <button type="button" class="btn-close" (click)="closeSignInModal('Cancel')"></button>
       </div>
       <div class="modal-body">
-        <p>Wybierz typ logowania:</p>
-        <button class="btn btn-primary me-2" (click)="closeSignInModal('Admin')">Admin</button>
-        <button class="btn btn-secondary" (click)="closeSignInModal('Company')">Firma</button>
+        <p class="text-center mb-4">Wybierz typ logowania:</p>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-primary rounded-pill px-4 shadow-sm" (click)="closeSignInModal('Admin')">Admin</button>
+          <button class="btn btn-outline-secondary rounded-pill px-4 shadow-sm" (click)="closeSignInModal('Company')">Company</button>
+        </div>
       </div>
     </div>
   </div>
