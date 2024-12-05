@@ -84,3 +84,12 @@
     background-color: #f1f1f1;
     color: #007bff;
   }
+.hover-effect:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar-nav .nav-item .nav-link {
+  transition: all 0.3s ease;
+}

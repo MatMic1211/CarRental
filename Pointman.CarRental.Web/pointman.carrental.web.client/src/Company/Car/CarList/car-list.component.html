@@ -1,11 +1,83 @@
-<!DOCTYPE html>
+<div class="container mt-4">
+  <h2 class="mb-4">Lista Samochodów</h2>
+  <button class="btn btn-success mb-4" (click)="openAddCarModal()">Dodaj Auto</button>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+  <div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': showModal}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dodaj Samochód</h5>
+          <button type="button" class="close" (click)="closeAddCarModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="addCar()" #carForm="ngForm">
+            <div class="form-group">
+              <label for="brand">Marka</label>
+              <input type="text" id="brand" class="form-control" [(ngModel)]="newCar.brand" name="brand" required />
+            </div>
+            <div class="form-group">
+              <label for="model">Model</label>
+              <input type="text" id="model" class="form-control" [(ngModel)]="newCar.model" name="model" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!loading && !errorMessage && cars.length > 0" class="row">
+    <div class="col-md-3 mb-4" *ngFor="let car of cars">
+      <div class="card">
+        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Car Image">
 
-</body>
-</html>
+        <div class="card-body">
+          <h5 class="card-title">{{ car.model }}</h5>
+          <p class="card-text">Marka: {{ car.brand }}</p>
+
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-danger" (click)="deleteCar(car.id)">
+              <i class="fas fa-trash-alt"></i> Usuń
+            </button>
+            <button class="btn btn-info" (click)="openEditCarModal(car)">
+              <i class="fas fa-edit"></i> Edytuj
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!loading && cars.length === 0" class="alert alert-warning">
+    Brak dostępnych samochodów do wyświetlenia.
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': showEditModal}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edytuj Samochód</h5>
+        <button type="button" class="close" (click)="closeEditCarModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="editCar()" #editCarForm="ngForm">
+          <div class="form-group">
+            <label for="editBrand">Marka</label>
+            <input type="text" id="editBrand" class="form-control" [(ngModel)]="editCarData.brand" name="brand" required />
+          </div>
+          <div class="form-group">
+            <label for="editModel">Model</label>
+            <input type="text" id="editModel" class="form-control" [(ngModel)]="editCarData.model" name="model" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

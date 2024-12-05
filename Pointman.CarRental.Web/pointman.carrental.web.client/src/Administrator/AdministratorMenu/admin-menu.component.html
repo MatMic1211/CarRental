@@ -1,9 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark p-3" style="background: linear-gradient(45deg, #2f353b, #434b54); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+<nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
   <div class="container-fluid">
-    <a class="navbar-brand text-light fw-bold fs-2" routerLink="/home">
+    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home">
       Logo
     </a>
-    <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+    <button class="navbar-toggler border-0 text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,25 +11,25 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/home" routerLinkActive="active"
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/home" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('HOME') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/companies" routerLinkActive="active"
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/companies" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('COMPANIES') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/about" routerLinkActive="active"
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/about" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('ABOUT') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light px-3 py-2 rounded-3 transition-all menu-item" routerLink="/contact" routerLinkActive="active"
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/contact" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
             {{ getTranslation('CONTACT') }}
           </a>
@@ -37,7 +37,7 @@
       </ul>
       <div class="d-flex align-items-center">
         <div class="dropdown me-3" (mouseleave)="closeDropdown()">
-          <button class="btn btn-light rounded-pill px-3 dropdown-toggle shadow-sm" type="button" (click)="toggleDropdown()">
+          <button class="btn btn-outline-dark rounded-pill px-3 dropdown-toggle shadow-sm" type="button" (click)="toggleDropdown()">
             {{ getTranslation('LANGUAGE') }}
           </button>
           <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }">
