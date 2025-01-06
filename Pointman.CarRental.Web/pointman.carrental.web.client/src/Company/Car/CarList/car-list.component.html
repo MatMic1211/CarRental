@@ -1,82 +1,164 @@
-<div class="container mt-4">
-  <h2 class="mb-4">Lista Samochodów</h2>
-  <button class="btn btn-success mb-4" (click)="openAddCarModal()">Dodaj Auto</button>
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h2 class="text-primary">{{ getTranslation('CAR_LIST_TITLE') }}</h2>
+  </div>
 
-  <div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': showModal}">
-    <div class="modal-dialog" role="document">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <input type="text"
+             class="form-control"
+             placeholder="{{ getTranslation('SEARCH_PLACEHOLDER') }}"
+             [(ngModel)]="searchQuery"
+             (input)="applyFilters()" />
+    </div>
+    <div class="col-md-6">
+      <select class="form-select"
+              [(ngModel)]="selectedBrand"
+              (change)="applyFilters()">
+        <option value="">{{ getTranslation('ALL_BRANDS') }}</option>
+        <option *ngFor="let brand of uniqueBrands" [value]="brand">
+          {{ brand }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="text-end mb-3">
+    <button class="btn btn-primary" (click)="openAddCarModal()">
+      <i class="fas fa-plus me-1"></i> {{ getTranslation('ADD_CAR') }}
+    </button>
+  </div>
+
+  <div class="row g-3">
+    <div *ngFor="let car of getPaginatedCars()" class="col-md-4">
+      <div class="card border-light">
+        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ car.model }}" />
+        <div class="card-body">
+          <h5 class="card-title">{{ car.model }}</h5>
+          <p class="card-text text-muted">{{ getTranslation('BRAND') }}: {{ car.brand }}</p>
+          <div class="d-flex justify-content-around mt-3">
+            <span title="{{ getTranslation('ENGINE') }}">
+              <i class="fas fa-cogs text-primary"></i>
+            </span>
+            <span title="{{ getTranslation('PERFORMANCE') }}">
+              <i class="fas fa-tachometer-alt text-success"></i>
+            </span>
+            <span title="{{ getTranslation('TURBO') }}">
+              <i class="fas fa-wind text-info"></i>
+            </span>
+            <span title="{{ getTranslation('SEATS') }}">
+              <i class="fas fa-couch text-secondary"></i>
+            </span>
+          </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <div>
+            <button class="btn btn-sm btn-outline-danger"
+                    (click)="openConfirmDeleteModal(car.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-secondary"
+                    (click)="openEditCarModal(car)">
+              <i class="fas fa-pen"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center mt-4">
+    <button class="btn btn-outline-primary me-2"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1">
+      {{ getTranslation('PREVIOUS') }}
+    </button>
+    <ul class="pagination mb-0">
+      <li *ngFor="let page of getPageNumbers()"
+          class="page-item"
+          [class.active]="page === currentPage">
+        <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+      </li>
+    </ul>
+    <button class="btn btn-outline-primary ms-2"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages">
+      {{ getTranslation('NEXT') }}
+    </button>
+  </div>
+
+  <div *ngIf="!loading && filteredCars.length === 0" class="alert alert-warning text-center mt-3">
+    {{ getTranslation('NO_CARS_FOUND') }}
+  </div>
+
+
+  <div *ngIf="showModal" class="modal show d-block" tabindex="-1">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Dodaj Samochód</h5>
-          <button type="button" class="close" (click)="closeAddCarModal()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title">{{ getTranslation('ADD_CAR') }}</h5>
+          <button type="button" class="btn-close" (click)="closeAddCarModal()"></button>
         </div>
         <div class="modal-body">
           <form (ngSubmit)="addCar()" #carForm="ngForm">
-            <div class="form-group">
-              <label for="brand">Marka</label>
+            <div class="mb-3">
+              <label for="brand" class="form-label">{{ getTranslation('BRAND') }}</label>
               <input type="text" id="brand" class="form-control" [(ngModel)]="newCar.brand" name="brand" required />
             </div>
-            <div class="form-group">
-              <label for="model">Model</label>
+            <div class="mb-3">
+              <label for="model" class="form-label">{{ getTranslation('MODEL') }}</label>
               <input type="text" id="model" class="form-control" [(ngModel)]="newCar.model" name="model" required />
             </div>
-            <button type="submit" class="btn btn-primary">Dodaj</button>
+            <button type="submit" class="btn btn-primary w-100">{{ getTranslation('ADD') }}</button>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="!loading && !errorMessage && cars.length > 0" class="row">
-    <div class="col-md-3 mb-4" *ngFor="let car of cars">
-      <div class="card">
-        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Car Image">
 
-        <div class="card-body">
-          <h5 class="card-title">{{ car.model }}</h5>
-          <p class="card-text">Marka: {{ car.brand }}</p>
 
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-danger" (click)="deleteCar(car.id)">
-              <i class="fas fa-trash-alt"></i> Usuń
-            </button>
-            <button class="btn btn-info" (click)="openEditCarModal(car)">
-              <i class="fas fa-edit"></i> Edytuj
-            </button>
-          </div>
+  <div *ngIf="showEditModal" class="modal show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ getTranslation('EDIT_CAR') }}</h5>
+          <button type="button" class="btn-close" (click)="closeEditCarModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="editCar()" #editCarForm="ngForm">
+            <div class="mb-3">
+              <label for="editBrand" class="form-label">{{ getTranslation('BRAND') }}</label>
+              <input type="text" id="editBrand" class="form-control" [(ngModel)]="editCarData.brand" name="brand" required />
+            </div>
+            <div class="mb-3">
+              <label for="editModel" class="form-label">{{ getTranslation('MODEL') }}</label>
+              <input type="text" id="editModel" class="form-control" [(ngModel)]="editCarData.model" name="model" required />
+            </div>
+            <button type="submit" class="btn btn-secondary w-100">{{ getTranslation('SAVE') }}</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="!loading && cars.length === 0" class="alert alert-warning">
-    Brak dostępnych samochodów do wyświetlenia.
-  </div>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-</div>
 
-<div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': showEditModal}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edytuj Samochód</h5>
-        <button type="button" class="close" (click)="closeEditCarModal()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form (ngSubmit)="editCar()" #editCarForm="ngForm">
-          <div class="form-group">
-            <label for="editBrand">Marka</label>
-            <input type="text" id="editBrand" class="form-control" [(ngModel)]="editCarData.brand" name="brand" required />
-          </div>
-          <div class="form-group">
-            <label for="editModel">Model</label>
-            <input type="text" id="editModel" class="form-control" [(ngModel)]="editCarData.model" name="model" required />
-          </div>
-          <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-        </form>
+  <div *ngIf="showConfirmDeleteModal" class="modal show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ getTranslation('DELETE_CONFIRMATION') }}</h5>
+          <button type="button" class="btn-close" (click)="closeConfirmDeleteModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ getTranslation('CONFIRM_DELETE_MESSAGE') }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeConfirmDeleteModal()">
+            {{ getTranslation('CANCEL') }}
+          </button>
+          <button type="button" class="btn btn-danger" (click)="confirmDeleteCar()">
+            {{ getTranslation('DELETE') }}
+          </button>
+        </div>
       </div>
     </div>
   </div>

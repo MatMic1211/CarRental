@@ -9,14 +9,17 @@
 </head>
 <body>
   <div class="d-flex flex-column min-vh-100">
-
     <header>
-      <div *ngIf="!showCompanyMenu">
+      <ng-container *ngIf="!showCompanyMenu">
         <app-admin-menu (switchToCompany)="switchToCompanyMenu()"></app-admin-menu>
-      </div>
-      <div *ngIf="showCompanyMenu">
-        <app-company-menu (switchToAdmin)="switchToAdminMenu()"></app-company-menu>
-      </div>
+      </ng-container>
+      <ng-container *ngIf="showCompanyMenu">
+        <app-company-menu [companies]="companies"
+                          [selectedCompanyName]="selectedCompanyName"
+                          (switchToAdmin)="switchToAdminMenu()"
+                          (companySelected)="updateCompanyName($event)">
+        </app-company-menu>
+      </ng-container>
     </header>
 
     <main class="flex-grow-1 py-5">
@@ -25,7 +28,6 @@
 
     <footer class="footer bg-white text-dark py-4">
       <div class="container text-center">
-        <!--<p class="mb-2">© 2024 CarRent. Wszystkie prawa zastrzeżone.</p>-->
         <div class="social-icons">
           <a href="#" class="social-icon text-dark mx-3"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social-icon text-dark mx-3"><i class="fab fa-twitter"></i></a>
@@ -33,7 +35,6 @@
         </div>
       </div>
     </footer>
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

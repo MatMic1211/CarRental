@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompaniesFormComponent } from '../Common/CompaniesList/CompaniesForm/companies-form.component';
 import { CompanyMenuComponent } from '../Company/CompanyMenu/company-menu.component';
 import { CarListComponent } from '../Company/Car/CarList/car-list.component';
+import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rentals.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CarListComponent } from '../Company/Car/CarList/car-list.component';
     CompaniesListComponent,
     CompaniesFormComponent,
     CompanyMenuComponent,
-    CarListComponent
+    CarListComponent,
+    CompanyRentalsComponent
     
 
   ],

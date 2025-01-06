@@ -14,51 +14,46 @@ header {
   top: 0;
   width: 100%;
   z-index: 1000;
-  height: 10vh;
+  height: 10vh; 
+  background-color: #fff; 
 }
 
 footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: auto; 
+  height: 50px; 
+  background-color: #2f353b; 
+  color: #f8f9fa;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 10px 0 0; 
 }
 
 main {
   flex-grow: 1;
   padding-top: 2rem; 
-  margin: 0; 
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  margin: 0;
+  margin-top: 10vh; 
+  margin-bottom: 10vh; 
   overflow-y: auto;
   height: calc(100vh - 20vh);
-  width: 100%; 
-  box-sizing: border-box; 
-}
-
-.footer {
-  background-color: #2f353b;
-  color: #f8f9fa;
-  text-align: center; 
-  display: flex; 
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
-  padding: 0.4rem; 
-  border-radius: 10px 10px 0 0;
-  height: calc(10vh * 0.75); 
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .social-icons {
-  display: flex; 
-  justify-content: center; 
-  margin-top: 5px; 
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 }
 
 .social-icon {
   font-size: 1.5rem;
   color: #f8f9fa;
-  margin: 0 10px; 
+  margin: 0 10px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 

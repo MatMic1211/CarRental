@@ -1,66 +1,86 @@
-<button class="btn btn-info btn-lg mb-3" (click)="openForm()">Add New Company</button>
+<button class="btn btn-primary btn-lg mb-3 d-flex align-items-center gap-2" (click)="openForm()">
+  <i class="bi bi-plus-lg"></i>
+  {{ getTranslation('ADD_COMPANY') }}
+</button>
 
-<table class="table table-striped table-bordered">
-  <thead class="thead-dark">
+<table class="table table-hover table-bordered">
+  <thead class="table-primary text-center">
     <tr>
       <th>#</th>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Phone Number</th>
-      <th>Actions</th>
+      <th>{{ getTranslation('COMPANY_NAME') }}</th>
+      <th>{{ getTranslation('COMPANY_LOCATION') }}</th>
+      <th>{{ getTranslation('COMPANY_PHONE_NUMBER') }}</th>
+      <th class="text-center">{{ getTranslation('COMPANY_ACTIONS') }}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let company of paginatedCompanies; let i = index">
-      <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-      <td>{{ company.name }}</td>
-      <td>{{ company.location }}</td>
-      <td>{{ company.telephoneNumber }}</td>
-      <td>
-        <button class="btn btn-info btn-sm" (click)="editCompany(company)">
-          <i class="bi bi-pencil"></i>
-        </button>
-        <button class="btn btn-danger btn-sm" (click)="openDeleteConfirmation(company)">
-          <i class="bi bi-trash"></i>
-        </button>
+      <td class="text-center">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+      <td class="text-center">{{ company.name }}</td>
+      <td class="text-center">{{ company.location }}</td>
+      <td class="text-center">{{ company.telephoneNumber }}</td>
+      <td class="text-center">
+        <div class="btn-group" role="group">
+          <button class="btn btn-outline-primary btn-sm" (click)="editCompany(company)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm" (click)="openDeleteConfirmation(company)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
 
-<div class="d-flex justify-content-between">
-  <button class="btn btn-outline-info" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
-    Previous
+<nav class="d-flex justify-content-between align-items-center mt-3">
+  <button class="btn btn-outline-primary" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+    <i class="bi bi-arrow-left"></i> {{ getTranslation('PREVIOUS') }}
   </button>
 
-  <div>
-    <button *ngFor="let page of [].constructor(totalPages); let i = index" class="btn btn-outline-secondary btn-sm mx-1" (click)="goToPage(i + 1)">
-      {{ i + 1 }}
-    </button>
-  </div>
+  <ul class="pagination mb-0">
+    <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="currentPage === i + 1">
+      <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+    </li>
+  </ul>
 
-  <button class="btn btn-outline-info" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
-    Next
+  <button class="btn btn-outline-primary" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+    {{ getTranslation('NEXT') }} <i class="bi bi-arrow-right"></i>
   </button>
-</div>
+</nav>
 
-<div *ngIf="isDeleteConfirmationOpen" class="modal-overlay" (click)="closeDeleteConfirmation()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <h5>Confirm Deletion</h5>
-    <p>Are you sure you want to delete the company <strong>{{ companyToDelete?.name }}</strong> located at <strong>{{ companyToDelete?.location }}</strong>?</p>
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-secondary me-2" (click)="closeDeleteConfirmation()">Cancel</button>
-      <button class="btn btn-danger" (click)="confirmDeleteCompany()">Delete</button>
+<div *ngIf="isDeleteConfirmationOpen" class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">{{ getTranslation('DELETE_CONFIRM') }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeDeleteConfirmation()"></button>
+      </div>
+      <div class="modal-body">
+        {{ getTranslation('CONFIRM_COMPANY_DELETE') }} <strong>{{ companyToDelete?.name }}</strong> {{ getTranslation('LOCATED') }} <strong>{{ companyToDelete?.location }}</strong>?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeDeleteConfirmation()">{{ getTranslation('CANCEL') }}</button>
+        <button class="btn btn-danger" (click)="confirmDeleteCompany()">{{ getTranslation('DELETE') }}</button>
+      </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="isFormOpen" class="modal-overlay" (click)="closeForm()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <app-companies-form *ngIf="isFormOpen"
-                        [companyToEdit]="editingCompany"
-                        (companyAdded)="addCompanyToList($event)"
-                        (closeForm)="closeForm()">
-    </app-companies-form>
+<div *ngIf="isFormOpen" class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModalLabel">{{ editingCompany ? 'Edit Company' : 'Add New Company' }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
+      </div>
+      <div class="modal-body">
+        <app-companies-form *ngIf="isFormOpen"
+                            [companyToEdit]="editingCompany"
+                            (companyAdded)="addCompanyToList($event)"
+                            (closeForm)="closeForm()">
+        </app-companies-form>
+      </div>
+    </div>
   </div>
 </div>

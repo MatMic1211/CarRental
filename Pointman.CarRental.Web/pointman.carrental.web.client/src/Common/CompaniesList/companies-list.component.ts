@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Company, CompanyService } from '../../../Services/companies.service';
+import { TranslateService } from '../../../Services/translate.service';
 
 @Component({
   selector: 'app-companies-list',
@@ -18,10 +19,17 @@ export class CompaniesListComponent implements OnInit {
   editingCompany: Company | null = null;
   companyToDelete: Company | null = null;
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService, public translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.refreshCompanies();
+  }
+
+  getTranslation(key: string): string {
+    return this.translateService.translate(key);
+  }
+  changeLanguage(lang: string): void {
+    this.translateService.setLanguage(lang);
   }
 
   refreshCompanies(): void {

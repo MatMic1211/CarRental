@@ -10,10 +10,12 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="src\Administrator\AdministratorMenu\" />
+    <Folder Include="src\app\Images\png\flags\" />
     <Folder Include="src\Assets\i18n\" />
     <Folder Include="src\Common\CompaniesList\CompaniesForm\" />
     <Folder Include="src\Common\SignIn\" />
     <Folder Include="src\Company\CompanyMenu\" />
+    <Folder Include="src\Company\CompanyRental\" />
     <Folder Include="src\MainPage\" />
   </ItemGroup>
 </Project>

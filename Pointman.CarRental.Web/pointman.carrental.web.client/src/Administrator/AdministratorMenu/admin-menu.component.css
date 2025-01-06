@@ -1,25 +1,42 @@
 
+.flag-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-menu {
+  display: none; 
+}
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
 .menu-item {
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
   letter-spacing: 1px;
   padding: 8px 18px;
   border-radius: 30px;
   transition: color 0.3s ease, text-decoration 0.3s ease, transform 0.3s ease;
-  position: relative; 
+  position: relative;
 }
 
   .menu-item:hover {
-    color: #1e90ff; 
+    color: #1e90ff;
   }
 
     .menu-item:hover::after {
-      content: ''; 
+      content: '';
       position: absolute;
-      bottom: -5px; 
+      bottom: -5px;
       left: 0;
       width: 100%;
-      height: 2px; 
-      background-color: #1e90ff; 
+      height: 2px;
+      background-color: #1e90ff;
       border-radius: 2px;
     }
 
@@ -29,13 +46,13 @@
   }
 
     .menu-item.active::after {
-      content: ''; 
+      content: '';
       position: absolute;
-      bottom: -5px; 
+      bottom: -5px;
       left: 0;
       width: 100%;
-      height: 2px; 
-      background-color: #1e90ff; 
+      height: 2px;
+      background-color: #1e90ff;
       border-radius: 2px;
     }
 
@@ -58,32 +75,44 @@
 }
 
   .navbar.scrolled {
-    background: linear-gradient(to right, #555d63, #6d777d); 
+    background: linear-gradient(to right, #555d63, #6d777d);
   }
+
 #languageDropdown {
   font-weight: bold;
   font-size: 14px;
   text-transform: uppercase;
   background-color: #f8f9fa;
-  color: #343a40; 
+  color: #343a40;
   border: 1px solid #dee2e6;
   transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 30px;
 }
 
   #languageDropdown:hover {
     background-color: #e2e6ea;
-    color: #212529; 
+    color: #212529;
   }
+
 .dropdown-item {
   font-size: 14px;
   font-weight: bold;
   text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
 }
 
   .dropdown-item:hover {
     background-color: #f1f1f1;
     color: #007bff;
   }
+
+
 .hover-effect:hover {
   background-color: #f8f9fa;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);

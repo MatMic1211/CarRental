@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pointman.CarRental.Company.API.Entities;
 
@@ -10,9 +11,11 @@ using Pointman.CarRental.Company.API.Entities;
 namespace Pointman.CarRental.Company.API.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20241226092212_carstocompany")]
+    partial class carstocompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,30 @@ namespace Pointman.CarRental.Company.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RentCompanyId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("RentCompanyId");
+
                     b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Brand = "Tesla",
+                            Model = "Model S",
+                            RentCompanyId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Brand = "Ford",
+                            Model = "Mustang",
+                            RentCompanyId = 2
+                        });
                 });
 
             modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.Location", b =>
@@ -84,6 +108,31 @@ namespace Pointman.CarRental.Company.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RentCompanies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Premium Rentals",
+                            TelephoneNumber = "123456789"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Budget Rentals",
+                            TelephoneNumber = "987654321"
+                        });
+                });
+
+            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.Car", b =>
+                {
+                    b.HasOne("Pointman.CarRental.Company.API.Entities.RentCompany", "RentCompany")
+                        .WithMany("Cars")
+                        .HasForeignKey("RentCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RentCompany");
                 });
 
             modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.Location", b =>
@@ -99,6 +148,8 @@ namespace Pointman.CarRental.Company.API.Migrations
 
             modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.RentCompany", b =>
                 {
+                    b.Navigation("Cars");
+
                     b.Navigation("Location");
                 });
 #pragma warning restore 612, 618

@@ -1,0 +1,42 @@
+<div *ngIf="errorMessage" class="alert alert-danger">
+  <strong>{{ translate('ERROR_OCCURRED') }}</strong>: {{ errorMessage }}
+</div>
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">{{ translate('RENTALS_LIST') }}</h2>
+
+  <div *ngIf="cars.length > 0; else noCars">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">{{ translate('COLUMN_BRAND') }}</th>
+          <th scope="col">{{ translate('COLUMN_MODEL') }}</th>
+          <th scope="col">{{ translate('START_DATE') }}</th>
+          <th scope="col">{{ translate('END_DATE') }}</th>
+          <th scope="col">{{ translate('PRICE') }}</th>
+          <th scope="col">{{ translate('COLUMN_ACTIONS') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let car of cars">
+          <td>{{ car.brand }}</td>
+          <td>{{ car.model }}</td>
+          <td>{{ car.startDate | date:'yyyy-MM-dd' }}</td>
+          <td>{{ car.endDate | date:'yyyy-MM-dd' }}</td>
+          <td>{{ car.price }} PLN</td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteCar(car.id)">
+              <i class="bi bi-trash"></i> {{ translate('DELETE') }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noCars>
+    <div class="alert alert-info">
+      <p>{{ translate('NO_RENTALS') }}</p>
+    </div>
+  </ng-template>
+</div>

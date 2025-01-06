@@ -20,9 +20,6 @@ namespace Pointman.CarRental.Company.API.Entities
                 .HasForeignKey<Location>(l => l.RentCompanyId);
 
             modelBuilder.Entity<Car>().HasData(
-                new Car { Id = 1, Model = "Porsche 911 GT3", Brand = "Porsche" },
-                new Car { Id = 2, Model = "Lamborghini Huracan Performante", Brand = "Lamborghini" },
-                new Car { Id = 3, Model = "Audi R8 Performance", Brand = "Audi" }
             );
 
             base.OnModelCreating(modelBuilder);

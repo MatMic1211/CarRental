@@ -32,7 +32,6 @@ namespace Pointman.CarRental.Company.API.Controllers
             return Ok(car);
         }
 
-
         [HttpPost]
         public IActionResult AddCar([FromBody] Car newCar)
         {

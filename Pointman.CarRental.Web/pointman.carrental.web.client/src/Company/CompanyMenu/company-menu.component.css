@@ -1,3 +1,70 @@
+
+.flag-icon {
+  width: 24px; 
+  height: 24px; 
+  border-radius: 50%;
+  margin-right: 10px; 
+  object-fit: cover; 
+  transition: transform 0.3s ease; 
+}
+
+#languageDropdown {
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  background-color: #f8f9fa;
+  color: #343a40;
+  border: 1px solid #dee2e6;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 30px;
+}
+
+  #languageDropdown:hover {
+    background-color: #e2e6ea;
+    color: #212529;
+  }
+
+.dropdown-item {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+  }
+
+.transition-btn {
+  color: #fff;
+  border-color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  padding: 8px 25px;
+  font-size: 1rem;
+}
+
+  .transition-btn:hover {
+    background-color: #1e90ff;
+    color: #2d2d2d;
+    transform: translateY(-3px);
+  }
+
+
+.navbar {
+  transition: background-color 0.3s ease;
+}
+
+  .navbar.scrolled {
+    background: linear-gradient(to right, #555d63, #6d777d);
+  }
+
 .menu-item {
   font-size: 1.1rem;
   letter-spacing: 1px;
@@ -38,24 +105,20 @@
       border-radius: 2px;
     }
 
-.transition-btn {
-  color: #fff;
-  border-color: #fff;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  padding: 8px 25px;
-  font-size: 1rem;
+.dropdown-menu {
+  display: none;
 }
 
-  .transition-btn:hover {
-    background-color: #1e90ff;
-    color: #2d2d2d;
-    transform: translateY(-3px);
+  .dropdown-menu.show {
+    display: block;
   }
 
-.navbar {
-  transition: background-color 0.3s ease;
+.hover-effect:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
-  .navbar.scrolled {
-    background: linear-gradient(to right, #555d63, #6d777d);
-  }
+.navbar-nav .nav-item .nav-link {
+  transition: all 0.3s ease;
+}

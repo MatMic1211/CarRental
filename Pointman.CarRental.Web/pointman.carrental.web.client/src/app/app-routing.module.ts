@@ -3,13 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from '../MainPage/main-page.component';
 import { CompaniesListComponent } from '../Common/CompaniesList/companies-list.component';
 import { CarListComponent } from '../Company/Car/CarList/car-list.component';
+import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rentals.component';
 
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'home', component: MainPageComponent },
   { path: 'companies', component: CompaniesListComponent },
-  { path: 'company/cars', component: CarListComponent }
+  { path: 'company/cars', component: CarListComponent },
+  { path: 'company/rentals', component: CompanyRentalsComponent }
 
 
 ];
