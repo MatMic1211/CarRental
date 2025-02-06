@@ -12,6 +12,7 @@ import { CompaniesFormComponent } from '../Common/CompaniesList/CompaniesForm/co
 import { CompanyMenuComponent } from '../Company/CompanyMenu/company-menu.component';
 import { CarListComponent } from '../Company/Car/CarList/car-list.component';
 import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rentals.component';
+import { LoginUserComponent } from '../Common/SignIn/UserLogin/user-login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rental
     CompaniesFormComponent,
     CompanyMenuComponent,
     CarListComponent,
-    CompanyRentalsComponent
+    CompanyRentalsComponent,
+    LoginUserComponent
     
 
   ],

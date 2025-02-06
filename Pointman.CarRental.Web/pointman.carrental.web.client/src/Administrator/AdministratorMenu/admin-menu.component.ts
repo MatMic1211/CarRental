@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TranslateService } from '../../../Services/translate.service';
 import { Company, CompanyService } from '../../../Services/companies.service';
+import { AuthService } from '../../../Services/auth.service';
+
 
 @Component({
   selector: 'app-admin-menu',
@@ -10,21 +12,23 @@ import { Company, CompanyService } from '../../../Services/companies.service';
 export class AdminMenuComponent implements OnInit {
   showModal = false;
   isDropdownOpen = false;
-  isMenuOpen = false; 
+  isMenuOpen = false;
   companies: Company[] = [];
   selectedCompany: number | null = null;
-  currentLanguage: string = 'en';  
+  currentLanguage: string = 'en';
+  loggedInUser: { userName: string } | null = null; 
 
   @Output() switchToCompany = new EventEmitter<void>();
 
   constructor(
     private translateService: TranslateService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private authService: AuthService 
   ) { }
 
   ngOnInit(): void {
     this.loadCompanies();
-    this.isDropdownOpen = false; 
+    this.isDropdownOpen = false;
   }
 
   loadCompanies(): void {
@@ -34,18 +38,6 @@ export class AdminMenuComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching companies:', error);
-      }
-    );
-  }
-
-  addCompany(newCompany: Company): void {
-    this.companyService.addCompany(newCompany).subscribe(
-      (createdCompany) => {
-        console.log('Company added:', createdCompany);
-        this.loadCompanies();
-      },
-      (error) => {
-        console.error('Error adding company:', error);
       }
     );
   }
@@ -64,8 +56,8 @@ export class AdminMenuComponent implements OnInit {
 
   changeLanguage(lang: string) {
     this.translateService.setLanguage(lang);
-    this.currentLanguage = lang; 
-    this.isDropdownOpen = false;  
+    this.currentLanguage = lang;
+    this.isDropdownOpen = false;
   }
 
   getTranslation(key: string): string {
@@ -82,5 +74,14 @@ export class AdminMenuComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  updateLoggedInUser(user: { userName: string }) {
+    this.loggedInUser = user; 
+  }
+
+  logout() {
+    this.loggedInUser = null; 
+    this.showModal = false; 
   }
 }

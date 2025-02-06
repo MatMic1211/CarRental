@@ -6,17 +6,15 @@ using Pointman.CarRental.Company.API.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CompanyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
 builder.Services.AddScoped<CompanyService>();
-
 builder.Services.AddScoped<MeetUpSeeder>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -28,24 +26,16 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
 app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 app.MapControllers();
-
-//using (var scope = app.Services.CreateScope())
-//{
-//    var seeder = scope.ServiceProvider.GetRequiredService<MeetUpSeeder>();
-//    seeder.Seed();
-//}
 
 app.Run();

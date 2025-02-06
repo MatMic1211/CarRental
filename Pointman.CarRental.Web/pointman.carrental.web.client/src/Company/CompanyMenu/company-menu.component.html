@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
   <div class="container-fluid">
-    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home">
-      {{ selectedCompanyName }}
+    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home" style="margin-left: 0px;">
+      <img src="assets/Images/png/logo_rentmo.png" alt="Logo" style="height: 40px;">
     </a>
     <button class="navbar-toggler border-0 text-dark" type="button" (click)="toggleMenu()"
             aria-controls="navbarNav" [attr.aria-expanded]="!isMenuCollapsed" aria-label="Toggle navigation">
@@ -28,9 +28,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="company/profile" routerLinkActive="active"
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="company/employees" routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
-            {{ getTranslation('PROFILE') }}
+            {{ getTranslation('COMPANY_EMPLOYEES') }}
           </a>
         </li>
       </ul>

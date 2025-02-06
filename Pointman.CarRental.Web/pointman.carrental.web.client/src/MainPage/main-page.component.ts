@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     './assets/Images/png/bmw_x5m_zielona.png',
     './assets/Images/png/BMW_M5_LIM_RED_MET.png',
     './assets/Images/png/Mati_BMW_M3_Mietowa.png',
+    './assets/Images/png/MERCEDES_AMG45_DREAM.png',
   ];
   currentImageIndex: number = 0;
   backgroundImage: string = this.images[this.currentImageIndex];
@@ -30,9 +31,15 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   startImageRotation(): void {
     this.intervalId = setInterval(() => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-      this.backgroundImage = this.images[this.currentImageIndex];
-    }, 5000); 
+      const mainElement = document.querySelector('main');
+      mainElement?.classList.add('fade-in');
+
+      setTimeout(() => {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+        this.backgroundImage = this.images[this.currentImageIndex];
+        mainElement?.classList.remove('fade-in');
+      }, 1000); 
+    }, 5000);
   }
 
   getTranslation(key: string): string {
@@ -40,7 +47,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   checkOffer(): void {
-
     alert('Sprawdzamy ofertę!');
   }
 }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
   <div class="container-fluid">
-    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home">
-      Logo
+    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home" style="margin-left: 0px;">
+      <img src="assets/Images/png/logo_rentmo.png" alt="Logo" style="height: 40px;">
     </a>
     <button class="navbar-toggler border-0 text-dark" type="button" (click)="toggleMenu()">
       <span class="navbar-toggler-icon"></span>
@@ -69,13 +69,12 @@
             {{ getTranslation('COMPANY') }}
           </button>
         </div>
-        <div>
-          <label for="companySelect" class="form-label">{{ getTranslation('SELECT_COMPANY') }}</label>
-          <select id="companySelect" class="form-select" [(ngModel)]="selectedCompany">
-            <option *ngFor="let company of companies" [value]="company.id">
-              {{ company.name }}
-            </option>
-          </select>
+
+        <app-login-user (closeModal)="closeSignInModal('User')" (userLoggedIn)="updateLoggedInUser($event)"></app-login-user>
+
+        <div *ngIf="loggedInUser" class="m-3">
+          <p>{{ getTranslation('LOGIN_AS') }}: {{ loggedInUser.userName }}</p>
+          <button class="btn btn-danger" (click)="logout()">{{ getTranslation('LOGOUT') }}</button>
         </div>
       </div>
     </div>
