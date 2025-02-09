@@ -31,7 +31,7 @@
 
   <div class="row g-3">
     <div *ngFor="let car of getPaginatedCars()" class="col-md-4">
-      <div class="card border-light">
+      <div class="card border-light shadow-sm">
         <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ car.model }}" />
         <div class="card-body">
           <h5 class="card-title">{{ car.model }}</h5>
@@ -91,7 +91,6 @@
     {{ getTranslation('NO_CARS_FOUND') }}
   </div>
 
-
   <div *ngIf="showModal" class="modal show d-block" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -115,7 +114,6 @@
       </div>
     </div>
   </div>
-
 
   <div *ngIf="showEditModal" class="modal show d-block" tabindex="-1">
     <div class="modal-dialog">

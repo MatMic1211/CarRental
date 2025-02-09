@@ -25,7 +25,7 @@ export class LoginUserComponent {
         (response) => {
           this.loggedInUser = response;
           this.userLoggedIn.emit(this.loggedInUser); 
-          alert(`Zalogowano jako: ${this.loggedInUser.userName}`);
+          /*alert(`Zalogowano jako: ${this.loggedInUser.userName}`);*/
           this.closeModal.emit();
         },
         (error) => {
