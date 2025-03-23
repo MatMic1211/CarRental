@@ -9,10 +9,10 @@ import { TranslateService } from '../../../../Services/translate.service';
 })
 export class LoginUserComponent {
   loggedInUser: { userName: string } | null = null;
-  userId: number = 0;
+  email: string = '';
 
   @Output() closeModal = new EventEmitter<void>();
-  @Output() userLoggedIn = new EventEmitter<{ userName: string }>(); 
+  @Output() userLoggedIn = new EventEmitter<{ userName: string }>();
 
   constructor(
     private translateService: TranslateService,
@@ -20,16 +20,15 @@ export class LoginUserComponent {
   ) { }
 
   login(): void {
-    if (this.userId) {
-      this.authService.login(this.userId).subscribe(
+    if (this.email) {
+      this.authService.login(this.email).subscribe(
         (response) => {
           this.loggedInUser = response;
-          this.userLoggedIn.emit(this.loggedInUser); 
-          /*alert(`Zalogowano jako: ${this.loggedInUser.userName}`);*/
+          this.userLoggedIn.emit(this.loggedInUser);
           this.closeModal.emit();
         },
         (error) => {
-          alert('Użytkownik nie został znaleziony');
+          alert('Użytkownik nie został znaleziony'); 
         }
       );
     }
@@ -41,6 +40,6 @@ export class LoginUserComponent {
 
   logout(): void {
     this.loggedInUser = null;
-    this.userId = 0;
+    this.email = '';
   }
 }

@@ -1,10 +1,12 @@
-﻿namespace Pointman.CarRental.Company.API.Entities
+﻿using System.Collections.Generic;
+
+namespace Pointman.CarRental.Company.API.Entities
 {
-    public enum UserRole
+    public class UserRole
     {
-        Admin,
-        CompanyOwner,
-        Employee,
-        IndividualClient
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<UserPermission> Permissions { get; set; } = new List<UserPermission>();
+        public ICollection<User> Users { get; set; } = new List<User>();
     }
 }

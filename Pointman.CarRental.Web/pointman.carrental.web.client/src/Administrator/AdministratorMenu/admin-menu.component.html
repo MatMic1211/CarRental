@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
   <div class="container-fluid">
-    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home" style="margin-left: 0px;">
+    <a class="navbar-brand text-dark fw-bold fs-2" routerLink="/home">
       <img src="assets/Images/png/logo_rentmo.png" alt="Logo" style="height: 40px;">
     </a>
     <button class="navbar-toggler border-0 text-dark" type="button" (click)="toggleMenu()">
@@ -9,26 +9,22 @@
     <div [ngClass]="{'collapse': !isMenuOpen, 'navbar-collapse': true}" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/home" routerLinkActive="active"
-             [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/home" routerLinkActive="active">
             {{ getTranslation('HOME') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/companies" routerLinkActive="active"
-             [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/companies" routerLinkActive="active">
             {{ getTranslation('COMPANIES') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/about" routerLinkActive="active"
-             [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/about" routerLinkActive="active">
             {{ getTranslation('ABOUT') }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/contact" routerLinkActive="active"
-             [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/contact" routerLinkActive="active">
             {{ getTranslation('CONTACT') }}
           </a>
         </li>
@@ -44,8 +40,8 @@
             <li><a class="dropdown-item" (click)="changeLanguage('en')"><img src="assets/Images/png/flags/uk_flag.png" alt="EN" class="flag-icon"> English</a></li>
           </ul>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="openSignInModal()">
-          {{ getTranslation('SIGN_IN') }}
+        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="openSignUpModal()">
+          {{ getTranslation('SIGN_UP') }}
         </button>
       </div>
     </div>
@@ -56,26 +52,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ getTranslation('SIGN_IN') }}</h5>
-        <button type="button" class="btn-close" (click)="closeSignInModal('Cancel')"></button>
+        <h5 class="modal-title">{{ getTranslation('SIGN_UP') }}</h5>
+        <button type="button" class="btn-close" (click)="closeSignUpModal()"></button>
       </div>
       <div class="modal-body">
-        <p class="text-center mb-4">{{ getTranslation('LOGIN_TYPE_PROMPT') }}</p>
-        <div class="d-flex justify-content-between mb-3">
-          <button class="btn btn-outline-primary rounded-pill px-4 shadow-sm" (click)="closeSignInModal('Admin')">
-            {{ getTranslation('ADMIN') }}
-          </button>
-          <button class="btn btn-outline-secondary rounded-pill px-4 shadow-sm" (click)="closeSignInModal('Company')">
-            {{ getTranslation('COMPANY') }}
-          </button>
-        </div>
-
-        <app-login-user (closeModal)="closeSignInModal('User')" (userLoggedIn)="updateLoggedInUser($event)"></app-login-user>
-
-        <div *ngIf="loggedInUser" class="m-3">
-          <p>{{ getTranslation('LOGIN_AS') }}: {{ loggedInUser.userName }}</p>
-          <button class="btn btn-danger" (click)="logout()">{{ getTranslation('LOGOUT') }}</button>
-        </div>
+        <app-sign-up (closeModal)="closeSignUpModal()"></app-sign-up>
       </div>
     </div>
   </div>

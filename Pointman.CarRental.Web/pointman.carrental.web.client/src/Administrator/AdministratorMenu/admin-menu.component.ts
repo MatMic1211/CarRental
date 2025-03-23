@@ -3,7 +3,6 @@ import { TranslateService } from '../../../Services/translate.service';
 import { Company, CompanyService } from '../../../Services/companies.service';
 import { AuthService } from '../../../Services/auth.service';
 
-
 @Component({
   selector: 'app-admin-menu',
   templateUrl: './admin-menu.component.html',
@@ -16,14 +15,14 @@ export class AdminMenuComponent implements OnInit {
   companies: Company[] = [];
   selectedCompany: number | null = null;
   currentLanguage: string = 'en';
-  loggedInUser: { userName: string } | null = null; 
+  loggedInUser: { userName: string } | null = null;
 
   @Output() switchToCompany = new EventEmitter<void>();
 
   constructor(
     private translateService: TranslateService,
     private companyService: CompanyService,
-    private authService: AuthService 
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -40,18 +39,6 @@ export class AdminMenuComponent implements OnInit {
         console.error('Error fetching companies:', error);
       }
     );
-  }
-
-  openSignInModal() {
-    this.showModal = true;
-  }
-
-  closeSignInModal(option: string) {
-    this.showModal = false;
-    if (option === 'Company') {
-      this.switchToCompany.emit();
-    }
-    console.log('Selected company ID:', this.selectedCompany);
   }
 
   changeLanguage(lang: string) {
@@ -77,11 +64,21 @@ export class AdminMenuComponent implements OnInit {
   }
 
   updateLoggedInUser(user: { userName: string }) {
-    this.loggedInUser = user; 
+    this.loggedInUser = user;
+  }
+
+  openSignUpModal() {
+    console.log("🔹 Otwieranie modala rejestracji");
+    this.showModal = true;
+  }
+
+  closeSignUpModal() {
+    console.log("🔹 Zamknięcie modala rejestracji");
+    this.showModal = false;
   }
 
   logout() {
-    this.loggedInUser = null; 
-    this.showModal = false; 
+    this.loggedInUser = null;
+    this.showModal = false;
   }
 }

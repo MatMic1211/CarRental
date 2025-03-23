@@ -49,4 +49,6 @@ export class AppComponent implements OnInit {
     this.selectedCompanyName = selectedCompany;
     this.cdr.detectChanges();
   }
+
+
 }

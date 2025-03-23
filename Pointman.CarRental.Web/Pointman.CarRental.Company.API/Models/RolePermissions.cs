@@ -1,36 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using Pointman.CarRental.Company.API.Attributes;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pointman.CarRental.Company.API.Entities
 {
-    public static class RolePermissions
+    public enum RolePermission
     {
-        public static readonly Dictionary<UserRole, List<UserPermission>> Permissions = new()
-        {
-            { UserRole.Admin, new List<UserPermission>
-                {
-                    UserPermission.AddUsers,
-                    UserPermission.AddCompanies,
-                    UserPermission.DeleteCompanies,
-                    UserPermission.EditCompanies,
-                    UserPermission.ViewReservations
-                }
-            },
-            { UserRole.CompanyOwner, new List<UserPermission>
-                {
-                    UserPermission.AddCars,
-                    UserPermission.ViewReservations
-                }
-            },
-            { UserRole.Employee, new List<UserPermission>
-                {
-                    UserPermission.ViewReservations
-                }
-            },
-            { UserRole.IndividualClient, new List<UserPermission>
-                {
-                    UserPermission.MakeReservations
-                }
-            }
-        };
+        [PermissionDefinition("ADD_USERS")]
+        AddUsers,
+
+        [PermissionDefinition("ADD_COMP")]
+        AddCompanies,
+
+        [PermissionDefinition("READ_COMP")]
+        ReadCompanies,
+
+        [PermissionDefinition("EDI_COMP")]
+        EditCompanies,
+
+        [PermissionDefinition("DEL_COMP")]
+        DeleteCompanies,
+
+        [PermissionDefinition("ADD_CARS")]
+        AddCars,
+
+        [PermissionDefinition("VI_RESER")]
+        ViewReservations,
+
+        [PermissionDefinition("MK_RESER")]
+        MakeReservations
     }
 }

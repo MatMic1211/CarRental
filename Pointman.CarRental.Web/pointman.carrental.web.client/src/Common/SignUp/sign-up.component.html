@@ -1,0 +1,27 @@
+<div class="modal fade show d-block" style="background: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ getTranslation('SIGN_UP') }}</h5>
+        <button type="button" class="btn-close" (click)="closeSignUpModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="registerUser()" autocomplete="off">
+          <div class="mb-3">
+            <label for="email" class="form-label">{{ getTranslation('EMAIL') }}</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required>
+          </div>
+          <div class="mb-3" *ngIf="true">
+            <label for="password" class="form-label">{{ getTranslation('PASSWORD') }}</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+          </div>
+          <div class="mb-3" *ngIf="true">
+            <label for="confirmPassword" class="form-label">{{ getTranslation('CONFIRM_PASSWORD') }}</label>
+            <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">{{ getTranslation('SIGN_UP') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

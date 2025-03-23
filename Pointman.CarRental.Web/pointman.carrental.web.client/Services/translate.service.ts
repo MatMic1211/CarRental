@@ -55,7 +55,7 @@ export class TranslateService {
       LOCATED: 'Located at',
       CLOSE: 'Close',
       COMPANY_NAME: 'Name',
-      COMPANY_LOCATION: 'Lcation',
+      COMPANY_LOCATION: 'Location',
       COMPANY_PHONE_NUMBER: 'Phone Number',
       COMPANY_ACTIONS: 'Actions',
       ADD_COMPANY: 'Add new company',
@@ -65,6 +65,10 @@ export class TranslateService {
       LOGIN_AS: 'Login as',
       USER_ID: 'Enter your user ID',
       LOGOUT: 'Logout',
+      EMAIL: 'Email',
+      SIGN_UP: 'Sign Up',
+      PASSWORD: 'Password',
+      CONFIRM_PASSWORD:'Confirm password',
 
     },
     pl: {
@@ -126,7 +130,11 @@ export class TranslateService {
       ADD: 'Dodaj',
       LOGIN_AS: 'Zalogowano jako',
       USER_ID: 'Podaj ID użytkownika',
-      LOGOUT: 'Wyloguj się'
+      LOGOUT: 'Wyloguj się',
+      EMAIL: 'Email',
+      SIGN_UP: 'Rejestracja',
+      PASSWORD: 'Hasło',
+      CONFIRM_PASSWORD: 'Potwierdź hasło',
 
     },
   };

@@ -1,28 +1,10 @@
-﻿using Pointman.CarRental.Company.API.Attributes;
+﻿using System.Collections.Generic;
 
 namespace Pointman.CarRental.Company.API.Entities
 {
-    public enum UserPermission
+    public class UserPermission
     {
-        [PermissionDefinition("ADD_USERS")]
-        AddUsers,
-
-        [PermissionDefinition("ADD_COMP")]
-        AddCompanies,
-
-        [PermissionDefinition("EDI_COMP")]
-        EditCompanies,
-
-        [PermissionDefinition("DEL_COMP")]
-        DeleteCompanies,
-
-        [PermissionDefinition("ADD_CARS")]
-        AddCars,
-
-        [PermissionDefinition("VI_RESER")]
-        ViewReservations,
-
-        [PermissionDefinition("MK_RESER")]
-        MakeReservations
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

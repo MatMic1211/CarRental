@@ -13,6 +13,7 @@
     <Folder Include="src\app\Images\png\flags\" />
     <Folder Include="src\Assets\i18n\" />
     <Folder Include="src\Common\CompaniesList\CompaniesForm\" />
+    <Folder Include="src\Common\SignUp\" />
     <Folder Include="src\Common\SignIn\UserLogin\" />
     <Folder Include="src\Company\CompanyMenu\" />
     <Folder Include="src\Company\CompanyRental\" />

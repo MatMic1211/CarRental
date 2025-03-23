@@ -13,6 +13,7 @@ import { CompanyMenuComponent } from '../Company/CompanyMenu/company-menu.compon
 import { CarListComponent } from '../Company/Car/CarList/car-list.component';
 import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rentals.component';
 import { LoginUserComponent } from '../Common/SignIn/UserLogin/user-login.component';
+import { SignUpComponent } from '../Common/SignUp/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,8 @@ import { LoginUserComponent } from '../Common/SignIn/UserLogin/user-login.compon
     CompanyMenuComponent,
     CarListComponent,
     CompanyRentalsComponent,
-    LoginUserComponent
-    
-
+    LoginUserComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule,
