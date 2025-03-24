@@ -2,25 +2,30 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ getTranslation('SIGN_UP') }}</h5>
+        <h5 class="modal-title">{{ isLoginMode ? getTranslation('SIGN_IN') : getTranslation('SIGN_UP') }}</h5>
         <button type="button" class="btn-close" (click)="closeSignUpModal()"></button>
       </div>
       <div class="modal-body">
-        <form (submit)="registerUser()" autocomplete="off">
+        <form (submit)="isLoginMode ? null : registerUser()" autocomplete="off">
           <div class="mb-3">
             <label for="email" class="form-label">{{ getTranslation('EMAIL') }}</label>
             <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required>
           </div>
-          <div class="mb-3" *ngIf="true">
+          <div *ngIf="!isLoginMode" class="mb-3">
             <label for="password" class="form-label">{{ getTranslation('PASSWORD') }}</label>
             <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
           </div>
-          <div class="mb-3" *ngIf="true">
+          <div *ngIf="!isLoginMode" class="mb-3">
             <label for="confirmPassword" class="form-label">{{ getTranslation('CONFIRM_PASSWORD') }}</label>
             <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
           </div>
-          <button type="submit" class="btn btn-primary w-100">{{ getTranslation('SIGN_UP') }}</button>
+          <button type="submit" class="btn btn-primary w-100">{{ isLoginMode ? getTranslation('SIGN_IN') : getTranslation('SIGN_UP') }}</button>
         </form>
+        <div class="text-center mt-3">
+          <a href="#" class="link-style" (click)="goToLogin()">
+            {{ isLoginMode ? getTranslation('DONT_HAVE_ACCOUNT') : getTranslation('ALREADY_HAVE_ACCOUNT') }}
+          </a>
+        </div>
       </div>
     </div>
   </div>

@@ -7,6 +7,6 @@ namespace Pointman.CarRental.Company.API.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<UserPermission> Permissions { get; set; } = new List<UserPermission>();
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<UserRegistraion> Users { get; set; } = new List<UserRegistraion>();
     }
 }

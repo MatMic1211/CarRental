@@ -28,7 +28,7 @@ export class LoginUserComponent {
           this.closeModal.emit();
         },
         (error) => {
-          alert('Użytkownik nie został znaleziony'); 
+          alert('Użytkownik nie został znaleziony');
         }
       );
     }

@@ -11,7 +11,7 @@ namespace Pointman.CarRental.Company.API.Entities
 
         public DbSet<RentCompany> RentCompanies { get; set; }
         public DbSet<Car> Cars { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserRegistraion> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
 
@@ -19,13 +19,13 @@ namespace Pointman.CarRental.Company.API.Entities
         { 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<UserRegistraion>()
                 .HasMany(u => u.Roles)
                 .WithMany(r => r.Users)
                 .UsingEntity<Dictionary<string, object>>(
                     "UserUserRoles",
                     j => j.HasOne<UserRole>().WithMany().HasForeignKey("UserRoleId"),
-                    j => j.HasOne<User>().WithMany().HasForeignKey("UserId"),
+                    j => j.HasOne<UserRegistraion>().WithMany().HasForeignKey("UserId"),
                     j => j.HasKey("UserId", "UserRoleId") 
                 );
             modelBuilder.Entity<UserRole>()

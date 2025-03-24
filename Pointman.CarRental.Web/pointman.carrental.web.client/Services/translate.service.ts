@@ -68,7 +68,10 @@ export class TranslateService {
       EMAIL: 'Email',
       SIGN_UP: 'Sign Up',
       PASSWORD: 'Password',
-      CONFIRM_PASSWORD:'Confirm password',
+      CONFIRM_PASSWORD: 'Confirm password',
+      ALREADY_HAVE_ACCOUNT: 'Already have an account',
+      DONT_HAVE_ACCOUNT: 'Do not have account',
+
 
     },
     pl: {
@@ -135,6 +138,8 @@ export class TranslateService {
       SIGN_UP: 'Rejestracja',
       PASSWORD: 'Hasło',
       CONFIRM_PASSWORD: 'Potwierdź hasło',
+      ALREADY_HAVE_ACCOUNT: 'Mam już konto',
+      DONT_HAVE_ACCOUNT: 'Nie mam konta'
 
     },
   };

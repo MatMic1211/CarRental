@@ -7,16 +7,22 @@ import { TranslateService } from '../../../Services/translate.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-  @Output() closeModal = new EventEmitter<void>(); // Emitowanie zamknięcia
+  @Output() closeModal = new EventEmitter<void>();
+  @Output() switchToLogin = new EventEmitter<void>();
 
   email = '';
   password = '';
   confirmPassword = '';
+  isLoginMode = false; 
 
   constructor(private translateService: TranslateService) { }
 
   closeSignUpModal() {
-    this.closeModal.emit(); // Emitowanie zdarzenia do zamknięcia modala w `AdminMenuComponent`
+    this.closeModal.emit();
+  }
+
+  goToLogin() {
+    this.isLoginMode = true;
   }
 
   registerUser() {

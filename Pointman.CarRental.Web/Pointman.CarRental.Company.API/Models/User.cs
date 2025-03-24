@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pointman.CarRental.Company.API.Entities
 {
-    public class User
+    public class UserRegistraion
     {
         public int Id { get; set; }
         public string Email { get; set; }
