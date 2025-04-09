@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Entities;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pointman.CarRental.Company.API.Controllers
 {
@@ -13,6 +14,28 @@ namespace Pointman.CarRental.Company.API.Controllers
         public AuthController(CompanyContext context)
         {
             _context = context;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        {
+            if (_context.Users.Any(u => u.Email == model.Email))
+            {
+                return BadRequest(new { message = "Użytkownik o podanym adresie email już istnieje." });
+            }
+
+            var user = new UserRegistration
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Password = model.Password
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Użytkownik został zarejestrowany." });
         }
 
         [HttpGet("{id}")]
@@ -42,5 +65,13 @@ namespace Pointman.CarRental.Company.API.Controllers
 
             return Ok(user);
         }
+    }
+
+    public class RegisterModel
+    {
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Password { get; set; }
     }
 }

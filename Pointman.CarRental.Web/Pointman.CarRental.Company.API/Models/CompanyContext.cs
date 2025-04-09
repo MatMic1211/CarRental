@@ -11,23 +11,24 @@ namespace Pointman.CarRental.Company.API.Entities
 
         public DbSet<RentCompany> RentCompanies { get; set; }
         public DbSet<Car> Cars { get; set; }
-        public DbSet<UserRegistraion> Users { get; set; }
+        public DbSet<UserRegistration> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        { 
+        {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserRegistraion>()
+            modelBuilder.Entity<UserRegistration>()
                 .HasMany(u => u.Roles)
                 .WithMany(r => r.Users)
                 .UsingEntity<Dictionary<string, object>>(
                     "UserUserRoles",
                     j => j.HasOne<UserRole>().WithMany().HasForeignKey("UserRoleId"),
-                    j => j.HasOne<UserRegistraion>().WithMany().HasForeignKey("UserId"),
-                    j => j.HasKey("UserId", "UserRoleId") 
+                    j => j.HasOne<UserRegistration>().WithMany().HasForeignKey("UserId"),
+                    j => j.HasKey("UserId", "UserRoleId")
                 );
+
             modelBuilder.Entity<UserRole>()
                 .HasMany(r => r.Permissions)
                 .WithMany()
@@ -35,7 +36,7 @@ namespace Pointman.CarRental.Company.API.Entities
                     "UserRolePermissions",
                     j => j.HasOne<UserPermission>().WithMany().HasForeignKey("UserPermissionId"),
                     j => j.HasOne<UserRole>().WithMany().HasForeignKey("UserRoleId"),
-                    j => j.HasKey("UserRoleId", "UserPermissionId") 
+                    j => j.HasKey("UserRoleId", "UserPermissionId")
                 );
         }
     }

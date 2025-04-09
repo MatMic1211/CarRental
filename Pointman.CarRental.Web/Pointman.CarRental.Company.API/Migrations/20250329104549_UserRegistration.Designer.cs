@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pointman.CarRental.Company.API.Entities;
 
@@ -10,9 +11,11 @@ using Pointman.CarRental.Company.API.Entities;
 namespace Pointman.CarRental.Company.API.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20250329104549_UserRegistration")]
+    partial class UserRegistration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +106,7 @@ namespace Pointman.CarRental.Company.API.Migrations
                     b.ToTable("UserPermissions");
                 });
 
-            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.UserRegistration", b =>
+            modelBuilder.Entity("Pointman.CarRental.Company.API.Entities.UserRegistraion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,10 +123,6 @@ namespace Pointman.CarRental.Company.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -207,7 +206,7 @@ namespace Pointman.CarRental.Company.API.Migrations
 
             modelBuilder.Entity("UserUserRoles", b =>
                 {
-                    b.HasOne("Pointman.CarRental.Company.API.Entities.UserRegistration", null)
+                    b.HasOne("Pointman.CarRental.Company.API.Entities.UserRegistraion", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -71,8 +71,10 @@ export class TranslateService {
       CONFIRM_PASSWORD: 'Confirm password',
       ALREADY_HAVE_ACCOUNT: 'Already have an account',
       DONT_HAVE_ACCOUNT: 'Do not have account',
-
-
+      SIGN_IN_TITTLE: 'Sign In',
+      SIGN_UP_TITTLE: 'Sign Up',
+      LAST_NAME:'Last name',
+      FIRST_NAME:'First name'
     },
     pl: {
       HOME: 'Strona główna',
@@ -135,12 +137,15 @@ export class TranslateService {
       USER_ID: 'Podaj ID użytkownika',
       LOGOUT: 'Wyloguj się',
       EMAIL: 'Email',
-      SIGN_UP: 'Rejestracja',
+      SIGN_UP: 'Zarejestruj',
       PASSWORD: 'Hasło',
       CONFIRM_PASSWORD: 'Potwierdź hasło',
       ALREADY_HAVE_ACCOUNT: 'Mam już konto',
-      DONT_HAVE_ACCOUNT: 'Nie mam konta'
-
+      DONT_HAVE_ACCOUNT: 'Nie mam konta',
+      SIGN_IN_TITTLE: 'Logowanie',
+      SIGN_UP_TITTLE: 'Rejestracja',
+      LAST_NAME: 'Nazwisko',
+      FIRST_NAME: 'Imię'
     },
   };
 

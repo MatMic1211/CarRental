@@ -10,6 +10,7 @@ import { TranslateService } from '../../../../Services/translate.service';
 export class LoginUserComponent {
   loggedInUser: { userName: string } | null = null;
   email: string = '';
+  password: string = '';
 
   @Output() closeModal = new EventEmitter<void>();
   @Output() userLoggedIn = new EventEmitter<{ userName: string }>();
@@ -41,5 +42,6 @@ export class LoginUserComponent {
   logout(): void {
     this.loggedInUser = null;
     this.email = '';
+    this.password = '';
   }
 }

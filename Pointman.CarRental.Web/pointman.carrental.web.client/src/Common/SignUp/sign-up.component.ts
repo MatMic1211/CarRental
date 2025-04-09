@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '../../../Services/translate.service';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,16 +14,18 @@ export class SignUpComponent {
   email = '';
   password = '';
   confirmPassword = '';
-  isLoginMode = false; 
+  firstName = '';
+  lastName = '';
+  isLoginMode = false;
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService, private authService: AuthService) { }
 
   closeSignUpModal() {
     this.closeModal.emit();
   }
 
   goToLogin() {
-    this.isLoginMode = true;
+    this.isLoginMode = !this.isLoginMode;
   }
 
   registerUser() {
@@ -30,7 +33,20 @@ export class SignUpComponent {
       alert('Hasła nie są takie same!');
       return;
     }
-    console.log('Rejestracja użytkownika:', this.email);
+
+    this.authService.register(this.email, this.password, this.firstName, this.lastName).subscribe(
+      response => {
+        alert('Rejestracja zakończona pomyślnie!');
+        this.closeSignUpModal();
+      },
+      error => {
+        alert('Wystąpił błąd podczas rejestracji.');
+      }
+    );
+  }
+
+  loginUser() {
+    console.log('Logowanie użytkownika:', this.email);
     this.closeSignUpModal();
   }
 
