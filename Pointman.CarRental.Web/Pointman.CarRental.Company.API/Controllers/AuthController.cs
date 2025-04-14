@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Pointman.CarRental.Company.API.Entities;
-using System.Linq;
-using System.Threading.Tasks;
+using Pointman.CarRental.Company.API.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Pointman.CarRental.Company.API.Controllers
 {
@@ -10,10 +14,12 @@ namespace Pointman.CarRental.Company.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly CompanyContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(CompanyContext context)
+        public AuthController(CompanyContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpPost("register")]
@@ -38,40 +44,44 @@ namespace Pointman.CarRental.Company.API.Controllers
             return Ok(new { message = "Użytkownik został zarejestrowany." });
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginModel model)
         {
-            var user = _context.Users
-                .Where(u => u.Id == id)
-                .Select(u => new
-                {
-                    u.Id,
-                    u.Email,
-                    u.FirstName,
-                    u.LastName,
-                    Roles = u.Roles.Select(r => new
-                    {
-                        r.Id,
-                        r.Name,
-                        Permissions = r.Permissions.Select(p => p.Name).ToList()
-                    }).ToList()
-                })
-                .FirstOrDefault();
-
+            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
             if (user == null)
             {
-                return NotFound(new { message = "Użytkownik nie został znaleziony" });
+                return Unauthorized(new { message = "Nieprawidłowy email lub hasło." });
             }
 
-            return Ok(user);
-        }
-    }
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.FirstName)
+            };
 
-    public class RegisterModel
-    {
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Issuer"],
+                claims: claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: creds
+            );
+
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token)
+            });
+        }
+
+        [Authorize]
+        [HttpGet("secure")]
+        public IActionResult GetSecureData()
+        {
+            return Ok("Tylko dla zalogowanych użytkowników.");
+        }
     }
 }
