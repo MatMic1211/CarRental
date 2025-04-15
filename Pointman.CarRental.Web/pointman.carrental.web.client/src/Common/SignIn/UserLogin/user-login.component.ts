@@ -8,12 +8,12 @@ import { TranslateService } from '../../../../Services/translate.service';
   styleUrls: ['./user-login.component.css']
 })
 export class LoginUserComponent {
-  loggedInUser: { userName: string } | null = null;
+  loggedInUser: { token: string } | null = null;
   email: string = '';
   password: string = '';
 
   @Output() closeModal = new EventEmitter<void>();
-  @Output() userLoggedIn = new EventEmitter<{ userName: string }>();
+  @Output() userLoggedIn = new EventEmitter<{ token: string }>();
 
   constructor(
     private translateService: TranslateService,
@@ -21,17 +21,20 @@ export class LoginUserComponent {
   ) { }
 
   login(): void {
-    if (this.email) {
-      this.authService.login(this.email).subscribe(
+    if (this.email && this.password) {
+      this.authService.login(this.email, this.password).subscribe(
         (response) => {
           this.loggedInUser = response;
+          localStorage.setItem('jwtToken', response.token); 
           this.userLoggedIn.emit(this.loggedInUser);
           this.closeModal.emit();
         },
         (error) => {
-          alert('Użytkownik nie został znaleziony');
+          alert(this.getTranslation('LOGIN_ERROR') || 'Użytkownik nie został znaleziony');
         }
       );
+    } else {
+      alert(this.getTranslation('FILL_EMAIL_PASSWORD') || 'Wprowadź e-mail i hasło.');
     }
   }
 
@@ -43,5 +46,6 @@ export class LoginUserComponent {
     this.loggedInUser = null;
     this.email = '';
     this.password = '';
+    localStorage.removeItem('jwtToken');
   }
 }

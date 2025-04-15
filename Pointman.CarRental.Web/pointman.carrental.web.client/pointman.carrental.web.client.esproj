@@ -11,6 +11,7 @@
     <Folder Include="Services\" />
     <Folder Include="src\Administrator\AdministratorMenu\" />
     <Folder Include="src\app\Images\png\flags\" />
+    <Folder Include="src\app\Interceptors\" />
     <Folder Include="src\Assets\i18n\" />
     <Folder Include="src\Common\CompaniesList\CompaniesForm\" />
     <Folder Include="src\Common\SignUp\" />

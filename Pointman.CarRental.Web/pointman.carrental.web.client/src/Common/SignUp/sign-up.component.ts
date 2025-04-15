@@ -46,8 +46,15 @@ export class SignUpComponent {
   }
 
   loginUser() {
-    console.log('Logowanie użytkownika:', this.email);
-    this.closeSignUpModal();
+    this.authService.login(this.email, this.password).subscribe(
+      response => {
+        alert('Zalogowano pomyślnie!');
+        this.closeSignUpModal();
+      },
+      error => {
+        alert('Błąd logowania. Sprawdź email i hasło.');
+      }
+    );
   }
 
   getTranslation(key: string): string {
