@@ -68,12 +68,12 @@ export class AdminMenuComponent implements OnInit {
   }
 
   openSignUpModal() {
-    console.log("🔹 Otwieranie modala rejestracji");
+    console.log("Otwieranie modala rejestracji");
     this.showModal = true;
   }
 
   closeSignUpModal() {
-    console.log("🔹 Zamknięcie modala rejestracji");
+    console.log("Zamknięcie modala rejestracji");
     this.showModal = false;
   }
 
