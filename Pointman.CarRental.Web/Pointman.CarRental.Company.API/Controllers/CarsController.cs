@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Entities;
 
 namespace Pointman.CarRental.Company.API.Controllers
 {
     [ApiController]
     [Route("api/cars")]
+    [Authorize] // Dodajemy wymaganie tokena JWT
     public class CarsController : ControllerBase
     {
-        private readonly CompanyContext _context;
+        private readonly CarRentalContext _context;
 
-        public CarsController(CompanyContext context)
+        public CarsController(CarRentalContext context)
         {
             _context = context;
         }
@@ -54,10 +56,10 @@ namespace Pointman.CarRental.Company.API.Controllers
                 return NotFound(new { Message = "Car not found" });
             }
 
-            _context.Cars.Remove(car); 
-            _context.SaveChanges(); 
+            _context.Cars.Remove(car);
+            _context.SaveChanges();
 
-            return NoContent(); 
+            return NoContent();
         }
 
         [HttpPut("{id}")]

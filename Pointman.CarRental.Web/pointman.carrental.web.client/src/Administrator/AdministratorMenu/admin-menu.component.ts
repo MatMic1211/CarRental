@@ -22,12 +22,17 @@ export class AdminMenuComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private companyService: CompanyService,
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loadCompanies();
     this.isDropdownOpen = false;
+
+    const email = this.authService.getUserEmail();
+    if (email) {
+      this.loggedInUser = { userName: email };
+    }
   }
 
   loadCompanies(): void {
@@ -63,22 +68,17 @@ export class AdminMenuComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  updateLoggedInUser(user: { userName: string }) {
-    this.loggedInUser = user;
-  }
-
   openSignUpModal() {
-    console.log("Otwieranie modala rejestracji");
     this.showModal = true;
   }
 
   closeSignUpModal() {
-    console.log("Zamknięcie modala rejestracji");
     this.showModal = false;
   }
 
   logout() {
+    this.authService.logout();
     this.loggedInUser = null;
-    this.showModal = false;
+    window.location.reload();
   }
 }

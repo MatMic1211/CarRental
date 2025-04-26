@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Pointman.CarRental.Company.API.Entities
 {
-    public class CompanyContext : DbContext
+    public class CarRentalContext : DbContext
     {
-        public CompanyContext(DbContextOptions<CompanyContext> options) : base(options)
+        public CarRentalContext(DbContextOptions<CarRentalContext> options) : base(options)
         {
         }
 

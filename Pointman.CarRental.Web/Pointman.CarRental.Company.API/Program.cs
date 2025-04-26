@@ -61,7 +61,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddDbContext<CompanyContext>(options =>
+builder.Services.AddDbContext<CarRentalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<CompanyService>();

@@ -7,9 +7,9 @@ namespace Pointman.CarRental.Company.API
 {
     public class MeetUpSeeder
     {
-        private readonly CompanyContext _companyContext;
+        private readonly CarRentalContext _companyContext;
 
-        public MeetUpSeeder(CompanyContext companyContext)
+        public MeetUpSeeder(CarRentalContext companyContext)
         {
             _companyContext = companyContext;
         }

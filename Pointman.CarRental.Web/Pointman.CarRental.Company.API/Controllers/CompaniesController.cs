@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Services;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace Pointman.CarRental.Company.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // Wymaga JWT (każdy użytkownik z ważnym tokenem)
     public class CompaniesController : ControllerBase
     {
         private readonly CompanyService _companyService;
