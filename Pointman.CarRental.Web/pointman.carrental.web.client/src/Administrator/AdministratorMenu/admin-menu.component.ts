@@ -29,10 +29,10 @@ export class AdminMenuComponent implements OnInit {
     this.loadCompanies();
     this.isDropdownOpen = false;
 
-    const email = this.authService.getUserEmail();
-    if (email) {
-      this.loggedInUser = { userName: email };
-    }
+    //const email = this.authService.getUserEmail();
+    //if (email) {
+    //  this.loggedInUser = { userName: email };
+    //}
   }
 
   loadCompanies(): void {

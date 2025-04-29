@@ -1,6 +1,6 @@
 ﻿namespace Pointman.CarRental.Company.API.Models
 {
-    public class LoginModel
+    public class LoginUserViewModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

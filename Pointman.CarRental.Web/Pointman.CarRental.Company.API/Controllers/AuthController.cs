@@ -23,7 +23,7 @@ namespace Pointman.CarRental.Company.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterUserViewModel model)
         {
             if (_context.Users.Any(u => u.Email == model.Email))
             {
@@ -45,7 +45,7 @@ namespace Pointman.CarRental.Company.API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model)
+        public IActionResult Login([FromBody] LoginUserViewModel model)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
             if (user == null)
