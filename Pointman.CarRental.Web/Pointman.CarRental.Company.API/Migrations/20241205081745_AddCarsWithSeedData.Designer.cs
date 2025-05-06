@@ -10,7 +10,7 @@ using Pointman.CarRental.Company.API.Entities;
 
 namespace Pointman.CarRental.Company.API.Migrations
 {
-    [DbContext(typeof(CarRentalContext))]
+    [DbContext(typeof(CompanyContext))]
     [Migration("20241205081745_AddCarsWithSeedData")]
     partial class AddCarsWithSeedData
     {

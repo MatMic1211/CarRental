@@ -13,10 +13,10 @@ namespace Pointman.CarRental.Company.API.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly CarRentalContext _context;
+        private readonly CompanyContext _context;
         private readonly IConfiguration _configuration;
 
-        public AuthController(CarRentalContext context, IConfiguration configuration)
+        public AuthController(CompanyContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;

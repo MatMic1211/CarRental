@@ -9,9 +9,9 @@ namespace Pointman.CarRental.Company.API.Controllers
     [Authorize] // Dodajemy wymaganie tokena JWT
     public class CarsController : ControllerBase
     {
-        private readonly CarRentalContext _context;
+        private readonly CompanyContext _context;
 
-        public CarsController(CarRentalContext context)
+        public CarsController(CompanyContext context)
         {
             _context = context;
         }

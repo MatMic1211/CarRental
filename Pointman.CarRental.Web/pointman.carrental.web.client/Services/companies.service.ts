@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientService } from './http-client.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -16,33 +16,32 @@ export interface Company {
 export class CompanyService {
   private apiUrl = 'https://localhost:7001/api/Companies';
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClientService: HttpClientService) { }
 
   getCompanies(): Observable<Company[]> {
-    return this.http.get<Company[]>(this.apiUrl).pipe(catchError(this.handleError));
+    return this.httpClientService.get<Company[]>(this.apiUrl)
+      .pipe(catchError(this.handleError));
   }
 
   addCompany(company: Company): Observable<Company> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    return this.http.post<Company>(this.apiUrl, company, { headers }).pipe(catchError(this.handleError));
+    return this.httpClientService.post<Company>(this.apiUrl, company)
+      .pipe(catchError(this.handleError));
   }
 
   updateCompany(id: number, companyData: Company): Observable<Company> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.put<Company>(url, companyData, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    }).pipe(catchError(this.handleError));
+    return this.httpClientService.put<Company>(url, companyData)
+      .pipe(catchError(this.handleError));
   }
 
   deleteCompany(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url).pipe(catchError(this.handleError));
+    return this.httpClientService.delete<void>(url)
+      .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    console.error('Error occurred:', error.message);
+  private handleError(error: any): Observable<never> {
+    console.error('Error occurred:', error);
     return throwError(() => new Error('Something went wrong. Please try again later.'));
   }
 }

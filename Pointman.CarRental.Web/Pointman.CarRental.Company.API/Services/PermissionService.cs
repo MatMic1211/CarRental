@@ -7,9 +7,9 @@ namespace Pointman.CarRental.Company.API.Services
 {
     public class PermissionService
     {
-        private readonly CarRentalContext _context;
+        private readonly CompanyContext _context;
 
-        public PermissionService(CarRentalContext context)
+        public PermissionService(CompanyContext context)
         {
             _context = context;
         }

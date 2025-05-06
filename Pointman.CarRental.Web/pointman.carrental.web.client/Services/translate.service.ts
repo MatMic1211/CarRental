@@ -74,7 +74,8 @@ export class TranslateService {
       SIGN_IN_TITTLE: 'Sign In',
       SIGN_UP_TITTLE: 'Sign Up',
       LAST_NAME:'Last name',
-      FIRST_NAME:'First name'
+      FIRST_NAME: 'First name'
+
     },
     pl: {
       HOME: 'Strona główna',
