@@ -1,34 +1,38 @@
-<div class="d-flex justify-content-end mb-3">
-  <button class="btn btn-primary btn-lg d-flex align-items-center gap-2 shadow" (click)="openForm()">
-    <i class="bi bi-plus-circle-fill"></i>
-    {{ getTranslation('ADD_COMPANY') }}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="text-primary fw-bold mb-0">
+    <i class="bi bi-building-fill me-2"></i>{{ getTranslation('COMPANY_LIST') }}
+  </h3>
+  <button class="btn btn-primary btn-lg d-flex align-items-center gap-2 shadow-sm" (click)="openForm()">
+    <i class="bi bi-plus-circle-fill fs-5"></i>
+    <span class="fw-semibold">{{ getTranslation('ADD_COMPANY') }}</span>
   </button>
 </div>
 
-<div class="table-responsive shadow rounded border border-2 border-primary">
+<div class="table-responsive rounded border border-2 border-primary shadow-sm">
   <table class="table table-hover table-bordered align-middle mb-0">
-    <thead class="table-primary text-center">
+    <thead class="bg-gradient text-white text-center" style="background: linear-gradient(to right, #0d6efd, #0b5ed7);">
       <tr>
         <th scope="col">#</th>
         <th scope="col"><i class="bi bi-building me-1"></i>{{ getTranslation('COMPANY_NAME') }}</th>
         <th scope="col"><i class="bi bi-geo-alt me-1"></i>{{ getTranslation('COMPANY_LOCATION') }}</th>
         <th scope="col"><i class="bi bi-telephone me-1"></i>{{ getTranslation('COMPANY_PHONE_NUMBER') }}</th>
-        <th scope="col"><i class="bi bi-gear me-1"></i>{{ getTranslation('COMPANY_ACTIONS') }}</th>
+        <th scope="col"><i class="bi bi-tools me-1"></i>{{ getTranslation('COMPANY_ACTIONS') }}</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let company of paginatedCompanies; let i = index">
-        <th scope="row" class="text-center">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
-        <td class="fw-semibold text-center text-primary">{{ company.name }}</td>
-        <td class="text-center">{{ company.location }}</td>
+        <th scope="row" class="text-center bg-light">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
+        <td class="fw-semibold text-primary text-center">{{ company.name }}</td>
+        <td class="text-center"><span class="badge bg-light text-dark border">{{ company.location }}</span></td>
         <td class="text-center">{{ company.telephoneNumber }}</td>
         <td class="text-center">
-          <div class="btn-group" role="group">
-            <button class="btn btn-outline-primary btn-sm" (click)="editCompany(company)" title="Edytuj">
-              <i class="bi bi-pencil-fill"></i>
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-outline-success" (click)="editCompany(company)" title="Edytuj" data-bs-toggle="tooltip">
+              <i class="bi bi-pencil-square"></i>
             </button>
-            <button class="btn btn-outline-danger btn-sm" (click)="openDeleteConfirmation(company)" title="Usuń">
-              <i class="bi bi-trash-fill"></i>
+            <button class="btn btn-outline-danger" (click)="openDeleteConfirmation(company)" title="Usuń" data-bs-toggle="tooltip">
+              <i class="bi bi-trash"></i>
             </button>
           </div>
         </td>
@@ -38,7 +42,7 @@
 </div>
 
 <nav class="d-flex justify-content-between align-items-center mt-3">
-  <button class="btn btn-outline-primary" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+  <button class="btn btn-outline-secondary" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
     <i class="bi bi-arrow-left-circle"></i> {{ getTranslation('PREVIOUS') }}
   </button>
 
@@ -48,42 +52,43 @@
     </li>
   </ul>
 
-  <button class="btn btn-outline-primary" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+  <button class="btn btn-outline-secondary" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
     {{ getTranslation('NEXT') }} <i class="bi bi-arrow-right-circle"></i>
   </button>
 </nav>
 
-<div *ngIf="isDeleteConfirmationOpen" class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div *ngIf="isDeleteConfirmationOpen" class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
     <div class="modal-content border-danger shadow">
       <div class="modal-header bg-danger text-white">
         <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>{{ getTranslation('DELETE_CONFIRM') }}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeDeleteConfirmation()"></button>
       </div>
       <div class="modal-body">
-        {{ getTranslation('CONFIRM_COMPANY_DELETE') }} <strong>{{ companyToDelete?.name }}</strong> {{ getTranslation('LOCATED') }} <strong>{{ companyToDelete?.location }}</strong>?
+        <p class="mb-1">{{ getTranslation('CONFIRM_COMPANY_DELETE') }}</p>
+        <p><strong>{{ companyToDelete?.name }}</strong> – {{ getTranslation('LOCATED') }} <strong>{{ companyToDelete?.location }}</strong>?</p>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="closeDeleteConfirmation()">{{ getTranslation('CANCEL') }}</button>
-        <button class="btn btn-danger" (click)="confirmDeleteCompany()">{{ getTranslation('DELETE') }}</button>
+      <div class="modal-footer d-flex justify-content-between">
+        <button class="btn btn-secondary btn-sm" (click)="closeDeleteConfirmation()">{{ getTranslation('CANCEL') }}</button>
+        <button class="btn btn-danger btn-sm" (click)="confirmDeleteCompany()">{{ getTranslation('DELETE') }}</button>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="isFormOpen" class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+
+<div *ngIf="isFormOpen" class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content border-primary shadow">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title">
           <i class="bi" [ngClass]="editingCompany ? 'bi-pencil-square' : 'bi-plus-square'"></i>
-          {{ editingCompany ? 'Edit Company' : 'Add New Company' }}
+          {{ editingCompany ? getTranslation('EDIT_COMPANY') : getTranslation('ADD_COMPANY') }}
         </h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
       </div>
       <div class="modal-body">
-        <app-companies-form *ngIf="isFormOpen"
-                            [companyToEdit]="editingCompany"
+        <app-companies-form [companyToEdit]="editingCompany"
                             (companyAdded)="addCompanyToList($event)"
                             (closeForm)="closeForm()">
         </app-companies-form>

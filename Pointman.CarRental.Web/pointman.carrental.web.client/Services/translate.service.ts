@@ -74,7 +74,9 @@ export class TranslateService {
       SIGN_IN_TITTLE: 'Sign In',
       SIGN_UP_TITTLE: 'Sign Up',
       LAST_NAME:'Last name',
-      FIRST_NAME: 'First name'
+      FIRST_NAME: 'First name',
+      EDIT_COMPANY: 'Edit company',
+      COMPANY_LIST: 'Companies list'
 
     },
     pl: {
@@ -146,7 +148,9 @@ export class TranslateService {
       SIGN_IN_TITTLE: 'Logowanie',
       SIGN_UP_TITTLE: 'Rejestracja',
       LAST_NAME: 'Nazwisko',
-      FIRST_NAME: 'Imię'
+      FIRST_NAME: 'Imię',
+      EDIT_COMPANY: 'Edytuj wypożyczalnie',
+      COMPANY_LIST: 'Lista wypożyczalni'
     },
   };
 

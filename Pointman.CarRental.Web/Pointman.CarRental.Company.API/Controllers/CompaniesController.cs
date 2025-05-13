@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace Pointman.CarRental.Company.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Wymaga JWT (każdy użytkownik z ważnym tokenem)
+    [Authorize]
     public class CompaniesController : ControllerBase
     {
         private readonly CompanyService _companyService;
@@ -30,15 +29,11 @@ namespace Pointman.CarRental.Company.API.Controllers
         public async Task<ActionResult<RentCompanyViewModel>> GetCompany(int id)
         {
             var company = await _companyService.GetCompanyByIdAsync(id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-            return Ok(company);
+            return company == null ? NotFound() : Ok(company);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddCompany([FromBody] RentCompanyViewModel model)
+        public async Task<ActionResult<RentCompanyViewModel>> AddCompany([FromBody] RentCompanyViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -64,24 +59,14 @@ namespace Pointman.CarRental.Company.API.Controllers
             }
 
             var result = await _companyService.UpdateCompanyAsync(id, model);
-            if (!result)
-            {
-                return StatusCode(500, "Failed to update company.");
-            }
-
-            return NoContent();
+            return result ? NoContent() : StatusCode(500, "Failed to update company.");
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompany(int id)
         {
             var result = await _companyService.DeleteCompanyAsync(id);
-            if (!result)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            return result ? NoContent() : NotFound();
         }
     }
 }
