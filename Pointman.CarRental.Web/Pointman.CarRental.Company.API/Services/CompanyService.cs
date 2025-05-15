@@ -16,36 +16,36 @@ namespace Pointman.CarRental.Company.API.Services
             _context = context;
         }
 
-        public async Task<List<RentCompanyViewModel>> GetAllCompaniesAsync()
+        public async Task<List<RentCompany>> GetAllCompaniesAsync()
         {
             return await _context.RentCompanies
                 .Include(c => c.Location)
-                .Select(c => new RentCompanyViewModel
+                .Select(c => new RentCompany
                 {
                     Id = c.Id,
                     Name = c.Name,
                     TelephoneNumber = c.TelephoneNumber,
-                    Location = c.Location.City
+                    Location = new Location { City = c.Location.City }
                 })
                 .ToListAsync();
         }
 
-        public async Task<RentCompanyViewModel> GetCompanyByIdAsync(int id)
+        public async Task<RentCompany> GetCompanyByIdAsync(int id)
         {
             return await _context.RentCompanies
                 .Include(c => c.Location)
                 .Where(c => c.Id == id)
-                .Select(c => new RentCompanyViewModel
+                .Select(c => new RentCompany
                 {
                     Id = c.Id,
                     Name = c.Name,
                     TelephoneNumber = c.TelephoneNumber,
-                    Location = c.Location.City
+                    Location = new Location { City = c.Location.City }
                 })
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> AddCompanyAsync(RentCompanyViewModel model)
+        public async Task<bool> AddCompanyAsync(RentCompany model)
         {
             var newCompany = new RentCompany
             {
@@ -53,7 +53,7 @@ namespace Pointman.CarRental.Company.API.Services
                 TelephoneNumber = model.TelephoneNumber,
                 Location = new Location
                 {
-                    City = model.Location
+                    City = model.Location?.City
                 }
             };
 
@@ -62,22 +62,22 @@ namespace Pointman.CarRental.Company.API.Services
             return result > 0;
         }
 
-        public async Task<RentCompanyViewModel> GetCompanyByNameAsync(string name)
+        public async Task<RentCompany> GetCompanyByNameAsync(string name)
         {
             return await _context.RentCompanies
                 .Include(c => c.Location)
                 .Where(c => c.Name == name)
-                .Select(c => new RentCompanyViewModel
+                .Select(c => new RentCompany
                 {
                     Id = c.Id,
                     Name = c.Name,
                     TelephoneNumber = c.TelephoneNumber,
-                    Location = c.Location.City
+                    Location = new Location { City = c.Location.City }
                 })
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> UpdateCompanyAsync(int id, RentCompanyViewModel model)
+        public async Task<bool> UpdateCompanyAsync(int id, RentCompany model)
         {
             var existingCompany = await _context.RentCompanies
                 .Include(c => c.Location)
@@ -93,11 +93,11 @@ namespace Pointman.CarRental.Company.API.Services
 
             if (existingCompany.Location == null)
             {
-                existingCompany.Location = new Location { City = model.Location };
+                existingCompany.Location = new Location { City = model.Location?.City };
             }
             else
             {
-                existingCompany.Location.City = model.Location;
+                existingCompany.Location.City = model.Location?.City;
             }
 
             try
@@ -107,9 +107,10 @@ namespace Pointman.CarRental.Company.API.Services
             }
             catch
             {
-                return false; 
+                return false;
             }
         }
+
         public async Task<bool> DeleteCompanyAsync(int id)
         {
             var company = await _context.RentCompanies.FindAsync(id);

@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Services;
-
+using Pointman.CarRental.Company.API.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Pointman.CarRental.Company.API.Mappers;
 
 namespace Pointman.CarRental.Company.API.Controllers
 {
@@ -22,43 +26,47 @@ namespace Pointman.CarRental.Company.API.Controllers
         public async Task<ActionResult<IEnumerable<RentCompanyViewModel>>> GetCompanies()
         {
             var companies = await _companyService.GetAllCompaniesAsync();
-            return Ok(companies);
+            var viewModels = companies.Select(RentCompanyMapper.ToViewModel);
+            return Ok(viewModels);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<RentCompanyViewModel>> GetCompany(int id)
         {
             var company = await _companyService.GetCompanyByIdAsync(id);
-            return company == null ? NotFound() : Ok(company);
+            if (company == null)
+                return NotFound();
+
+            var viewModel = RentCompanyMapper.ToViewModel(company);
+            return Ok(viewModel);
         }
 
         [HttpPost]
         public async Task<ActionResult<RentCompanyViewModel>> AddCompany([FromBody] RentCompanyViewModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            var result = await _companyService.AddCompanyAsync(model);
+            var entity = RentCompanyMapper.ToEntity(model);
+            var result = await _companyService.AddCompanyAsync(entity);
+
             if (!result)
-            {
                 return StatusCode(500, "Failed to add company.");
-            }
 
             var newCompany = await _companyService.GetCompanyByNameAsync(model.Name);
-            return CreatedAtAction(nameof(GetCompany), new { id = newCompany.Id }, newCompany);
+            var newViewModel = RentCompanyMapper.ToViewModel(newCompany);
+
+            return CreatedAtAction(nameof(GetCompany), new { id = newCompany.Id }, newViewModel);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCompany(int id, [FromBody] RentCompanyViewModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            var result = await _companyService.UpdateCompanyAsync(id, model);
+            var entity = RentCompanyMapper.ToEntity(model);
+            var result = await _companyService.UpdateCompanyAsync(id, entity);
             return result ? NoContent() : StatusCode(500, "Failed to update company.");
         }
 
