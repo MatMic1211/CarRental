@@ -16,17 +16,19 @@ namespace Pointman.CarRental.Company.API.Controllers
     public class CompaniesController : ControllerBase
     {
         private readonly CompanyService _companyService;
+        private readonly IRentCompanyMapper _rentCompanyMapper;
 
-        public CompaniesController(CompanyService companyService)
+        public CompaniesController(CompanyService companyService, IRentCompanyMapper rentCompanyMapper)
         {
             _companyService = companyService;
+            _rentCompanyMapper = rentCompanyMapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RentCompanyViewModel>>> GetCompanies()
         {
             var companies = await _companyService.GetAllCompaniesAsync();
-            var viewModels = companies.Select(RentCompanyMapper.ToViewModel);
+            var viewModels = companies.Select(_rentCompanyMapper.ToViewModel);
             return Ok(viewModels);
         }
 
@@ -37,7 +39,7 @@ namespace Pointman.CarRental.Company.API.Controllers
             if (company == null)
                 return NotFound();
 
-            var viewModel = RentCompanyMapper.ToViewModel(company);
+            var viewModel = _rentCompanyMapper.ToViewModel(company);
             return Ok(viewModel);
         }
 
@@ -47,14 +49,14 @@ namespace Pointman.CarRental.Company.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var entity = RentCompanyMapper.ToEntity(model);
+            var entity = _rentCompanyMapper.ToEntity(model);
             var result = await _companyService.AddCompanyAsync(entity);
 
             if (!result)
                 return StatusCode(500, "Failed to add company.");
 
             var newCompany = await _companyService.GetCompanyByNameAsync(model.Name);
-            var newViewModel = RentCompanyMapper.ToViewModel(newCompany);
+            var newViewModel = _rentCompanyMapper.ToViewModel(newCompany);
 
             return CreatedAtAction(nameof(GetCompany), new { id = newCompany.Id }, newViewModel);
         }
@@ -65,7 +67,7 @@ namespace Pointman.CarRental.Company.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var entity = RentCompanyMapper.ToEntity(model);
+            var entity = _rentCompanyMapper.ToEntity(model);
             var result = await _companyService.UpdateCompanyAsync(id, entity);
             return result ? NoContent() : StatusCode(500, "Failed to update company.");
         }

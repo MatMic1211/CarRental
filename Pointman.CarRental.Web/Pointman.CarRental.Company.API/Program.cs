@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Pointman.CarRental.Company.API;
 using Pointman.CarRental.Company.API.Entities;
+using Pointman.CarRental.Company.API.Mappers;
 using Pointman.CarRental.Company.API.Services;
 using System.Text;
 
@@ -65,6 +66,7 @@ builder.Services.AddDbContext<CompanyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<CompanyService>();
+builder.Services.AddScoped<IRentCompanyMapper, RentCompanyMapper>();
 builder.Services.AddScoped<MeetUpSeeder>();
 builder.Services.AddCors(options =>
 {

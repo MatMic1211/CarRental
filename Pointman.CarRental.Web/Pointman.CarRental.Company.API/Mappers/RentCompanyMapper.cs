@@ -3,9 +3,9 @@ using Pointman.CarRental.Company.API.Models;
 
 namespace Pointman.CarRental.Company.API.Mappers
 {
-    public static class RentCompanyMapper
+    public class RentCompanyMapper : IRentCompanyMapper
     {
-        public static RentCompany ToEntity(RentCompanyViewModel viewModel)
+        public RentCompany ToEntity(RentCompanyViewModel viewModel)
         {
             return new RentCompany
             {
@@ -18,7 +18,7 @@ namespace Pointman.CarRental.Company.API.Mappers
             };
         }
 
-        public static RentCompanyViewModel ToViewModel(RentCompany entity)
+        public RentCompanyViewModel ToViewModel(RentCompany entity)
         {
             return new RentCompanyViewModel
             {
