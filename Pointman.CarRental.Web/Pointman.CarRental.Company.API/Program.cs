@@ -66,6 +66,8 @@ builder.Services.AddDbContext<CompanyContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<CompanyService>();
+builder.Services.AddScoped<ICarMapper, CarMapper>();
+builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<IRentCompanyMapper, RentCompanyMapper>();
 builder.Services.AddScoped<MeetUpSeeder>();
 builder.Services.AddCors(options =>

@@ -1,87 +1,81 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pointman.CarRental.Company.API.Entities;
+using Pointman.CarRental.Company.API.Models;
+using Pointman.CarRental.Company.API.Services;
+using Pointman.CarRental.Company.API.Mappers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pointman.CarRental.Company.API.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/cars")]
     [Authorize]
     public class CarsController : ControllerBase
     {
-        private readonly CompanyContext _context;
+        private readonly CarService _carService;
+        private readonly ICarMapper _carMapper;
 
-        public CarsController(CompanyContext context)
+        public CarsController(CarService carService, ICarMapper carMapper)
         {
-            _context = context;
+            _carService = carService;
+            _carMapper = carMapper;
         }
 
         [HttpGet]
-        public IActionResult GetCars()
+        public async Task<ActionResult<IEnumerable<CarViewModel>>> GetCars()
         {
-            var cars = _context.Cars.ToList();
-            return Ok(cars);
+            var cars = await _carService.GetAllCarsAsync();
+            var viewModels = cars.Select(_carMapper.ToViewModel);
+            return Ok(viewModels);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCarById(int id)
+        public async Task<ActionResult<CarViewModel>> GetCar(int id)
         {
-            var car = _context.Cars.FirstOrDefault(c => c.Id == id);
+            var car = await _carService.GetCarByIdAsync(id);
             if (car == null)
-            {
-                return NotFound(new { Message = "Car not found" });
-            }
-            return Ok(car);
+                return NotFound();
+
+            var viewModel = _carMapper.ToViewModel(car);
+            return Ok(viewModel);
         }
 
         [HttpPost]
-        public IActionResult AddCar([FromBody] Car newCar)
+        public async Task<ActionResult<CarViewModel>> AddCar([FromBody] CarViewModel model)
         {
-            if (newCar == null || string.IsNullOrEmpty(newCar.Model) || string.IsNullOrEmpty(newCar.Brand))
-            {
-                return BadRequest(new { Message = "Invalid data" });
-            }
-            _context.Cars.Add(newCar);
-            _context.SaveChanges();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return CreatedAtAction(nameof(GetCarById), new { id = newCar.Id }, newCar);
-        }
+            var entity = _carMapper.ToEntity(model);
+            var result = await _carService.AddCarAsync(entity);
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteCar(int id)
-        {
-            var car = _context.Cars.FirstOrDefault(c => c.Id == id);
-            if (car == null)
-            {
-                return NotFound(new { Message = "Car not found" });
-            }
+            if (!result)
+                return StatusCode(500, "Failed to add car.");
 
-            _context.Cars.Remove(car);
-            _context.SaveChanges();
+            var newCar = await _carService.GetCarByModelAsync(model.Model);
+            var newViewModel = _carMapper.ToViewModel(newCar);
 
-            return NoContent();
+            return CreatedAtAction(nameof(GetCar), new { id = newCar.Id }, newViewModel);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCar(int id, [FromBody] Car updatedCar)
+        public async Task<IActionResult> UpdateCar(int id, [FromBody] CarViewModel model)
         {
-            if (updatedCar == null || string.IsNullOrEmpty(updatedCar.Model) || string.IsNullOrEmpty(updatedCar.Brand))
-            {
-                return BadRequest(new { Message = "Invalid data" });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var car = _context.Cars.FirstOrDefault(c => c.Id == id);
-            if (car == null)
-            {
-                return NotFound(new { Message = "Car not found" });
-            }
+            var entity = _carMapper.ToEntity(model);
+            var result = await _carService.UpdateCarAsync(id, entity);
+            return result ? NoContent() : StatusCode(500, "Failed to update car.");
+        }
 
-            car.Model = updatedCar.Model;
-            car.Brand = updatedCar.Brand;
-            _context.Cars.Update(car);
-            _context.SaveChanges();
-
-            return Ok(car);
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCar(int id)
+        {
+            var result = await _carService.DeleteCarAsync(id);
+            return result ? NoContent() : NotFound();
         }
     }
 }
