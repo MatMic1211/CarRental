@@ -9,6 +9,7 @@ import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rental
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'home', component: MainPageComponent },
+  { path: 'cars', component: CarListComponent },
   { path: 'companies', component: CompaniesListComponent },
   { path: 'company/cars', component: CarListComponent },
   { path: 'company/rentals', component: CompanyRentalsComponent }

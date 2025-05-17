@@ -163,13 +163,8 @@ export class CarListComponent implements OnInit {
 
   editCar(): void {
     this.carService.updateCar(this.editCarData.id, this.editCarData).subscribe({
-      next: (updatedCar) => {
-        const index = this.cars.findIndex(car => car.id === updatedCar.id);
-        if (index !== -1) {
-          this.cars[index] = updatedCar;
-        }
-        this.updateUniqueBrands(); 
-        this.applyFilters();
+      next: () => {
+        this.loadCars(); 
         this.closeEditCarModal();
         this.errorMessage = '';
       },
