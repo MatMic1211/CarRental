@@ -27,7 +27,6 @@ export class CarListComponent implements OnInit {
   itemsPerPage: number = 9;
   totalPages: number = 0;
 
-
   constructor(private carService: CarService, public translateService: TranslateService) { }
 
   ngOnInit(): void {
@@ -37,9 +36,10 @@ export class CarListComponent implements OnInit {
   getTranslation(key: string): string {
     return this.translateService.translate(key);
   }
+
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
-    this.applyFilters(); 
+    this.applyFilters();
   }
 
   loadCars(): void {
@@ -59,7 +59,8 @@ export class CarListComponent implements OnInit {
   }
 
   updateUniqueBrands(): void {
-    this.uniqueBrands = [...new Set(this.cars.map(car => car.brand))];
+    const brandSet = new Set(this.cars.map(car => car.brand));
+    this.uniqueBrands = Array.from(brandSet);
   }
 
   applyFilters(): void {
@@ -106,7 +107,7 @@ export class CarListComponent implements OnInit {
       next: (car) => {
         this.cars.push(car);
         this.updateUniqueBrands();
-        this.applyFilters(); 
+        this.applyFilters();
         this.closeAddCarModal();
         this.newCar = { model: '', brand: '' };
         this.errorMessage = '';
@@ -140,7 +141,7 @@ export class CarListComponent implements OnInit {
       this.carService.deleteCar(this.carToDeleteId).subscribe({
         next: () => {
           this.cars = this.cars.filter(car => car.id !== this.carToDeleteId);
-          this.updateUniqueBrands(); 
+          this.updateUniqueBrands();
           this.applyFilters();
           this.closeConfirmDeleteModal();
           this.errorMessage = '';
@@ -164,7 +165,7 @@ export class CarListComponent implements OnInit {
   editCar(): void {
     this.carService.updateCar(this.editCarData.id, this.editCarData).subscribe({
       next: () => {
-        this.loadCars(); 
+        this.loadCars();
         this.closeEditCarModal();
         this.errorMessage = '';
       },
