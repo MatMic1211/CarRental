@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Pointman.CarRental.Company.API.Entities;
 using Pointman.CarRental.Company.API.Models;
@@ -38,6 +39,12 @@ namespace Pointman.CarRental.Company.API.Controllers
                 Password = model.Password
             };
 
+            var defaultRole = _context.UserRoles.FirstOrDefault(r => r.Name == "User");
+            if (defaultRole != null)
+            {
+                user.Roles.Add(defaultRole);
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -47,18 +54,26 @@ namespace Pointman.CarRental.Company.API.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginUserViewModel model)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+            var user = _context.Users
+                .Include(u => u.Roles)
+                .FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+
             if (user == null)
             {
                 return Unauthorized(new { message = "Nieprawidłowy email lub hasło." });
             }
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.FirstName)
             };
+
+            foreach (var role in user.Roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -82,6 +97,13 @@ namespace Pointman.CarRental.Company.API.Controllers
         public IActionResult GetSecureData()
         {
             return Ok("Tylko dla zalogowanych użytkowników.");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin")]
+        public IActionResult AdminOnlyData()
+        {
+            return Ok("Tylko dla administratorów.");
         }
     }
 }
