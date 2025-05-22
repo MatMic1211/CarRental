@@ -1,77 +1,66 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3 class="text-primary fw-bold mb-0">
-    <i class="bi bi-building-fill me-2"></i>{{ getTranslation('COMPANY_LIST') }}
-  </h3>
-  <button class="btn btn-primary btn-lg d-flex align-items-center gap-2 shadow-sm" (click)="openForm()">
-    <i class="bi bi-plus-circle-fill fs-5"></i>
-    <span class="fw-semibold">{{ getTranslation('ADD_COMPANY') }}</span>
-  </button>
-</div>
+<div class="container py-5">
+  <div class="text-center mb-4">
+    <h2 class="text-primary fw-bold">
+      <i class="bi bi-building-fill me-2"></i>{{ getTranslation('COMPANY_LIST') }}
+    </h2>
+  </div>
 
-<div class="table-responsive rounded border border-2 border-primary shadow-sm">
-  <table class="table table-hover table-bordered align-middle mb-0">
-    <thead class="bg-gradient text-white text-center" style="background: linear-gradient(to right, #0d6efd, #0b5ed7);">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col"><i class="bi bi-building me-1"></i>{{ getTranslation('COMPANY_NAME') }}</th>
-        <th scope="col"><i class="bi bi-geo-alt me-1"></i>{{ getTranslation('COMPANY_LOCATION') }}</th>
-        <th scope="col"><i class="bi bi-telephone me-1"></i>{{ getTranslation('COMPANY_PHONE_NUMBER') }}</th>
-        <th scope="col"><i class="bi bi-tools me-1"></i>{{ getTranslation('COMPANY_ACTIONS') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let company of paginatedCompanies; let i = index">
-        <th scope="row" class="text-center bg-light">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
-        <td class="fw-semibold text-primary text-center">{{ company.name }}</td>
-        <td class="text-center"><span class="badge bg-light text-dark border">{{ company.location }}</span></td>
-        <td class="text-center">{{ company.telephoneNumber }}</td>
-        <td class="text-center">
-          <div class="btn-group btn-group-sm">
-            <button class="btn btn-outline-success" (click)="editCompany(company)" title="Edytuj" data-bs-toggle="tooltip">
+  <div class="text-end mb-4">
+    <button class="btn btn-gradient-primary px-4 py-2" (click)="openForm()">
+      <i class="bi bi-plus-circle-fill me-2"></i> {{ getTranslation('ADD_COMPANY') }}
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center shadow-sm">
+      <thead class="table-primary">
+        <tr>
+          <th>#</th>
+          <th>{{ getTranslation('COMPANY_NAME') }}</th>
+          <th>{{ getTranslation('COMPANY_LOCATION') }}</th>
+          <th>{{ getTranslation('COMPANY_PHONE_NUMBER') }}</th>
+          <th>{{ getTranslation('ACTIONS') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of paginatedCompanies; let i = index">
+          <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+          <td>{{ company.name }}</td>
+          <td>{{ company.location }}</td>
+          <td>{{ company.telephoneNumber }}</td>
+          <td>
+            <button class="btn btn-outline-success btn-sm me-2" (click)="editCompany(company)" title="{{ getTranslation('EDIT') }}">
               <i class="bi bi-pencil-square"></i>
             </button>
-            <button class="btn btn-outline-danger" (click)="openDeleteConfirmation(company)" title="Usuń" data-bs-toggle="tooltip">
+            <button class="btn btn-outline-danger btn-sm" (click)="openDeleteConfirmation(company)" title="{{ getTranslation('DELETE') }}">
               <i class="bi bi-trash"></i>
             </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<nav class="d-flex justify-content-between align-items-center mt-3">
-  <button class="btn btn-outline-secondary" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
-    <i class="bi bi-arrow-left-circle"></i> {{ getTranslation('PREVIOUS') }}
-  </button>
 
-  <ul class="pagination mb-0">
-    <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="currentPage === i + 1">
-      <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
-    </li>
-  </ul>
+  <div class="d-flex justify-content-center align-items-center mt-4">
+    <button class="btn btn-outline-primary me-2"
+            (click)="goToPage(currentPage - 1)"
+            [disabled]="currentPage === 1">
+      {{ getTranslation('PREVIOUS') }}
+    </button>
 
-  <button class="btn btn-outline-secondary" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
-    {{ getTranslation('NEXT') }} <i class="bi bi-arrow-right-circle"></i>
-  </button>
-</nav>
+    <ul class="pagination mb-0">
+      <li *ngFor="let page of [].constructor(totalPages); let i = index"
+          class="page-item" [class.active]="currentPage === i + 1">
+        <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+      </li>
+    </ul>
 
-<div *ngIf="isDeleteConfirmationOpen" class="modal fade show d-block" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content border-danger shadow">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>{{ getTranslation('DELETE_CONFIRM') }}</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeDeleteConfirmation()"></button>
-      </div>
-      <div class="modal-body">
-        <p class="mb-1">{{ getTranslation('CONFIRM_COMPANY_DELETE') }}</p>
-        <p><strong>{{ companyToDelete?.name }}</strong> – {{ getTranslation('LOCATED') }} <strong>{{ companyToDelete?.location }}</strong>?</p>
-      </div>
-      <div class="modal-footer d-flex justify-content-between">
-        <button class="btn btn-secondary btn-sm" (click)="closeDeleteConfirmation()">{{ getTranslation('CANCEL') }}</button>
-        <button class="btn btn-danger btn-sm" (click)="confirmDeleteCompany()">{{ getTranslation('DELETE') }}</button>
-      </div>
-    </div>
+    <button class="btn btn-outline-primary ms-2"
+            (click)="goToPage(currentPage + 1)"
+            [disabled]="currentPage === totalPages">
+      {{ getTranslation('NEXT') }}
+    </button>
   </div>
 </div>
 
@@ -84,13 +73,34 @@
           <i class="bi" [ngClass]="editingCompany ? 'bi-pencil-square' : 'bi-plus-square'"></i>
           {{ editingCompany ? getTranslation('EDIT_COMPANY') : getTranslation('ADD_COMPANY') }}
         </h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
+        <button type="button" class="btn-close" (click)="closeForm()"></button>
       </div>
       <div class="modal-body">
         <app-companies-form [companyToEdit]="editingCompany"
                             (companyAdded)="addCompanyToList($event)"
                             (closeForm)="closeForm()">
         </app-companies-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isDeleteConfirmationOpen" class="modal fade show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content border-danger shadow">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ getTranslation('DELETE_CONFIRM') }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeDeleteConfirmation()"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-1">{{ getTranslation('CONFIRM_COMPANY_DELETE') }}</p>
+        <p><strong>{{ companyToDelete?.name }}</strong> – {{ getTranslation('LOCATED') }} <strong>{{ companyToDelete?.location }}</strong>?</p>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button class="btn btn-secondary btn-sm" (click)="closeDeleteConfirmation()">{{ getTranslation('CANCEL') }}</button>
+        <button class="btn btn-danger btn-sm" (click)="confirmDeleteCompany()">{{ getTranslation('DELETE') }}</button>
       </div>
     </div>
   </div>

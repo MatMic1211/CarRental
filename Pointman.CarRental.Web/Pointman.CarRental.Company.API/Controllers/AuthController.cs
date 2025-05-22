@@ -39,7 +39,7 @@ namespace Pointman.CarRental.Company.API.Controllers
                 Password = model.Password
             };
 
-            var defaultRole = _context.UserRoles.FirstOrDefault(r => r.Name == "User");
+            var defaultRole = _context.UserRoles.FirstOrDefault(r => r.Name == "Admin");
             if (defaultRole != null)
             {
                 user.Roles.Add(defaultRole);
