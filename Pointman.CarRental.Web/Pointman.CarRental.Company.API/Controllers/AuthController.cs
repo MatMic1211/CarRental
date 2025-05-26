@@ -39,11 +39,13 @@ namespace Pointman.CarRental.Company.API.Controllers
                 Password = model.Password
             };
 
-            var defaultRole = _context.UserRoles.FirstOrDefault(r => r.Name == "Admin");
-            if (defaultRole != null)
+            var selectedRole = await _context.UserRoles.FirstOrDefaultAsync(r => r.Name == model.RoleName);
+            if (selectedRole == null)
             {
-                user.Roles.Add(defaultRole);
+                return BadRequest(new { message = "Niepoprawna rola użytkownika." });
             }
+
+            user.Roles.Add(selectedRole);
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

@@ -28,13 +28,15 @@ export class SignUpComponent {
     this.isLoginMode = !this.isLoginMode;
   }
 
+  role = 'User';
+
   registerUser() {
     if (this.password !== this.confirmPassword) {
       alert('Hasła nie są takie same!');
       return;
     }
 
-    this.authService.register(this.email, this.password, this.firstName, this.lastName).subscribe(
+    this.authService.register(this.email, this.password, this.firstName, this.lastName, this.role).subscribe(
       response => {
         alert('Rejestracja zakończona pomyślnie!');
         this.closeSignUpModal();

@@ -1,33 +1,74 @@
 .btn-gradient-primary {
-  background: linear-gradient(45deg, #3b82f6, #06b6d4);
+  background: linear-gradient(135deg, #1c1c1c, #0f4c81);
   border: none;
   color: white;
-  transition: background 0.3s ease;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
 }
 
   .btn-gradient-primary:hover {
-    background: linear-gradient(45deg, #06b6d4, #3b82f6);
+    background: linear-gradient(135deg, #0f4c81, #1c1c1c);
+    transform: scale(1.05);
   }
+
 
 .card {
   border-radius: 16px;
-  transition: transform 0.2s ease;
+  background-color: #f8f9fa;
+  border: none;
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
   .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
   }
 
-.card-title {
-  font-size: 1.25rem;
+.table {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(15, 76, 129, 0.15);
 }
 
+  .table thead {
+    background: #0f4c81;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f0f0f0;
+  }
+
 .page-item.active .page-link {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: #0f4c81;
+  border-color: #0f4c81;
   color: white;
+  font-weight: bold;
 }
 
 .page-link {
-  cursor: pointer;
+  color: #0f4c81;
+  transition: background 0.3s ease;
+}
+
+  .page-link:hover {
+    background-color: #e2e6ea;
+  }
+
+.modal-header.bg-primary {
+  background-color: #0f4c81 !important;
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
+.modal-header.bg-danger {
+  background-color: #d62828 !important;
 }

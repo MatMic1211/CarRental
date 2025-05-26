@@ -38,6 +38,10 @@ namespace Pointman.CarRental.Company.API.Entities
                     j => j.HasOne<UserRole>().WithMany().HasForeignKey("UserRoleId"),
                     j => j.HasKey("UserRoleId", "UserPermissionId")
                 );
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole { Id = 1, Name = "User" },
+                new UserRole { Id = 2, Name = "Admin" }
+);
         }
     }
 }
