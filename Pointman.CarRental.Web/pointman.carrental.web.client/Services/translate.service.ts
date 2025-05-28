@@ -76,7 +76,9 @@ export class TranslateService {
       LAST_NAME:'Last name',
       FIRST_NAME: 'First name',
       EDIT_COMPANY: 'Edit company',
-      COMPANY_LIST: 'Companies list'
+      COMPANY_LIST: 'Companies list',
+      ROLE: 'Role',
+      USER: 'User',
 
     },
     pl: {
@@ -150,7 +152,9 @@ export class TranslateService {
       LAST_NAME: 'Nazwisko',
       FIRST_NAME: 'Imię',
       EDIT_COMPANY: 'Edytuj wypożyczalnie',
-      COMPANY_LIST: 'Lista wypożyczalni'
+      COMPANY_LIST: 'Lista wypożyczalni',
+      ROLE: 'Rola',
+      USER: 'Użytkownik',
     },
   };
 

@@ -11,7 +11,7 @@ namespace Pointman.CarRental.Company.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class CarsController : ControllerBase
     {
         private readonly CarService _carService;

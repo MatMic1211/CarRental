@@ -33,11 +33,11 @@
             <input type="password" class="form-control" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
           </div>
 
-          <div class="mb-3">
+          <div *ngIf="!isLoginMode" class="mb-3">
             <label for="role" class="form-label">{{ getTranslation('ROLE') }}</label>
             <select class="form-select" id="role" [(ngModel)]="role" name="role" required>
-              <option value="User">User</option>
-              <option value="Admin">Admin</option>
+              <option value="User">{{ getTranslation('USER')}}</option>
+              <option value="Admin">{{ getTranslation('ADMIN') }}</option>
             </select>
           </div>
 

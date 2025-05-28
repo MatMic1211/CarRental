@@ -21,6 +21,7 @@ export class AuthService {
     });
   }
 
+
   login(email: string, password: string): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
@@ -28,6 +29,7 @@ export class AuthService {
       })
     );
   }
+
 
   logout(): void {
     localStorage.removeItem('jwtToken');
