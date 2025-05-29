@@ -69,7 +69,6 @@ builder.Services.AddScoped<CompanyService>();
 builder.Services.AddScoped<ICarMapper, CarMapper>();
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<IRentCompanyMapper, RentCompanyMapper>();
-builder.Services.AddScoped<MeetUpSeeder>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
