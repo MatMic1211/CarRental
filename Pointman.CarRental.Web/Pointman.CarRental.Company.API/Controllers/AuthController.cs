@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Pointman.CarRental.Company.API.Entities;
-using Pointman.CarRental.Company.API.Models;
+using Pointman.CarRental.Company.API.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -92,20 +92,6 @@ namespace Pointman.CarRental.Company.API.Controllers
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
-        }
-
-        [Authorize]
-        [HttpGet("secure")]
-        public IActionResult GetSecureData()
-        {
-            return Ok("Tylko dla zalogowanych użytkowników.");
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("admin")]
-        public IActionResult AdminOnlyData()
-        {
-            return Ok("Tylko dla administratorów.");
         }
     }
 }
