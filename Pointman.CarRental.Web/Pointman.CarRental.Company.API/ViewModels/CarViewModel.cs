@@ -1,9 +1,12 @@
-﻿namespace Pointman.CarRental.Company.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Pointman.CarRental.Company.API.Models
 {
-    public class CarViewModel
+    public class CarViewModel : EntityViewModel
     {
-        public int Id { get; set; }
+        [Required]
         public string Model { get; set; }
+        [Required]
         public string Brand { get; set; }
     }
 }
