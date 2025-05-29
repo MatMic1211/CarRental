@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pointman.CarRental.Company.API.Entities;
-using Pointman.CarRental.Company.API.Models;
+
 
 namespace Pointman.CarRental.Company.API.Services
 {

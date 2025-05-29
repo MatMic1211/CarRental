@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Services;
-using Pointman.CarRental.Company.API.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Pointman.CarRental.Company.API.Mappers;
 
 namespace Pointman.CarRental.Company.API.Controllers

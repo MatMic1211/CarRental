@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Pointman.CarRental.Company.API.Attributes
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

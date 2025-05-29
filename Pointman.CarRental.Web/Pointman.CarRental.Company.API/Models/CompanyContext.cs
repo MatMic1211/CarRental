@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace Pointman.CarRental.Company.API.Entities
 {

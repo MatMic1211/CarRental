@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Pointman.CarRental.Company.API;
 using Pointman.CarRental.Company.API.Entities;
 using Pointman.CarRental.Company.API.Mappers;
 using Pointman.CarRental.Company.API.Services;

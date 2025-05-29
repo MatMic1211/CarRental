@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pointman.CarRental.Company.API.Entities;
-using System.Collections.Generic;
-
+﻿
 namespace Pointman.CarRental.Company.API.Entities
 {
     public class UserRegistraion

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace Pointman.CarRental.Company.API.Entities
 {
     public class UserRole

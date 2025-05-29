@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Services;
 using Pointman.CarRental.Company.API.Mappers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pointman.CarRental.Company.API.Controllers
 {

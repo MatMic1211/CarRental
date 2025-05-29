@@ -1,6 +1,5 @@
 ﻿using Pointman.CarRental.Company.API.Attributes;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace Pointman.CarRental.Company.API.Entities
 {

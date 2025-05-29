@@ -7,7 +7,6 @@ export interface Car {
   id: number;
   brand: string;
   model: string;
-  // Dodaj inne właściwości jeśli masz więcej pól w CarViewModel
 }
 
 @Injectable({

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pointman.CarRental.Company.API.Entities;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pointman.CarRental.Company.API.Services
 {
