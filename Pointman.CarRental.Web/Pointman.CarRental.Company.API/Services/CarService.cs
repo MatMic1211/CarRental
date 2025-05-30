@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pointman.CarRental.Company.API.Entities;
 
-
 namespace Pointman.CarRental.Company.API.Services
 {
-    public class CarService
+    public class CarService : ICarService
     {
         private readonly CompanyContext _context;
 

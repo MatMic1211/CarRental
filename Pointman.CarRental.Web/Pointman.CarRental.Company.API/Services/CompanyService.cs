@@ -4,7 +4,7 @@ using Pointman.CarRental.Company.API.Entities;
 
 namespace Pointman.CarRental.Company.API.Services
 {
-    public class CompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly CompanyContext _context;
 

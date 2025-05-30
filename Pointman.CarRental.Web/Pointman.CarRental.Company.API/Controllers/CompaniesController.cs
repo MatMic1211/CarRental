@@ -11,10 +11,10 @@ namespace Pointman.CarRental.Company.API.Controllers
     [Authorize(Roles = "Admin")]
     public class CompaniesController : ControllerBase
     {
-        private readonly CompanyService _companyService;
+        private readonly ICompanyService _companyService;
         private readonly IRentCompanyMapper _rentCompanyMapper;
 
-        public CompaniesController(CompanyService companyService, IRentCompanyMapper rentCompanyMapper)
+        public CompaniesController(ICompanyService companyService, IRentCompanyMapper rentCompanyMapper)
         {
             _companyService = companyService;
             _rentCompanyMapper = rentCompanyMapper;
