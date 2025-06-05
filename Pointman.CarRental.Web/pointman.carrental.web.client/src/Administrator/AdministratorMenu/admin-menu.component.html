@@ -45,9 +45,15 @@
             <li><a class="dropdown-item" (click)="changeLanguage('en')"><img src="assets/Images/png/flags/uk_flag.png" alt="EN" class="flag-icon"> English</a></li>
           </ul>
         </div>
-        <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="openSignUpModal()">
-          {{ getTranslation('SIGN_UP') }}
+        <button *ngIf="authService.isLoggedIn(); else signUpButton" class="btn btn-outline-danger rounded-pill px-4 shadow-sm" (click)="logout()">
+          {{ getTranslation('LOGOUT') }}
         </button>
+
+        <ng-template #signUpButton>
+          <button class="btn btn-primary rounded-pill px-4 shadow-sm" (click)="openSignUpModal()">
+            {{ getTranslation('SIGN_UP') }}
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>
