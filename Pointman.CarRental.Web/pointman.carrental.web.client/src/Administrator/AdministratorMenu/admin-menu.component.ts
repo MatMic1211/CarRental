@@ -68,6 +68,7 @@ export class AdminMenuComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+
   openSignUpModal() {
     this.showModal = true;
   }

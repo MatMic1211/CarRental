@@ -13,22 +13,26 @@
             {{ getTranslation('HOME') }}
           </a>
         </li>
-        <li class="nav-item">
+
+        <li class="nav-item" *ngIf="authService.isAdmin()">
           <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/companies" routerLinkActive="active">
             {{ getTranslation('COMPANIES') }}
           </a>
         </li>
-        <li class="nav-item">
+
+        <li class="nav-item" *ngIf="authService.isUser()">
           <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/cars" routerLinkActive="active">
             {{ getTranslation('CARS') }}
           </a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/about" routerLinkActive="active">
             {{ getTranslation('ABOUT') }}
           </a>
         </li>
-        <li class="nav-item">
+
+        <li class="nav-item" >
           <a class="nav-link text-dark px-3 py-2 rounded-3 menu-item transition-all hover-effect" routerLink="/contact" routerLinkActive="active">
             {{ getTranslation('CONTACT') }}
           </a>

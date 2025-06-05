@@ -30,6 +30,21 @@ export class AuthService {
     );
   }
 
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const payload = token.split('.')[1];
+    const decodedPayload = atob(payload);
+    const parsedPayload = JSON.parse(decodedPayload);
+
+    return (
+      parsedPayload['role'] ||
+      parsedPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ||
+      null
+    );
+  }
+
 
   logout(): void {
     localStorage.removeItem('jwtToken');
@@ -41,5 +56,13 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'Admin';
+  }
+
+  isUser(): boolean {
+    return this.getUserRole() === 'User';
   }
 }
