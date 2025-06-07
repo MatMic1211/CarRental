@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TranslateService } from '../../../Services/translate.service';
 import { Company, CompanyService } from '../../../Services/companies.service';
 import { AuthService } from '../../../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-menu',
@@ -22,7 +23,8 @@ export class AdminMenuComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private companyService: CompanyService,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -76,10 +78,9 @@ export class AdminMenuComponent implements OnInit {
   closeSignUpModal() {
     this.showModal = false;
   }
-
   logout() {
     this.authService.logout();
     this.loggedInUser = null;
-    window.location.reload();
+    this.router.navigate(['/home']);
   }
 }

@@ -16,7 +16,7 @@ export class SignUpComponent {
   confirmPassword = '';
   firstName = '';
   lastName = '';
-  isLoginMode = false;
+  isLoginMode = true;
 
   constructor(private translateService: TranslateService, private authService: AuthService) { }
 

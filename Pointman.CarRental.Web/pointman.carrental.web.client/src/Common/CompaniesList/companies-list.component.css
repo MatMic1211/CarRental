@@ -1,29 +1,42 @@
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .fadeInModal {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1050;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease forwards;
+  }
+
   .btn-gradient-primary {
-    background: linear-gradient(135deg, #1c1c1c, #0f4c81);
+    background: linear-gradient(45deg, #3b82f6, #06b6d4);
     border: none;
     color: white;
-    font-weight: 500;
+    transition: background 0.3s ease;
     text-transform: uppercase;
+    font-weight: 500;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
     border-radius: 8px;
   }
 
   .btn-gradient-primary:hover {
-    background: linear-gradient(135deg, #0f4c81, #1c1c1c);
+    background: linear-gradient(45deg, #06b6d4, #3b82f6);
     transform: scale(1.05);
-  }
-
-  .card {
-    border-radius: 16px;
-    background-color: #f8f9fa;
-    border: none;
-    transition: transform 0.3s ease;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .card:hover {
-    transform: translateY(-6px);
   }
 
   .table {
@@ -45,8 +58,8 @@
   }
 
   .page-item.active .page-link {
-    background-color: #0f4c81;
-    border-color: #0f4c81;
+    background-color: #3b82f6;
+    border-color: #3b82f6;
     color: white;
     font-weight: bold;
   }
@@ -54,20 +67,24 @@
   .page-link {
     color: #0f4c81;
     transition: background 0.3s ease;
+    cursor: pointer;
   }
 
   .page-link:hover {
     background-color: #e2e6ea;
   }
 
-  .modal-header.bg-primary {
-    background-color: #0f4c81 !important;
-  }
-
   .modal-content {
     border-radius: 12px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-header.bg-primary {
+    background-color: #0f4c81 !important;
+    color: white;
   }
 
   .modal-header.bg-danger {
     background-color: #d62828 !important;
+    color: white;
   }
