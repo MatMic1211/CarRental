@@ -79,6 +79,12 @@ export class TranslateService {
       COMPANY_LIST: 'Companies list',
       ROLE: 'Role',
       USER: 'User',
+      CONTACT_WITH_US: 'Contact with us',
+      YOUR_EMAIL: 'Your email',
+      EMAIL_EXAMPLE: 'e.g.: youremail@gmail.com',
+      SUBJECT: 'Subject',
+      MESSAGE: 'Message',
+      SEND: 'Send', 
 
     },
     pl: {
@@ -155,6 +161,12 @@ export class TranslateService {
       COMPANY_LIST: 'Lista wypożyczalni',
       ROLE: 'Rola',
       USER: 'Użytkownik',
+      CONTACT_WITH_US: 'Skontaktuj sie z nami',
+      YOUR_EMAIL: 'Twój email',
+      EMAIL_EXAMPLE: 'np. twojemail@gmail.com',
+      SUBJECT: 'Temat',
+      MESSAGE: 'Wiadomość',
+      SEND: 'Wyślij',
     },
   };
 

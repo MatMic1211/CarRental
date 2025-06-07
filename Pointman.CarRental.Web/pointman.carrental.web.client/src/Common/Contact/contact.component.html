@@ -1,0 +1,48 @@
+<div class="container py-5" style="max-width: 800px;">
+  <div class="card shadow-lg border-0">
+    <div class="card-body p-5">
+      <h2 class="mb-4 text-center text-primary">
+        <i class="bi bi-envelope-fill me-2"></i>{{ getTranslation('CONTACT_WITH_US') }}
+      </h2>
+
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="fromEmail" class="form-label">{{ getTranslation('YOUR_EMAIL') }}</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-envelope-at-fill"></i></span>
+            <input type="email" class="form-control" id="fromEmail" formControlName="fromEmail" placeholder="{{ getTranslation('EMAIL_EXAMPLE') }}">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="subject" class="form-label">{{ getTranslation('SUBJECT') }}</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-chat-left-text-fill"></i></span>
+            <input type="text" class="form-control" id="subject" formControlName="subject">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="message" class="form-label">{{ getTranslation('MESSAGE') }}</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
+            <textarea class="form-control" id="message" rows="5" formControlName="message" placeholder="{{ getTranslation('MESSAGE') }}"></textarea>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="!contactForm.valid">
+            <i class="bi bi-send-fill me-1"></i>{{ getTranslation('SEND') }}
+          </button>
+        </div>
+      </form>
+
+      <div *ngIf="successMessage" class="alert alert-success mt-4 text-center animate__animated animate__fadeIn">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-4 text-center animate__animated animate__fadeIn">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>

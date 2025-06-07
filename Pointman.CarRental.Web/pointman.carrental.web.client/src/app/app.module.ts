@@ -14,6 +14,7 @@ import { LoginUserComponent } from '../Common/SignIn/UserLogin/user-login.compon
 import { SignUpComponent } from '../Common/SignUp/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './Interceptors/auth.interceptor';
+import { ContactComponent } from '../Common/Contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AuthInterceptor } from './Interceptors/auth.interceptor';
     CompanyRentalsComponent,
     LoginUserComponent,
     SignUpComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

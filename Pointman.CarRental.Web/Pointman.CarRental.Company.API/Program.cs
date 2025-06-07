@@ -69,6 +69,7 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ICarMapper, CarMapper>();
 builder.Services.AddScoped<CarService>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IContactRequestMapper, ContactRequestMapper>();
 builder.Services.AddScoped<IRentCompanyMapper, RentCompanyMapper>();
 builder.Services.AddCors(options =>
 {
