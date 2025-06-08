@@ -1,0 +1,105 @@
+﻿using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
+using Pointman.CarRental.Company.API.Models;
+
+namespace Pointman.CarRental.Company.API.Services
+{
+    public class ContactService : IContactService
+    {
+        public void SendEmail(ContactRequest request)
+        {
+            var fromAddress = new MailAddress("rentmo.contact@gmail.com", "RentMo");
+            var toAddress = new MailAddress("mat.micz@wp.pl", "Mateusz");
+
+            const string fromPassword = "ijdcrtjpyxgpkkef";
+            string subject = $"[RentMo Kontakt] {request.Subject}";
+            string logoContentId = "logoRentmo";
+
+            string bodyHtml = $@"
+                <html>
+                <head>
+                    <style>
+                        body {{
+                            font-family: Arial, sans-serif;
+                            background-color: #f7f7f7;
+                            color: #333;
+                            padding: 20px;
+                        }}
+                        .container {{
+                            background-color: #fff;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            padding: 20px;
+                            max-width: 600px;
+                            margin: auto;
+                        }}
+                        .title {{
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }}
+                        .label {{
+                            font-weight: bold;
+                        }}
+                        .footer {{
+                            margin-top: 30px;
+                            font-size: 12px;
+                            color: #888;
+                            text-align: center;
+                        }}
+                        .logo {{
+                            margin-top: 10px;
+                            width: 100px;
+                        }}
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='title'>Nowa wiadomość kontaktowa z RentMo</div>
+                        <p><span class='label'>Temat:</span> {request.Subject}</p>
+                        <p><span class='label'>E-mail nadawcy:</span> {request.FromEmail}</p>
+                        <p><span class='label'>Wiadomość:</span></p>
+                        <p>{request.Message.Replace("\n", "<br>")}</p>
+                        <div class='footer'>
+                            Wiadomość wygenerowana automatycznie przez system RentMo.
+                            <br>
+                            <img src='cid:{logoContentId}' alt='RentMo Logo' class='logo'/>
+                        </div>
+                    </div>
+                </body>
+                </html>";
+
+            string logoPath = @"C:\TempGit\Pointman.CarRental.Web\pointman.carrental.web.client\src\app\Images\png\logo_rentmo.png";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+                Timeout = 20000
+            };
+
+            using var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                IsBodyHtml = true
+            };
+
+            var htmlView = AlternateView.CreateAlternateViewFromString(bodyHtml, null, MediaTypeNames.Text.Html);
+
+            var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Png)
+            {
+                ContentId = logoContentId,
+                TransferEncoding = TransferEncoding.Base64
+            };
+
+            htmlView.LinkedResources.Add(logo);
+            message.AlternateViews.Add(htmlView);
+
+            smtp.Send(message);
+        }
+    }
+}

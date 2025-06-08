@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ContactService } from '../../../Services/contact.service';
 import { TranslateService } from '../../../Services/translate.service';
+
+// Lokalny interfejs ContactRequest
+interface ContactRequest {
+  fromEmail: string;
+  subject: string;
+  message: string;
+}
 
 @Component({
   selector: 'app-contact',
@@ -13,12 +20,15 @@ export class ContactComponent {
   successMessage: string = '';
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private translateService: TranslateService,) {
+  constructor(
+    private fb: FormBuilder,
+    private contactService: ContactService,
+    private translateService: TranslateService
+  ) {
     this.contactForm = this.fb.group({
       fromEmail: ['', [Validators.required, Validators.email]],
       subject: ['', Validators.required],
-      message: ['', Validators.required],
-
+      message: ['', Validators.required]
     });
   }
 
@@ -28,12 +38,16 @@ export class ContactComponent {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      this.http.post('https://localhost:7001/api/contact', this.contactForm.value).subscribe({
+      const request: ContactRequest = this.contactForm.value;
+
+      this.contactService.sendContactRequest(request).subscribe({
         next: () => {
           this.successMessage = 'Wiadomość została wysłana!';
+          this.errorMessage = '';
           this.contactForm.reset();
         },
         error: () => {
+          this.successMessage = '';
           this.errorMessage = 'Błąd przy wysyłaniu wiadomości.';
         }
       });

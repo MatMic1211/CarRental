@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Mail;
-using System.Net;
+using Pointman.CarRental.Company.API.Entities;
 using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Mappers;
-using Pointman.CarRental.Company.API.Entities;
+using Pointman.CarRental.Company.API.Services;
 using Pointman.CarRental.Company.API.ViewModels;
 
 namespace Pointman.CarRental.Company.API.Controllers
@@ -13,10 +12,12 @@ namespace Pointman.CarRental.Company.API.Controllers
     public class ContactController : ControllerBase
     {
         private readonly IContactRequestMapper _mapper;
+        private readonly IContactService _contactService;
 
-        public ContactController(IContactRequestMapper mapper)
+        public ContactController(IContactRequestMapper mapper, IContactService contactService)
         {
             _mapper = mapper;
+            _contactService = contactService;
         }
 
         [HttpPost]
@@ -24,32 +25,8 @@ namespace Pointman.CarRental.Company.API.Controllers
         {
             try
             {
-                ContactRequest request = _mapper.MapToEntity(requestViewModel);
-
-                var fromAddress = new MailAddress("rentmo.contact@gmail.com", "RentMo");
-                var toAddress = new MailAddress("mat.micz@wp.pl", "Mateusz");
-
-                const string fromPassword = "ijdcrtjpyxgpkkef";
-                string subject = $"[RentMo Kontakt] {request.Subject}";
-                string body = $"Nadawca: {request.FromEmail}\n\nWiadomość:\n{request.Message}";
-
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
-                    Timeout = 20000
-                };
-
-                using var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body
-                };
-
-                smtp.Send(message);
+                var request = _mapper.MapToEntity(requestViewModel);
+                _contactService.SendEmail(request);
                 return Ok();
             }
             catch (Exception ex)
