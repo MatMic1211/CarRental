@@ -11,6 +11,7 @@ namespace Pointman.CarRental.Company.API.Services
         {
             var fromAddress = new MailAddress("rentmo.contact@gmail.com", "RentMo");
             var toAddress = new MailAddress("mat.micz@wp.pl", "Mateusz");
+            var userCopyAddress = new MailAddress(request.FromEmail);
 
             const string fromPassword = "ijdcrtjpyxgpkkef";
             string subject = $"[RentMo Kontakt] {request.Subject}";
@@ -82,14 +83,17 @@ namespace Pointman.CarRental.Company.API.Services
                 Timeout = 20000
             };
 
-            using var message = new MailMessage(fromAddress, toAddress)
+            using var message = new MailMessage
             {
+                From = fromAddress,
                 Subject = subject,
                 IsBodyHtml = true
             };
 
-            var htmlView = AlternateView.CreateAlternateViewFromString(bodyHtml, null, MediaTypeNames.Text.Html);
+            message.To.Add(toAddress);       
+            message.CC.Add(userCopyAddress);   
 
+            var htmlView = AlternateView.CreateAlternateViewFromString(bodyHtml, null, MediaTypeNames.Text.Html);
             var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Png)
             {
                 ContentId = logoContentId,
