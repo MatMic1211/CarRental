@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../../../Services/contact.service';
 import { TranslateService } from '../../../Services/translate.service';
 
-// Lokalny interfejs ContactRequest
 interface ContactRequest {
   fromEmail: string;
   subject: string;
@@ -28,7 +27,8 @@ export class ContactComponent {
     this.contactForm = this.fb.group({
       fromEmail: ['', [Validators.required, Validators.email]],
       subject: ['', Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
+      sendCopy: [false]
     });
   }
 

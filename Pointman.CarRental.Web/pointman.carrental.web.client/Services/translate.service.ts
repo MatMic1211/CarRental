@@ -84,7 +84,8 @@ export class TranslateService {
       EMAIL_EXAMPLE: 'e.g.: youremail@gmail.com',
       SUBJECT: 'Subject',
       MESSAGE: 'Message',
-      SEND: 'Send', 
+      SEND: 'Send',
+      SEND_COPY_TO_ME: 'Send me a copy of the message',
 
     },
     pl: {
@@ -167,6 +168,7 @@ export class TranslateService {
       SUBJECT: 'Temat',
       MESSAGE: 'Wiadomość',
       SEND: 'Wyślij',
+      SEND_COPY_TO_ME: 'Prześlij mi kopię wiadomości',
     },
   };
 

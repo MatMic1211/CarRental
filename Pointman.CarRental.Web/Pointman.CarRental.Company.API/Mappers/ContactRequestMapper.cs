@@ -12,7 +12,8 @@ namespace Pointman.CarRental.Company.API.Mappers
             {
                 FromEmail = entity.FromEmail,
                 Subject = entity.Subject,
-                Message = entity.Message
+                Message = entity.Message,
+                SendCopy = entity.SendCopy
             };
         }
 
@@ -22,7 +23,8 @@ namespace Pointman.CarRental.Company.API.Mappers
             {
                 FromEmail = viewModel.FromEmail,
                 Subject = viewModel.Subject,
-                Message = viewModel.Message
+                Message = viewModel.Message,
+                SendCopy = viewModel.SendCopy
             };
         }
     }
