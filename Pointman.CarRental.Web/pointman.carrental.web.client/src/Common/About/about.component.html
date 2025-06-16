@@ -1,0 +1,51 @@
+<div class="container py-5">
+  <h2 class="text-center text-primary mb-5 animate__animated animate__fadeInDown">{{ getTranslation('ABOUT_APP') }}</h2>
+
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-lg animate__animated animate__fadeInLeft">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ getTranslation('CLIENT') }}</h5>
+          <p class="card-text">
+            {{getTranslation('CLIENT_DESCRIPTION') }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-lg animate__animated animate__fadeInUp">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{getTranslation('COMPANY_OWNER')}}</h5>
+          <p class="card-text">
+            {{getTranslation('COMPANY_OWNER_DESCRIPTION')}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-lg animate__animated animate__fadeInRight">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{getTranslation('ADMIN')}}</h5>
+          <p class="card-text">
+            {{getTranslation('ADMINISTRATOR_DESCRIPTION')}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h3 class="text-center text-secondary mb-4">{{getTranslation('TRUSTED_BY')}}</h3>
+  <div class="carousel-wrapper" title="{{getTranslation('TRUSTED_COMPANIES_ALT')}}">
+    <div class="carousel-track">
+      <div class="logo-placeholder" *ngFor="let company of trustedCompanies">
+        <img [src]="company.logo" [alt]="company.name" />
+        <div
+             class="logo-name">{{ company.name}}
+        </div>
+      </div>
+      <div class="logo-placeholder" *ngFor="let company of trustedCompanies">
+        <img [src]="company.logo" [alt]="company.name" />
+        <div class="logo-name">{{ company.name }}</div>
+      </div>
+    </div>
+  </div>
+</div>

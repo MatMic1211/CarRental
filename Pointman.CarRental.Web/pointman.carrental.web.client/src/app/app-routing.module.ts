@@ -5,6 +5,7 @@ import { CompaniesListComponent } from '../Common/CompaniesList/companies-list.c
 import { CarListComponent } from '../Company/Car/CarList/car-list.component';
 import { CompanyRentalsComponent } from '../Company/CompanyRental/company-rentals.component';
 import { ContactComponent } from '../Common/Contact/contact.component';
+import { AboutComponent } from '../Common/About/about.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'companies', component: CompaniesListComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'company/cars', component: CarListComponent },
-  { path: 'company/rentals', component: CompanyRentalsComponent }
+  { path: 'company/rentals', component: CompanyRentalsComponent },
+  { path: 'about', component: AboutComponent },
 
 
 ];

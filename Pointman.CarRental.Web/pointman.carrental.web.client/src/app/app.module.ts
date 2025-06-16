@@ -15,6 +15,7 @@ import { SignUpComponent } from '../Common/SignUp/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './Interceptors/auth.interceptor';
 import { ContactComponent } from '../Common/Contact/contact.component';
+import { AboutComponent } from '../Common/About/about.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ContactComponent } from '../Common/Contact/contact.component';
     LoginUserComponent,
     SignUpComponent,
     ContactComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

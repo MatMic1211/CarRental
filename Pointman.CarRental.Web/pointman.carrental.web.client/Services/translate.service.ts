@@ -86,7 +86,15 @@ export class TranslateService {
       MESSAGE: 'Message',
       SEND: 'Send',
       SEND_COPY_TO_ME: 'Send me a copy of the message',
-
+      ABOUT_APP: 'About the application',
+      CLIENT: 'Client',
+      CLIENT_DESCRIPTION: 'The client can browse available cars, filter them by category, and make reservations quickly and conveniently. Additionally, they have access to their rental history and can manage their account.',
+      COMPANY_OWNER: 'Rental Owner',
+      COMPANY_OWNER_DESCRIPTION: 'The rental owner can add cars, manage availability, view active and archived reservations, and manage company employees.',
+      ADMINISTRATOR: 'Administrator',
+      ADMINISTRATOR_DESCRIPTION: 'The administrator manages users, approves rental companies, monitors system activity, and ensures the security of the platform.',
+      TRUSTED_BY: 'Trusted by',
+      TRUSTED_COMPANIES_ALT: 'Logos of trusted rental companies',
     },
     pl: {
       HOME: 'Strona główna',
@@ -169,6 +177,14 @@ export class TranslateService {
       MESSAGE: 'Wiadomość',
       SEND: 'Wyślij',
       SEND_COPY_TO_ME: 'Prześlij mi kopię wiadomości',
+      "ABOUT_APP": "O aplikacji",
+      "CLIENT": "Klient",
+      "CLIENT_DESCRIPTION": "Klient może przeglądać dostępne samochody, filtrować je według kategorii oraz szybko i wygodnie dokonywać rezerwacji. Dodatkowo ma dostęp do historii wynajmów oraz może zarządzać swoim kontem.",
+      "COMPANY_OWNER": "Właściciel wypożyczalni",
+      "COMPANY_OWNER_DESCRIPTION": "Właściciel wypożyczalni może dodawać samochody, zarządzać dostępnością, przeglądać aktywne i archiwalne rezerwacje oraz zarządzać pracownikami firmy.",
+      "ADMINISTRATOR_DESCRIPTION": "Administrator zarządza użytkownikami, zatwierdza wypożyczalnie, monitoruje aktywność systemu oraz dba o bezpieczeństwo platformy.",
+      "TRUSTED_BY": "Zaufali nam",
+      "TRUSTED_COMPANIES_ALT": "Logotypy zaufanych wypożyczalni"
     },
   };
 
