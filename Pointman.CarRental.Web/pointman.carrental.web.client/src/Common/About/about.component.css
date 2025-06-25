@@ -44,18 +44,11 @@
   }
 
   .logo-placeholder img {
-    max-width: 120px;
-    max-height: 60px;
+    max-width: 150px;
+    max-height: 90px;
     object-fit: contain;
     margin-bottom: 8px;
-  }
-
-.logo-name {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #444;
-  text-align: center;
-}
+  } 
 
 @keyframes scrollLoop {
   0% {

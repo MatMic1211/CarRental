@@ -37,14 +37,10 @@
   <div class="carousel-wrapper" title="{{getTranslation('TRUSTED_COMPANIES_ALT')}}">
     <div class="carousel-track">
       <div class="logo-placeholder" *ngFor="let company of trustedCompanies">
-        <img [src]="company.logo" [alt]="company.name" />
-        <div
-             class="logo-name">{{ company.name}}
-        </div>
+        <img [src]="company.logo" />
       </div>
       <div class="logo-placeholder" *ngFor="let company of trustedCompanies">
-        <img [src]="company.logo" [alt]="company.name" />
-        <div class="logo-name">{{ company.name }}</div>
+        <img [src]="company.logo" />
       </div>
     </div>
   </div>
