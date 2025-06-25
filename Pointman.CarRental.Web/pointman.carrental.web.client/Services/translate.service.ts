@@ -183,7 +183,7 @@ export class TranslateService {
       "COMPANY_OWNER": "Właściciel wypożyczalni",
       "COMPANY_OWNER_DESCRIPTION": "Właściciel wypożyczalni może dodawać samochody, zarządzać dostępnością, przeglądać aktywne i archiwalne rezerwacje oraz zarządzać pracownikami firmy.",
       "ADMINISTRATOR_DESCRIPTION": "Administrator zarządza użytkownikami, zatwierdza wypożyczalnie, monitoruje aktywność systemu oraz dba o bezpieczeństwo platformy.",
-      "TRUSTED_BY": "Zaufali nam",
+      "TRUSTED_BY": "Zaufali nam:",
       "TRUSTED_COMPANIES_ALT": "Logotypy zaufanych wypożyczalni"
     },
   };
