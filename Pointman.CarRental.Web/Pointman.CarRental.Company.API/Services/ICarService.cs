@@ -10,5 +10,8 @@ namespace Pointman.CarRental.Company.API.Services
         Task<Car> GetCarByModelAsync(string model);
         Task<bool> UpdateCarAsync(int id, Car car);
         Task<bool> DeleteCarAsync(int id);
+        Task<List<Car>> GetCarsPagedAsync(int pageNumber, int pageSize);
+        Task<(List<Car> Items, int TotalCount)> GetPagedCarsAsync(int pageNumber, int pageSize);
+
     }
 }

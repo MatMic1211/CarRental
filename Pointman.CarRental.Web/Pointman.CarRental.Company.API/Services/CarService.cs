@@ -57,5 +57,30 @@ namespace Pointman.CarRental.Company.API.Services
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }
+
+        public async Task<List<Car>> GetCarsPagedAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Cars
+                .OrderBy(c => c.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<(List<Car> Items, int TotalCount)> GetPagedCarsAsync(int pageNumber, int pageSize)
+        {
+            var query = _context.Cars.AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .OrderBy(c => c.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
+
     }
 }

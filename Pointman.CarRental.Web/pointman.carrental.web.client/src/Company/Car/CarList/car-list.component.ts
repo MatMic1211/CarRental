@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarService } from '../../../../Services/car.service';
+import { CarService, Car } from '../../../../Services/car.service';
 import { TranslateService } from '../../../../Services/translate.service';
 
 @Component({
@@ -8,8 +8,7 @@ import { TranslateService } from '../../../../Services/translate.service';
   styleUrls: ['./car-list.component.css']
 })
 export class CarListComponent implements OnInit {
-  cars: { id: number; model: string; brand: string }[] = [];
-  filteredCars: { id: number; model: string; brand: string }[] = [];
+  cars: Car[] = [];
   uniqueBrands: string[] = [];
   loading: boolean = true;
   errorMessage: string = '';
@@ -17,7 +16,7 @@ export class CarListComponent implements OnInit {
   showModal: boolean = false;
   showEditModal: boolean = false;
   showConfirmDeleteModal: boolean = false;
-  editCarData: { id: number; model: string; brand: string } = { id: 0, model: '', brand: '' };
+  editCarData: Car = { id: 0, model: '', brand: '' };
   carToDeleteId: number | null = null;
 
   searchQuery: string = '';
@@ -26,6 +25,7 @@ export class CarListComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 9;
   totalPages: number = 0;
+  totalItems: number = 0;
 
   constructor(private carService: CarService, public translateService: TranslateService) { }
 
@@ -39,17 +39,18 @@ export class CarListComponent implements OnInit {
 
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
-    this.applyFilters();
+    this.loadCars(); 
   }
 
   loadCars(): void {
-    this.carService.getCars().subscribe({
-      next: (data) => {
-        this.cars = data;
-        this.filteredCars = [...this.cars];
+    this.loading = true;
+    this.carService.getCarsPaged(this.currentPage, this.itemsPerPage).subscribe({
+      next: (response) => {
+        this.cars = response.items;
+        this.totalItems = response.totalCount;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.updateUniqueBrands();
         this.loading = false;
-        this.totalPages = Math.ceil(this.filteredCars.length / this.itemsPerPage);
       },
       error: () => {
         this.errorMessage = 'Nie udało się załadować danych. Spróbuj ponownie później.';
@@ -63,38 +64,24 @@ export class CarListComponent implements OnInit {
     this.uniqueBrands = Array.from(brandSet);
   }
 
-  applyFilters(): void {
-    this.filteredCars = this.cars.filter(car => {
-      const matchesSearch = car.model.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        car.brand.toLowerCase().includes(this.searchQuery.toLowerCase());
-      const matchesBrand = this.selectedBrand ? car.brand === this.selectedBrand : true;
-      return matchesSearch && matchesBrand;
-    });
-    this.totalPages = Math.ceil(this.filteredCars.length / this.itemsPerPage);
-    this.currentPage = 1;
-  }
-
-  getPaginatedCars(): { id: number; model: string; brand: string }[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredCars.slice(start, end);
-  }
-
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.loadCars();
     }
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.loadCars();
     }
   }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.loadCars();
     }
   }
 
@@ -104,10 +91,8 @@ export class CarListComponent implements OnInit {
 
   addCar(): void {
     this.carService.addCar(this.newCar).subscribe({
-      next: (car) => {
-        this.cars.push(car);
-        this.updateUniqueBrands();
-        this.applyFilters();
+      next: () => {
+        this.loadCars();
         this.closeAddCarModal();
         this.newCar = { model: '', brand: '' };
         this.errorMessage = '';
@@ -140,9 +125,7 @@ export class CarListComponent implements OnInit {
     if (this.carToDeleteId !== null) {
       this.carService.deleteCar(this.carToDeleteId).subscribe({
         next: () => {
-          this.cars = this.cars.filter(car => car.id !== this.carToDeleteId);
-          this.updateUniqueBrands();
-          this.applyFilters();
+          this.loadCars();
           this.closeConfirmDeleteModal();
           this.errorMessage = '';
         },
@@ -153,7 +136,7 @@ export class CarListComponent implements OnInit {
     }
   }
 
-  openEditCarModal(car: { id: number; model: string; brand: string }): void {
+  openEditCarModal(car: Car): void {
     this.editCarData = { ...car };
     this.showEditModal = true;
   }

@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Pointman.Pierwiastkomat/Pierwiastkomat/Pierwiastkomat/.vscode/extensions.json

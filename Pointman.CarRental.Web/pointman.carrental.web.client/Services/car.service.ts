@@ -9,6 +9,11 @@ export interface Car {
   model: string;
 }
 
+export interface PagedResult<T> {
+  items: T[];
+  totalCount: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +22,11 @@ export class CarService {
 
   constructor(private httpClientService: HttpClientService) { }
 
+  getCarsPaged(page: number, size: number): Observable<PagedResult<Car>> {
+    const url = `${this.apiUrl}?pageNumber=${page}&pageSize=${size}`;
+    return this.httpClientService.get<PagedResult<Car>>(url)
+      .pipe(catchError(this.handleError));
+  }
   getCars(): Observable<Car[]> {
     return this.httpClientService.get<Car[]>(this.apiUrl)
       .pipe(catchError(this.handleError));
@@ -41,6 +51,6 @@ export class CarService {
 
   private handleError(error: any): Observable<never> {
     console.error('CarService error:', error);
-    return throwError(() => new Error('Something went wrong.Please try again later.'));
+    return throwError(() => new Error('Something went wrong. Please try again later.'));
   }
 }
