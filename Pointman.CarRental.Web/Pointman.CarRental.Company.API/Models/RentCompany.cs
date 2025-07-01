@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace Pointman.CarRental.Company.API.Entities
 {
@@ -15,5 +16,6 @@ namespace Pointman.CarRental.Company.API.Entities
 
         [Required]
         public virtual Location? Location { get; set; }
+
     }
 }

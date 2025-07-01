@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Pointman.CarRental.Company.API.Entities;
+using Pointman.CarRental.Company.API.Models;
 
 namespace Pointman.CarRental.Company.API.Entities
 {
@@ -18,6 +21,14 @@ namespace Pointman.CarRental.Company.API.Entities
         {
             base.OnModelCreating(modelBuilder);
 
+            var utcConverter = new ValueConverter<DateTime, DateTime>(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+            );
+
+            modelBuilder.Entity<Car>()
+                .Property(c => c.CreatedOn)
+                .HasConversion(utcConverter);
             modelBuilder.Entity<UserRegistration>()
                 .HasMany(u => u.Roles)
                 .WithMany(r => r.Users)
@@ -37,10 +48,11 @@ namespace Pointman.CarRental.Company.API.Entities
                     j => j.HasOne<UserRole>().WithMany().HasForeignKey("UserRoleId"),
                     j => j.HasKey("UserRoleId", "UserPermissionId")
                 );
+
             modelBuilder.Entity<UserRole>().HasData(
                 new UserRole { Id = 1, Name = "User" },
                 new UserRole { Id = 2, Name = "Admin" }
-);
+            );
         }
     }
 }
