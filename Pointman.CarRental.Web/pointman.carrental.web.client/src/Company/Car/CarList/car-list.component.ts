@@ -41,10 +41,17 @@ export class CarListComponent implements OnInit {
     this.translateService.setLanguage(lang);
     this.loadCars(); 
   }
-
   loadCars(): void {
     this.loading = true;
-    this.carService.getCarsPaged(this.currentPage, this.itemsPerPage).subscribe({
+
+    this.carService.getCarsPaged(
+      this.currentPage,
+      this.itemsPerPage,
+      this.searchQuery,
+      this.selectedBrand,
+      'model',        
+      'asc'          
+    ).subscribe({
       next: (response) => {
         this.cars = response.items;
         this.totalItems = response.totalCount;

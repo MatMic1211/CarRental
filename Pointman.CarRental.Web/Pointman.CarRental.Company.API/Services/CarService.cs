@@ -58,29 +58,44 @@ namespace Pointman.CarRental.Company.API.Services
             return result > 0;
         }
 
-        public async Task<List<Car>> GetCarsPagedAsync(int pageNumber, int pageSize)
-        {
-            return await _context.Cars
-                .OrderBy(c => c.Id)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
-
-        public async Task<(List<Car> Items, int TotalCount)> GetPagedCarsAsync(int pageNumber, int pageSize)
+        public async Task<(List<Car> Items, int TotalCount)> GetPagedCarsAsync(
+            int pageNumber,
+            int pageSize,
+            string? searchQuery = null,
+            string? brand = null,
+            string? sortBy = "id",
+            string? sortOrder = "asc")
         {
             var query = _context.Cars.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(c => c.Model.Contains(searchQuery));
+            }
+
+            if (!string.IsNullOrEmpty(brand))
+            {
+                query = query.Where(c => c.Brand == brand);
+            }
+
+            query = (sortBy?.ToLower(), sortOrder?.ToLower()) switch
+            {
+                ("model", "desc") => query.OrderByDescending(c => c.Model),
+                ("model", _) => query.OrderBy(c => c.Model),
+                ("brand", "desc") => query.OrderByDescending(c => c.Brand),
+                ("brand", _) => query.OrderBy(c => c.Brand),
+                (_, "desc") => query.OrderByDescending(c => c.Id),
+                _ => query.OrderBy(c => c.Id),
+            };
 
             var totalCount = await query.CountAsync();
 
             var items = await query
-                .OrderBy(c => c.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
             return (items, totalCount);
         }
-
     }
 }
