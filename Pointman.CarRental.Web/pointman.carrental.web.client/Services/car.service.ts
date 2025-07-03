@@ -22,8 +22,12 @@ export class CarService {
 
   constructor(private httpClientService: HttpClientService) { }
 
-  getCarsPaged(page: number, size: number): Observable<PagedResult<Car>> {
-    const url = `${this.apiUrl}?pageNumber=${page}&pageSize=${size}`;
+  getCarsPaged(page: number, size: number, brand?: string, model?: string): Observable<PagedResult<Car>> {
+    let url = `${this.apiUrl}?pageNumber=${page}&pageSize=${size}`;
+
+    if (brand) url += `&brand=${encodeURIComponent(brand)}`;
+    if (model) url += `&model=${encodeURIComponent(model)}`;
+
     return this.httpClientService.get<PagedResult<Car>>(url)
       .pipe(catchError(this.handleError));
   }

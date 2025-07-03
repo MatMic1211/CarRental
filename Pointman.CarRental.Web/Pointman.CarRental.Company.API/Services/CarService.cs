@@ -67,9 +67,15 @@ namespace Pointman.CarRental.Company.API.Services
                 .ToListAsync();
         }
 
-        public async Task<(List<Car> Items, int TotalCount)> GetPagedCarsAsync(int pageNumber, int pageSize)
+        public async Task<(List<Car> Items, int TotalCount)> GetPagedCarsAsync(int pageNumber, int pageSize, string? brand = null, string? model = null)
         {
             var query = _context.Cars.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(brand))
+                query = query.Where(c => c.Brand.ToLower().Contains(brand.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(model))
+                query = query.Where(c => c.Model.ToLower().Contains(model.ToLower()));
 
             var totalCount = await query.CountAsync();
 
@@ -81,6 +87,5 @@ namespace Pointman.CarRental.Company.API.Services
 
             return (items, totalCount);
         }
-
     }
 }

@@ -40,13 +40,12 @@ export class CarListComponent implements OnInit {
 
   loadCars(): void {
     this.loading = true;
-    this.carService.getCarsPaged(this.currentPage, this.itemsPerPage).subscribe({
+    this.carService.getCarsPaged(this.currentPage, this.itemsPerPage, this.selectedBrand, this.searchQuery).subscribe({
       next: (response) => {
-        this.allCars = response.items;
+        this.cars = response.items;
         this.totalItems = response.totalCount;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.updateUniqueBrands();
-        this.applyFilters();
         this.loading = false;
       },
       error: () => {
@@ -57,14 +56,8 @@ export class CarListComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.cars = this.allCars.filter(car => {
-      const matchesBrand = this.selectedBrand ? car.brand === this.selectedBrand : true;
-      const matchesSearch = this.searchQuery
-        ? car.model.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        car.brand.toLowerCase().includes(this.searchQuery.toLowerCase())
-        : true;
-      return matchesBrand && matchesSearch;
-    });
+    this.currentPage = 1; 
+    this.loadCars();      
   }
 
   updateUniqueBrands(): void {
