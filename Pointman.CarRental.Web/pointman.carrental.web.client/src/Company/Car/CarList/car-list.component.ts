@@ -8,6 +8,7 @@ import { TranslateService } from '../../../../Services/translate.service';
   styleUrls: ['./car-list.component.css']
 })
 export class CarListComponent implements OnInit {
+  allCars: Car[] = [];
   cars: Car[] = [];
   uniqueBrands: string[] = [];
   loading: boolean = true;
@@ -37,26 +38,15 @@ export class CarListComponent implements OnInit {
     return this.translateService.translate(key);
   }
 
-  changeLanguage(lang: string): void {
-    this.translateService.setLanguage(lang);
-    this.loadCars(); 
-  }
   loadCars(): void {
     this.loading = true;
-
-    this.carService.getCarsPaged(
-      this.currentPage,
-      this.itemsPerPage,
-      this.searchQuery,
-      this.selectedBrand,
-      'model',        
-      'asc'          
-    ).subscribe({
+    this.carService.getCarsPaged(this.currentPage, this.itemsPerPage).subscribe({
       next: (response) => {
-        this.cars = response.items;
+        this.allCars = response.items;
         this.totalItems = response.totalCount;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.updateUniqueBrands();
+        this.applyFilters();
         this.loading = false;
       },
       error: () => {
@@ -66,8 +56,19 @@ export class CarListComponent implements OnInit {
     });
   }
 
+  applyFilters(): void {
+    this.cars = this.allCars.filter(car => {
+      const matchesBrand = this.selectedBrand ? car.brand === this.selectedBrand : true;
+      const matchesSearch = this.searchQuery
+        ? car.model.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        car.brand.toLowerCase().includes(this.searchQuery.toLowerCase())
+        : true;
+      return matchesBrand && matchesSearch;
+    });
+  }
+
   updateUniqueBrands(): void {
-    const brandSet = new Set(this.cars.map(car => car.brand));
+    const brandSet = new Set(this.allCars.map(car => car.brand));
     this.uniqueBrands = Array.from(brandSet);
   }
 
@@ -163,5 +164,10 @@ export class CarListComponent implements OnInit {
         this.errorMessage = 'Nie udało się zaktualizować samochodu. Spróbuj ponownie.';
       }
     });
+  }
+
+  changeLanguage(lang: string): void {
+    this.translateService.setLanguage(lang);
+    this.loadCars();
   }
 }

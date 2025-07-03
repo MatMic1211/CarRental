@@ -21,21 +21,12 @@ namespace Pointman.CarRental.Company.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResult<CarViewModel>>> GetCars(
-            [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] string? searchQuery = null,
-            [FromQuery] string? brand = null,
-            [FromQuery] string? sortBy = "id",
-            [FromQuery] string? sortOrder = "asc")
+        public async Task<ActionResult<PagedResult<CarViewModel>>> GetCars([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             if (pageNumber < 1 || pageSize < 1)
                 return BadRequest("Page number and size must be greater than 0.");
 
-            var (cars, totalCount) = await _carService.GetPagedCarsAsync(
-                pageNumber, pageSize, searchQuery, brand, sortBy, sortOrder
-            );
-
+            var (cars, totalCount) = await _carService.GetPagedCarsAsync(pageNumber, pageSize);
             var viewModels = cars.Select(_carMapper.ToViewModel).ToList();
 
             var result = new PagedResult<CarViewModel>

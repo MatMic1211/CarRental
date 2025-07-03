@@ -22,28 +22,11 @@ export class CarService {
 
   constructor(private httpClientService: HttpClientService) { }
 
-  getCarsPaged(
-    page: number,
-    size: number,
-    searchQuery?: string,
-    brand?: string,
-    sortBy: string = 'id',
-    sortOrder: string = 'asc'
-  ): Observable<PagedResult<Car>> {
-    let url = `${this.apiUrl}?pageNumber=${page}&pageSize=${size}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
-
-    if (searchQuery) {
-      url += `&searchQuery=${encodeURIComponent(searchQuery)}`;
-    }
-
-    if (brand) {
-      url += `&brand=${encodeURIComponent(brand)}`;
-    }
-
+  getCarsPaged(page: number, size: number): Observable<PagedResult<Car>> {
+    const url = `${this.apiUrl}?pageNumber=${page}&pageSize=${size}`;
     return this.httpClientService.get<PagedResult<Car>>(url)
       .pipe(catchError(this.handleError));
   }
-
   getCars(): Observable<Car[]> {
     return this.httpClientService.get<Car[]>(this.apiUrl)
       .pipe(catchError(this.handleError));
