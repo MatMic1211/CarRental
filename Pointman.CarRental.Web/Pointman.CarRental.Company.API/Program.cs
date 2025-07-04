@@ -72,6 +72,10 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IContactRequestMapper, ContactRequestMapper>();
 builder.Services.AddScoped<IRentCompanyMapper, RentCompanyMapper>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IBrandMapper, BrandMapper>();
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>

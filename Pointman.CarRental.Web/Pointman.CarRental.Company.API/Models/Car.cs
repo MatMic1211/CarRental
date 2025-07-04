@@ -15,5 +15,6 @@ namespace Pointman.CarRental.Company.API.Entities
 
         [Required]
         public string Brand { get; set; }
+
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService, Car } from '../../../../Services/car.service';
+import { BrandService, BrandViewModel } from '../../../../Services/brand.service';
 import { TranslateService } from '../../../../Services/translate.service';
 
 @Component({
@@ -11,6 +12,8 @@ export class CarListComponent implements OnInit {
   allCars: Car[] = [];
   cars: Car[] = [];
   uniqueBrands: string[] = [];
+  brands: string[] = []; 
+  selectedBrand: string = '';
   loading: boolean = true;
   errorMessage: string = '';
   newCar = { model: '', brand: '' };
@@ -19,19 +22,22 @@ export class CarListComponent implements OnInit {
   showConfirmDeleteModal: boolean = false;
   editCarData: Car = { id: 0, model: '', brand: '' };
   carToDeleteId: number | null = null;
-
   searchQuery: string = '';
-  selectedBrand: string = '';
 
   currentPage: number = 1;
   itemsPerPage: number = 9;
   totalPages: number = 0;
   totalItems: number = 0;
 
-  constructor(private carService: CarService, public translateService: TranslateService) { }
+  constructor(
+    private carService: CarService,
+    private brandService: BrandService,
+    public translateService: TranslateService
+  ) { }
 
   ngOnInit(): void {
     this.loadCars();
+    this.loadBrands();
   }
 
   getTranslation(key: string): string {
@@ -45,7 +51,6 @@ export class CarListComponent implements OnInit {
         this.cars = response.items;
         this.totalItems = response.totalCount;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-        this.updateUniqueBrands();
         this.loading = false;
       },
       error: () => {
@@ -55,14 +60,20 @@ export class CarListComponent implements OnInit {
     });
   }
 
-  applyFilters(): void {
-    this.currentPage = 1; 
-    this.loadCars();      
+  loadBrands(): void {
+    this.brandService.getBrands().subscribe({
+      next: (brands: BrandViewModel[]) => {
+        this.uniqueBrands = brands.map(b => b.name);
+      },
+      error: () => {
+        this.uniqueBrands = [];
+      }
+    });
   }
 
-  updateUniqueBrands(): void {
-    const brandSet = new Set(this.allCars.map(car => car.brand));
-    this.uniqueBrands = Array.from(brandSet);
+  applyFilters(): void {
+    this.currentPage = 1;
+    this.loadCars();
   }
 
   nextPage(): void {
@@ -162,5 +173,6 @@ export class CarListComponent implements OnInit {
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.loadCars();
+    this.loadBrands();
   }
 }
