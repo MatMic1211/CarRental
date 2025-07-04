@@ -105,6 +105,7 @@ export class CarListComponent implements OnInit {
     this.carService.addCar(this.newCar).subscribe({
       next: () => {
         this.loadCars();
+        this.loadBrands();
         this.closeAddCarModal();
         this.newCar = { model: '', brand: '' };
         this.errorMessage = '';
@@ -161,6 +162,7 @@ export class CarListComponent implements OnInit {
     this.carService.updateCar(this.editCarData.id, this.editCarData).subscribe({
       next: () => {
         this.loadCars();
+        this.loadBrands();
         this.closeEditCarModal();
         this.errorMessage = '';
       },
