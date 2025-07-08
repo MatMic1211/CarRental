@@ -12,17 +12,19 @@ export class CarListComponent implements OnInit {
   allCars: Car[] = [];
   cars: Car[] = [];
   uniqueBrands: string[] = [];
-  brands: string[] = []; 
   selectedBrand: string = '';
+  searchQuery: string = '';
   loading: boolean = true;
   errorMessage: string = '';
+
   newCar = { model: '', brand: '' };
+  editCarData: Car = { id: 0, model: '', brand: '' };
+
   showModal: boolean = false;
   showEditModal: boolean = false;
   showConfirmDeleteModal: boolean = false;
-  editCarData: Car = { id: 0, model: '', brand: '' };
+
   carToDeleteId: number | null = null;
-  searchQuery: string = '';
 
   currentPage: number = 1;
   itemsPerPage: number = 9;
@@ -100,6 +102,14 @@ export class CarListComponent implements OnInit {
   getPageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
+  
+  openAddCarModal(): void {
+    this.showModal = true;
+  }
+
+  closeAddCarModal(): void {
+    this.showModal = false;
+  }
 
   addCar(): void {
     this.carService.addCar(this.newCar).subscribe({
@@ -114,39 +124,6 @@ export class CarListComponent implements OnInit {
         this.errorMessage = 'Nie udało się dodać samochodu. Spróbuj ponownie.';
       }
     });
-  }
-
-  openAddCarModal(): void {
-    this.showModal = true;
-  }
-
-  closeAddCarModal(): void {
-    this.showModal = false;
-  }
-
-  openConfirmDeleteModal(id: number): void {
-    this.carToDeleteId = id;
-    this.showConfirmDeleteModal = true;
-  }
-
-  closeConfirmDeleteModal(): void {
-    this.carToDeleteId = null;
-    this.showConfirmDeleteModal = false;
-  }
-
-  confirmDeleteCar(): void {
-    if (this.carToDeleteId !== null) {
-      this.carService.deleteCar(this.carToDeleteId).subscribe({
-        next: () => {
-          this.loadCars();
-          this.closeConfirmDeleteModal();
-          this.errorMessage = '';
-        },
-        error: () => {
-          this.errorMessage = 'Nie udało się usunąć samochodu. Spróbuj ponownie.';
-        }
-      });
-    }
   }
 
   openEditCarModal(car: Car): void {
@@ -172,9 +149,95 @@ export class CarListComponent implements OnInit {
     });
   }
 
+  openConfirmDeleteModal(id: number): void {
+    this.carToDeleteId = id;
+    this.showConfirmDeleteModal = true;
+  }
+
+  closeConfirmDeleteModal(): void {
+    this.carToDeleteId = null;
+    this.showConfirmDeleteModal = false;
+  }
+
+  confirmDeleteCar(): void {
+    if (this.carToDeleteId !== null) {
+      this.carService.deleteCar(this.carToDeleteId).subscribe({
+        next: () => {
+          this.loadCars();
+          this.loadBrands();
+          this.closeConfirmDeleteModal();
+          this.errorMessage = '';
+        },
+        error: () => {
+          this.errorMessage = 'Nie udało się usunąć samochodu. Spróbuj ponownie.';
+        }
+      });
+    }
+  }
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.loadCars();
     this.loadBrands();
+  }
+
+  showReservationModal: boolean = false;
+  selectedCarId: number | null = null;
+  selectedCar: Car | null = null;
+
+  reservationData = {
+    startDate: '',
+    endDate: '',
+    startTime: '',
+    endTime: '',
+    pickupLocation: '',
+    returnLocation: '',
+    customerName: ''
+  };
+
+  reserveCar(carId: number): void {
+    this.selectedCarId = carId;
+    this.selectedCar = this.cars.find(c => c.id === carId) || null;
+    this.showReservationModal = true;
+    this.reservationData = {
+      startDate: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      pickupLocation: '',
+      returnLocation: '',
+      customerName: ''
+    };
+  }
+
+  closeReservationModal(): void {
+    this.showReservationModal = false;
+    this.selectedCarId = null;
+    this.selectedCar = null;
+  }
+
+  submitReservation(): void {
+    if (
+      !this.selectedCarId ||
+      !this.reservationData.startDate ||
+      !this.reservationData.endDate ||
+      !this.reservationData.startTime ||
+      !this.reservationData.endTime ||
+      !this.reservationData.pickupLocation ||
+      !this.reservationData.returnLocation ||
+      !this.reservationData.customerName
+    ) {
+      this.errorMessage = 'Wszystkie pola są wymagane.';
+      return;
+    }
+
+    if (this.reservationData.endDate < this.reservationData.startDate) {
+      this.errorMessage = 'Data zakończenia nie może być wcześniejsza niż rozpoczęcia.';
+      return;
+    }
+
+    console.log('Rezerwacja samochodu ID:', this.selectedCarId);
+    console.log('Dane rezerwacji:', this.reservationData);
+
+    this.closeReservationModal();
   }
 }
