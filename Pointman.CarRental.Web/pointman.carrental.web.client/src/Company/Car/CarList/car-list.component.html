@@ -204,7 +204,7 @@
               {{ getTranslation('RESERVING') }}: <strong>{{ selectedCar.brand }} {{ selectedCar.model }}</strong>
             </div>
 
-            <button type="submit" class="btn btn-gradient-primary w-100">
+            <button type="button" class="btn btn-gradient-primary w-100" (click)="submitReservation()">
               {{ getTranslation('CONFIRM_RESERVATION') }}
             </button>
           </form>

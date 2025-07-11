@@ -16,6 +16,7 @@ namespace Pointman.CarRental.Company.API.Entities
         public DbSet<UserRegistration> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<Reservation> Reservations { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,7 @@ namespace Pointman.CarRental.Company.API.Entities
             modelBuilder.Entity<Car>()
                 .Property(c => c.CreatedOn)
                 .HasConversion(utcConverter);
+
             modelBuilder.Entity<UserRegistration>()
                 .HasMany(u => u.Roles)
                 .WithMany(r => r.Users)
@@ -53,6 +55,12 @@ namespace Pointman.CarRental.Company.API.Entities
                 new UserRole { Id = 1, Name = "User" },
                 new UserRole { Id = 2, Name = "Admin" }
             );
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Car)
+                .WithMany()
+                .HasForeignKey(r => r.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

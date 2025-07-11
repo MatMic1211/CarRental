@@ -74,6 +74,8 @@ builder.Services.AddScoped<IContactRequestMapper, ContactRequestMapper>();
 builder.Services.AddScoped<IRentCompanyMapper, RentCompanyMapper>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IBrandMapper, BrandMapper>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IReservationMapper, ReservationMapper>();
 
 
 builder.Services.AddCors(options =>

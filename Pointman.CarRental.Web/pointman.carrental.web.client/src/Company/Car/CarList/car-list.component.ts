@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarService, Car } from '../../../../Services/car.service';
 import { BrandService, BrandViewModel } from '../../../../Services/brand.service';
 import { TranslateService } from '../../../../Services/translate.service';
+import { ReservationService, Reservation } from '../../../../Services/reservation.service';
 
 @Component({
   selector: 'app-car-list',
@@ -23,7 +24,6 @@ export class CarListComponent implements OnInit {
   showModal: boolean = false;
   showEditModal: boolean = false;
   showConfirmDeleteModal: boolean = false;
-
   carToDeleteId: number | null = null;
 
   currentPage: number = 1;
@@ -31,9 +31,24 @@ export class CarListComponent implements OnInit {
   totalPages: number = 0;
   totalItems: number = 0;
 
+  showReservationModal: boolean = false;
+  selectedCarId: number | null = null;
+  selectedCar: Car | null = null;
+
+  reservationData = {
+    startDate: '',
+    endDate: '',
+    startTime: '',
+    endTime: '',
+    pickupLocation: '',
+    returnLocation: '',
+    customerName: ''
+  };
+
   constructor(
     private carService: CarService,
     private brandService: BrandService,
+    private reservationService: ReservationService,
     public translateService: TranslateService
   ) { }
 
@@ -102,7 +117,7 @@ export class CarListComponent implements OnInit {
   getPageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
-  
+
   openAddCarModal(): void {
     this.showModal = true;
   }
@@ -125,7 +140,6 @@ export class CarListComponent implements OnInit {
       }
     });
   }
-
   openEditCarModal(car: Car): void {
     this.editCarData = { ...car };
     this.showEditModal = true;
@@ -174,25 +188,12 @@ export class CarListComponent implements OnInit {
       });
     }
   }
+
   changeLanguage(lang: string): void {
     this.translateService.setLanguage(lang);
     this.loadCars();
     this.loadBrands();
   }
-
-  showReservationModal: boolean = false;
-  selectedCarId: number | null = null;
-  selectedCar: Car | null = null;
-
-  reservationData = {
-    startDate: '',
-    endDate: '',
-    startTime: '',
-    endTime: '',
-    pickupLocation: '',
-    returnLocation: '',
-    customerName: ''
-  };
 
   reserveCar(carId: number): void {
     this.selectedCarId = carId;
@@ -235,9 +236,26 @@ export class CarListComponent implements OnInit {
       return;
     }
 
-    console.log('Rezerwacja samochodu ID:', this.selectedCarId);
-    console.log('Dane rezerwacji:', this.reservationData);
+    const reservation: Reservation = {
+      carId: this.selectedCarId,
+      customerName: this.reservationData.customerName,
+      startDate: this.reservationData.startDate,
+      endDate: this.reservationData.endDate,
+      startTime: this.reservationData.startTime,
+      endTime: this.reservationData.endTime,
+      pickupLocation: this.reservationData.pickupLocation,
+      returnLocation: this.reservationData.returnLocation
+    };
 
-    this.closeReservationModal();
+    this.reservationService.createReservation(reservation).subscribe({
+      next: () => {
+        this.errorMessage = '';
+        this.closeReservationModal();
+        alert('Rezerwacja została wysłana pomyślnie.');
+      },
+      error: () => {
+        this.errorMessage = 'Wystąpił błąd podczas rezerwacji. Spróbuj ponownie.';
+      }
+    });
   }
 }
