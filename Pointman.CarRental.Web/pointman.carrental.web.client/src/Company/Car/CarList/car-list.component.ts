@@ -253,8 +253,12 @@ export class CarListComponent implements OnInit {
         this.closeReservationModal();
         alert('Rezerwacja została wysłana pomyślnie.');
       },
-      error: () => {
-        this.errorMessage = 'Wystąpił błąd podczas rezerwacji. Spróbuj ponownie.';
+      error: (error) => {
+        if (error.status === 409) {
+          this.errorMessage = 'Samochód jest już zarezerwowany w tym terminie.';
+        } else {
+          this.errorMessage = 'Samochód jest już zarezerwowany w tym terminie';
+        }
       }
     });
   }

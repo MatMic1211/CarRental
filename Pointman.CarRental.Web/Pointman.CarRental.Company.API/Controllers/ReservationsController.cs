@@ -17,16 +17,25 @@ namespace Pointman.CarRental.Company.API.Controllers
             _reservationService = reservationService;
             _reservationMapper = reservationMapper;
         }
-
         [HttpPost]
         public async Task<IActionResult> CreateReservation([FromBody] ReservationViewModel viewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var reservation = _reservationMapper.MapToModel(viewModel);
-            await _reservationService.AddReservationAsync(reservation);
-            return Ok(new { message = "Rezerwacja zapisana pomyślnie." });
+
+            try
+            {
+                await _reservationService.AddReservationAsync(reservation);
+                return Ok(new { message = "Rezerwacja zapisana pomyślnie." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
+
+
     }
 
 }
