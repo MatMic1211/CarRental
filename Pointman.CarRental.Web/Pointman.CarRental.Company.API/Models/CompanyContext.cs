@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Pointman.CarRental.Company.API.Entities;
 using Pointman.CarRental.Company.API.Models;
 
 namespace Pointman.CarRental.Company.API.Entities

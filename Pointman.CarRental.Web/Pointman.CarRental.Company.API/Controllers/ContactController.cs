@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pointman.CarRental.Company.API.Entities;
-using Pointman.CarRental.Company.API.Models;
 using Pointman.CarRental.Company.API.Mappers;
 using Pointman.CarRental.Company.API.Services;
 using Pointman.CarRental.Company.API.ViewModels;
