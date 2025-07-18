@@ -198,6 +198,12 @@
                 <input type="text" class="form-control shadow-sm"
                        [(ngModel)]="reservationData.customerName" name="customerName" required />
               </div>
+
+              <div class="col-12 mb-3">
+                <label class="form-label">{{ getTranslation('EMAIL') }}</label>
+                <input type="email" class="form-control shadow-sm"
+                       [(ngModel)]="reservationData.email" name="email" required />
+              </div>
             </div>
 
             <div class="alert alert-info" *ngIf="selectedCar">

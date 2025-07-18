@@ -14,6 +14,8 @@ namespace Pointman.CarRental.Company.API.Models
         public string PickupLocation { get; set; } = null!;
         public string ReturnLocation { get; set; } = null!;
 
+        public string Email { get; set; } = null!;
+
         public Car Car { get; set; } = null!;
     }
 }

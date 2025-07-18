@@ -7,10 +7,12 @@ namespace Pointman.CarRental.Company.API.Services
     public class ReservationService : IReservationService
     {
         private readonly CompanyContext _context;
+        private readonly IEmailService _emailService;
 
-        public ReservationService(CompanyContext context)
+        public ReservationService(CompanyContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         public async Task AddReservationAsync(Reservation reservation)
@@ -23,7 +25,21 @@ namespace Pointman.CarRental.Company.API.Services
 
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
+
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == reservation.CarId);
+
+            var subject = "Potwierdzenie rezerwacji – RentMo";
+            var body = $"Witaj {reservation.CustomerName},\n\n" +
+                       $"Dziękujemy za dokonanie rezerwacji samochodu.\n\n" +
+                       $"🚗 Samochód: {car?.Brand} {car?.Model}\n" +
+                       $"📅 Termin: {reservation.StartDate:yyyy-MM-dd} do {reservation.EndDate:yyyy-MM-dd}\n" +
+                       $"📍 Miejsce odbioru: {reservation.PickupLocation}\n" +
+                       $"📍 Miejsce zwrotu: {reservation.ReturnLocation}\n\n" +
+                       $"Pozdrawiamy,\nZespół RentMo";
+
+            await _emailService.SendEmailAsync(reservation.Email, subject, body);
         }
+
 
         public async Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate)
         {

@@ -7,5 +7,4 @@ namespace Pointman.CarRental.Company.API.Services
         Task AddReservationAsync(Reservation reservation);
         Task<bool> IsCarAvailableAsync(int carId, DateTime startDate, DateTime endDate);
     }
-
 }

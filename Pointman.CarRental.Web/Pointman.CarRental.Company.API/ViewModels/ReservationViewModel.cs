@@ -10,5 +10,6 @@
         public string EndTime { get; set; } = null!;
         public string PickupLocation { get; set; } = null!;
         public string ReturnLocation { get; set; } = null!;
+        public string Email { get; set; } = null!;
     }
 }

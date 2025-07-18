@@ -1,21 +1,31 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using Microsoft.Extensions.Configuration;
 using Pointman.CarRental.Company.API.Models;
+using Pointman.CarRental.Company.API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pointman.CarRental.Company.API.Services
 {
-    public class ContactService : IContactService
+    public class EmailService : IEmailService
     {
-        public void SendEmail(ContactRequest request)
-        {
-            var fromAddress = new MailAddress("rentmo.contact@gmail.com", "RentMo");
-            var toAddress = new MailAddress("mat.micz@wp.pl", "Mateusz");
-            var userCopyAddress = new MailAddress(request.FromEmail);
+        private readonly IConfiguration _configuration;
+        private readonly CompanyContext _context;
 
-            const string fromPassword = "ijdcrtjpyxgpkkef";
-            string subject = $"[RentMo Kontakt] {request.Subject}";
-            string logoContentId = "logoRentmo";
+        public EmailService(IConfiguration configuration, CompanyContext context)
+        {
+            _configuration = configuration;
+            _context = context;
+        }
+
+        public async Task SendEmailAsync(string toEmail, string subject, string bodyText)
+        {
+            var fromAddress = new MailAddress(_configuration["Smtp:From"]!, "RentMo");
+            var toAddress = new MailAddress(toEmail);
+            var logoContentId = "logoRentmo";
+
+            string logoPath = @"C:\TempGit\Pointman.CarRental.Web\pointman.carrental.web.client\src\app\Images\png\logo_rentmo.png";
 
             string bodyHtml = $@"
                 <html>
@@ -23,31 +33,29 @@ namespace Pointman.CarRental.Company.API.Services
                     <style>
                         body {{
                             font-family: Arial, sans-serif;
-                            background-color: #f7f7f7;
+                            background-color: #f9f9f9;
                             color: #333;
                             padding: 20px;
                         }}
                         .container {{
                             background-color: #fff;
-                            border: 1px solid #ddd;
                             border-radius: 8px;
+                            border: 1px solid #ccc;
                             padding: 20px;
                             max-width: 600px;
                             margin: auto;
                         }}
-                        .title {{
-                            font-size: 18px;
-                            font-weight: bold;
+                        h2 {{
+                            color: #2c3e50;
+                        }}
+                        .info {{
                             margin-bottom: 10px;
                         }}
-                        .label {{
-                            font-weight: bold;
-                        }}
                         .footer {{
-                            margin-top: 30px;
                             font-size: 12px;
                             color: #888;
                             text-align: center;
+                            margin-top: 30px;
                         }}
                         .logo {{
                             margin-top: 10px;
@@ -57,31 +65,15 @@ namespace Pointman.CarRental.Company.API.Services
                 </head>
                 <body>
                     <div class='container'>
-                        <div class='title'>Nowa wiadomość kontaktowa z RentMo</div>
-                        <p><span class='label'>Temat:</span> {request.Subject}</p>
-                        <p><span class='label'>E-mail nadawcy:</span> {request.FromEmail}</p>
-                        <p><span class='label'>Wiadomość:</span></p>
-                        <p>{request.Message.Replace("\n", "<br>")}</p>
+                        <h2>Potwierdzenie rezerwacji</h2>
+                        <div class='info'>{bodyText.Replace("\n", "<br>")}</div>
                         <div class='footer'>
-                            Wiadomość wygenerowana automatycznie przez system RentMo.
-                            <br>
+                            Wiadomość wygenerowana automatycznie przez system RentMo.<br>
                             <img src='cid:{logoContentId}' alt='RentMo Logo' class='logo'/>
                         </div>
                     </div>
                 </body>
                 </html>";
-
-            string logoPath = @"C:\TempGit\Pointman.CarRental.Web\pointman.carrental.web.client\src\app\Images\png\logo_rentmo.png";
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
-                Timeout = 20000
-            };
 
             using var message = new MailMessage
             {
@@ -91,11 +83,6 @@ namespace Pointman.CarRental.Company.API.Services
             };
 
             message.To.Add(toAddress);
-
-            if (request.SendCopy)
-            {
-                message.CC.Add(userCopyAddress);
-            }
 
             var htmlView = AlternateView.CreateAlternateViewFromString(bodyHtml, null, MediaTypeNames.Text.Html);
             var logo = new LinkedResource(logoPath, MediaTypeNames.Image.Png)
@@ -107,9 +94,14 @@ namespace Pointman.CarRental.Company.API.Services
             htmlView.LinkedResources.Add(logo);
             message.AlternateViews.Add(htmlView);
 
-            smtp.Send(message);
+            var smtpClient = new SmtpClient(_configuration["Smtp:Host"])
+            {
+                Port = int.Parse(_configuration["Smtp:Port"]!),
+                Credentials = new NetworkCredential(_configuration["Smtp:Username"], _configuration["Smtp:Password"]),
+                EnableSsl = true
+            };
+
+            await smtpClient.SendMailAsync(message);
         }
-
-
     }
 }
