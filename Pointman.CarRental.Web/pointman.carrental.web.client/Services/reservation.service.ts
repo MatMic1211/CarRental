@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface Reservation {
   carId: number;
   customerName: string;
+  email: string;
   startDate: string;
   endDate: string;
   startTime: string; 

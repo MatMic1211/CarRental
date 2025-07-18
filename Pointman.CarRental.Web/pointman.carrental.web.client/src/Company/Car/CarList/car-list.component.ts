@@ -42,7 +42,8 @@ export class CarListComponent implements OnInit {
     endTime: '',
     pickupLocation: '',
     returnLocation: '',
-    customerName: ''
+    customerName: '',
+    email: ''
   };
 
   constructor(
@@ -206,7 +207,8 @@ export class CarListComponent implements OnInit {
       endTime: '',
       pickupLocation: '',
       returnLocation: '',
-      customerName: ''
+      customerName: '',
+      email: ''
     };
   }
 
@@ -239,6 +241,7 @@ export class CarListComponent implements OnInit {
     const reservation: Reservation = {
       carId: this.selectedCarId,
       customerName: this.reservationData.customerName,
+      email: this.reservationData.email,
       startDate: this.reservationData.startDate,
       endDate: this.reservationData.endDate,
       startTime: this.reservationData.startTime,

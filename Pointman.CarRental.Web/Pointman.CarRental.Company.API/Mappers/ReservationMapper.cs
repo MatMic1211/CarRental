@@ -11,6 +11,7 @@ namespace Pointman.CarRental.Company.API.Mappers
             {
                 CarId = viewModel.CarId,
                 CustomerName = viewModel.CustomerName,
+                Email = viewModel.Email, 
                 StartDate = viewModel.StartDate,
                 EndDate = viewModel.EndDate,
                 StartTime = viewModel.StartTime,

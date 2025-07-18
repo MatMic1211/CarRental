@@ -76,7 +76,8 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IBrandMapper, BrandMapper>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IReservationMapper, ReservationMapper>();
-
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddCors(options =>
 {
