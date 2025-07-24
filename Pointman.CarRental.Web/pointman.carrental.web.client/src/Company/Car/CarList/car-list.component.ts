@@ -46,6 +46,8 @@ export class CarListComponent implements OnInit {
     email: ''
   };
 
+  carReservations: { startDate: string, endDate: string }[] = [];
+
   constructor(
     private carService: CarService,
     private brandService: BrandService,
@@ -141,6 +143,7 @@ export class CarListComponent implements OnInit {
       }
     });
   }
+
   openEditCarModal(car: Car): void {
     this.editCarData = { ...car };
     this.showEditModal = true;
@@ -200,6 +203,17 @@ export class CarListComponent implements OnInit {
     this.selectedCarId = carId;
     this.selectedCar = this.cars.find(c => c.id === carId) || null;
     this.showReservationModal = true;
+
+    this.carReservations = [];
+    this.reservationService.getReservationsForCar(carId).subscribe({
+      next: (reservations) => {
+        this.carReservations = reservations;
+      },
+      error: () => {
+        console.error('Nie udało się załadować rezerwacji.');
+      }
+    });
+
     this.reservationData = {
       startDate: '',
       endDate: '',
@@ -238,6 +252,15 @@ export class CarListComponent implements OnInit {
       return;
     }
 
+    const overlap = this.carReservations.some(r =>
+      (this.reservationData.startDate <= r.endDate && this.reservationData.endDate >= r.startDate)
+    );
+
+    if (overlap) {
+      this.errorMessage = 'Wybrany termin koliduje z istniejącą rezerwacją.';
+      return;
+    }
+
     const reservation: Reservation = {
       carId: this.selectedCarId,
       customerName: this.reservationData.customerName,
@@ -260,7 +283,7 @@ export class CarListComponent implements OnInit {
         if (error.status === 409) {
           this.errorMessage = 'Samochód jest już zarezerwowany w tym terminie.';
         } else {
-          this.errorMessage = 'Samochód jest już zarezerwowany w tym terminie';
+          this.errorMessage = 'Samochód jest już zarezerwowany w tym terminie.';
         }
       }
     });

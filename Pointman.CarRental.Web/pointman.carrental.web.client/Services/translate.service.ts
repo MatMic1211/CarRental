@@ -110,7 +110,8 @@ export class TranslateService {
       "CUSTOMER_NAME": "Full name",
       "RESERVING": "Reserving",
       "ALL_FIELDS_REQUIRED": "All fields are required.",
-      "INVALID_DATE_RANGE": "End date cannot be earlier than start date."
+      "INVALID_DATE_RANGE": "End date cannot be earlier than start date.",
+      "BOOKED_DATES": "Booked dates"
     },
     pl: {
       HOME: 'Strona główna',
@@ -215,6 +216,7 @@ export class TranslateService {
       "RETURN_LOCATION": "Miejsce zwrotu",
       "CUSTOMER_NAME": "Imię i nazwisko",
       "RESERVING": "Rezerwujesz",
+      "BOOKED_DATES": 'Zajęte terminy'
 
     },
   };

@@ -158,6 +158,14 @@
           <button type="button" class="btn-close" (click)="closeReservationModal()"></button>
         </div>
         <div class="modal-body">
+          <div *ngIf="carReservations.length > 0" class="alert alert-warning">
+            <strong>{{getTranslation('BOOKED_DATES')}}:</strong>
+            <ul class="mb-0">
+              <li *ngFor="let res of carReservations">
+                {{ res.startDate | date:'yyyy-MM-dd' }} – {{ res.endDate | date:'yyyy-MM-dd' }}
+              </li>
+            </ul>
+          </div>
           <form (ngSubmit)="submitReservation()" #reservationForm="ngForm">
             <div class="row">
               <div class="col-md-6 mb-3">

@@ -52,5 +52,13 @@ namespace Pointman.CarRental.Company.API.Services
                 )
             );
         }
+
+        public async Task<List<Reservation>> GetReservationsForCarAsync(int carId)
+        {
+            return await _context.Reservations
+                .Where(r => r.CarId == carId)
+                .ToListAsync();
+        }
+
     }
 }

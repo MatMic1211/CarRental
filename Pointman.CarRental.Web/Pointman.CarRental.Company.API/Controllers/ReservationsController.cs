@@ -35,6 +35,19 @@ namespace Pointman.CarRental.Company.API.Controllers
             }
         }
 
+        [HttpGet("car/{carId}")]
+        public async Task<IActionResult> GetReservationsForCar(int carId)
+        {
+            var reservations = await _reservationService.GetReservationsForCarAsync(carId);
+
+            return Ok(reservations.Select(r => new
+            {
+                r.StartDate,
+                r.EndDate
+            }));
+        }
+
+
 
     }
 

@@ -2,6 +2,7 @@
   "dependencies": {
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "vanillajs-datepicker": "^1.3.4"
   }
 }

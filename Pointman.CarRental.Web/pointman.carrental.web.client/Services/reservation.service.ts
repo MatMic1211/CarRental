@@ -25,4 +25,8 @@ export class ReservationService {
   createReservation(reservation: Reservation): Observable<any> {
     return this.http.post(this.apiUrl, reservation);
   }
+
+  getReservationsForCar(carId: number): Observable<{ startDate: string, endDate: string }[]> {
+    return this.http.get<{ startDate: string, endDate: string }[]>(`${this.apiUrl}/car/${carId}`);
+  }
 }
